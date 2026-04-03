@@ -15,3 +15,11 @@ class InvalidAnalysisInputError(PracticeLensError):
 
 class ReportContractError(PracticeLensError):
     """Raised when a report contract cannot be built safely."""
+
+
+class AudioLoadError(PracticeLensError):
+    """Raised when an audio asset cannot be loaded safely."""
+
+
+class FeatureExtractionError(PracticeLensError):
+    """Raised when feature extraction fails or receives invalid input."""
