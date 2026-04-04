@@ -23,3 +23,11 @@ class AudioLoadError(PracticeLensError):
 
 class FeatureExtractionError(PracticeLensError):
     """Raised when feature extraction fails or receives invalid input."""
+
+
+class AlignmentError(PracticeLensError):
+    """Raised when feature alignment cannot be computed safely."""
+
+
+class ScoringError(PracticeLensError):
+    """Raised when scoring cannot be synthesized from aligned features."""
