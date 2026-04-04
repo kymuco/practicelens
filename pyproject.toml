@@ -30,6 +30,9 @@ classifiers = [
 ]
 dependencies = []
 
+[project.scripts]
+practicelens = "practicelens.cli.main:run"
+
 [project.optional-dependencies]
 dev = [
   "pytest>=8.0",
