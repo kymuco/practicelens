@@ -8,7 +8,7 @@ except ImportError:  # pragma: no cover - optional dependency
     FastAPI = None  # type: ignore[assignment]
     HTTPException = None  # type: ignore[assignment]
 
-from practicelens.api.service import analyze_payload
+from practicelens.api.service import analyze_payload, compare_batch_payload
 
 
 def create_app() -> Any:
@@ -29,6 +29,13 @@ def create_app() -> Any:
     def analyze(payload: dict[str, object]) -> dict[str, object]:
         try:
             return analyze_payload(payload)
+        except Exception as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    @app.post("/compare-batch")
+    def compare_batch(payload: dict[str, object]) -> dict[str, object]:
+        try:
+            return compare_batch_payload(payload)
         except Exception as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
 
