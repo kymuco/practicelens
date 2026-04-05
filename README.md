@@ -2,7 +2,7 @@
 
 **PracticeLens** is a local-first audio practice analysis tool for singing and instrument takes.
 
-It is designed to help musicians turn raw practice recordings into precise, actionable feedback by analyzing pitch, rhythm, timing, alignment, and take consistency.
+It helps musicians turn raw practice recordings into precise, actionable feedback by analyzing pitch, rhythm, timing, alignment, and take consistency.
 
 ## Why this project exists
 
@@ -16,28 +16,98 @@ PracticeLens aims to answer the questions that actually matter during improvemen
 - which sections need focused repetition;
 - how a take differs from a reference recording.
 
+## Current v0.1 baseline
+
+The current repository now includes a bounded local-first analysis vertical slice:
+
+- WAV loading and preprocessing;
+- deterministic feature extraction;
+- reference-aware DTW alignment;
+- explainable scoring;
+- JSON and Markdown report rendering;
+- an offline pipeline;
+- a CLI `analyze` command;
+- an optional FastAPI app surface.
+
 ## Core idea
 
-Given a user take and, optionally, a reference recording, PracticeLens will extract audio features, align comparable sections, compute quality-oriented metrics, and generate feedback that is both machine-readable and human-readable.
+Given a user take and, optionally, a reference recording, PracticeLens extracts audio features, aligns comparable sections, computes quality-oriented metrics, and generates feedback that is both machine-readable and human-readable.
 
-The long-term goal is to provide a strong foundation for:
+The longer-term goal is to provide a strong foundation for:
 
 - a command-line workflow;
 - a lightweight API service;
 - future desktop or creator-tool integrations;
 - ML-based quality scoring on top of robust signal-processing features.
 
-## Initial scope
+## Current scope
 
-The first milestone focuses on a practical MVP rather than fake AI theater.
+PracticeLens v0.1 is intentionally bounded.
 
-Planned MVP capabilities:
+Current expectations:
 
-- load a reference take and a user take;
-- extract pitch, onset, tempo, and timing features;
-- compare the two takes with alignment-aware analysis;
-- report weak sections and unstable passages;
-- export structured reports as JSON and readable summaries as Markdown.
+- local-first execution;
+- offline reference-based analysis;
+- monophonic or near-monophonic material first;
+- explainable component scoring instead of one opaque score.
+
+Current non-goals:
+
+- realtime feedback;
+- polyphonic-first analysis;
+- end-to-end learned scoring;
+- artistic judgment or interpretation scoring.
+
+## CLI usage
+
+After installation, the current CLI entry point is:
+
+```bash
+practicelens analyze \
+  --reference path/to/reference.wav \
+  --take path/to/take.wav \
+  --out out/
+```
+
+Optional tuning flags currently include:
+
+- `--sample-rate`
+- `--frame-length`
+- `--hop-length`
+- `--segment-duration`
+
+The command writes:
+
+- `report.json`
+- `report.md`
+
+## Optional API usage
+
+PracticeLens also exposes an API-friendly service layer and an optional FastAPI app.
+
+Install the API extra to use the HTTP app surface.
+
+Example app import:
+
+```python
+from practicelens.api.app import create_app
+
+app = create_app()
+```
+
+Example payload shape:
+
+```json
+{
+  "reference_path": "reference.wav",
+  "take_path": "take.wav",
+  "out_dir": "out",
+  "sample_rate": 16000,
+  "frame_length": 2048,
+  "hop_length": 512,
+  "segment_duration": 8.0
+}
+```
 
 ## Principles
 
@@ -57,7 +127,7 @@ Planned MVP capabilities:
 
 ## Planned outputs
 
-PracticeLens is expected to eventually produce outputs such as:
+PracticeLens currently produces and is expected to keep evolving around outputs such as:
 
 - pitch stability metrics;
 - rhythm deviation metrics;
@@ -68,9 +138,9 @@ PracticeLens is expected to eventually produce outputs such as:
 
 ## Status
 
-This repository is currently in the project-definition phase.
+The repository has moved beyond the project-definition phase and now has a bounded working vertical slice for offline reference-aware analysis.
 
-The README establishes the product intent and scope first. The implementation architecture, repository structure, and MVP execution plan will be defined next.
+The next work should focus on strengthening service and integration surfaces, not on pretending the current DSP stack is already final.
 
 ## License
 
