@@ -37,4 +37,6 @@ class ArtifactKind(StrEnum):
 
     JSON_REPORT = "json_report"
     MARKDOWN_REPORT = "markdown_report"
+    CSV_REPORT = "csv_report"
+    SVG_REPORT = "svg_report"
     DEBUG_PAYLOAD = "debug_payload"

@@ -48,3 +48,5 @@ def test_cli_analyze_command_writes_reports(tmp_path: Path) -> None:
     assert exit_code == 0
     assert (out_dir / "report.json").exists()
     assert (out_dir / "report.md").exists()
+    assert (out_dir / "report.csv").exists()
+    assert (out_dir / "report.svg").exists()

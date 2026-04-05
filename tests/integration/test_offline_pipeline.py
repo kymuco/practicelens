@@ -39,6 +39,8 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
     )
 
     assert result.report.summary is not None
-    assert len(result.report.artifacts) == 2
+    assert len(result.report.artifacts) == 4
     assert (out_dir / "report.json").exists()
     assert (out_dir / "report.md").exists()
+    assert (out_dir / "report.csv").exists()
+    assert (out_dir / "report.svg").exists()

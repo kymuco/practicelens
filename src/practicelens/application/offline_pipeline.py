@@ -1,18 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import replace
-from pathlib import Path
-
 from practicelens.alignment import align_feature_bundles
 from practicelens.application.contracts import AnalyzeRequest, AnalyzeResult
 from practicelens.application.pipeline import AnalysisPipeline
-from practicelens.domain.enums import ArtifactKind
-from practicelens.domain.models import AnalysisOverview, AnalysisReport, ArtifactLink, FeatureFlags
+from practicelens.domain.models import AnalysisOverview, AnalysisReport, FeatureFlags
 from practicelens.features import extract_feature_bundle
 from practicelens.io import ensure_finite_audio, load_wav_audio
 from practicelens.io.models import LoadedAudio
 from practicelens.preprocessing import peak_normalize, resample_linear, trim_silence
-from practicelens.reporting import report_to_json_text, report_to_markdown
+from practicelens.reporting.artifacts import write_report_artifacts
 from practicelens.scoring import score_aligned_features
 
 
@@ -44,7 +40,7 @@ class OfflineReferenceAnalysisPipeline(AnalysisPipeline):
         )
 
         if request.out_dir is not None:
-            report = self._write_artifacts(report, request.out_dir)
+            report, _ = write_report_artifacts(report, request.out_dir)
 
         return AnalyzeResult(report=report)
 
@@ -64,20 +60,3 @@ class OfflineReferenceAnalysisPipeline(AnalysisPipeline):
             source_channels=audio.source_channels,
             sample_width_bytes=audio.sample_width_bytes,
         )
-
-    def _write_artifacts(self, report: AnalysisReport, out_dir: Path) -> AnalysisReport:
-        out_dir.mkdir(parents=True, exist_ok=True)
-        json_path = out_dir / "report.json"
-        markdown_path = out_dir / "report.md"
-
-        report_with_artifacts = replace(
-            report,
-            artifacts=(
-                ArtifactLink(ArtifactKind.JSON_REPORT, str(json_path), "Structured analysis report."),
-                ArtifactLink(ArtifactKind.MARKDOWN_REPORT, str(markdown_path), "Human-readable analysis report."),
-            ),
-        )
-
-        json_path.write_text(report_to_json_text(report_with_artifacts), encoding="utf-8")
-        markdown_path.write_text(report_to_markdown(report_with_artifacts), encoding="utf-8")
-        return report_with_artifacts
