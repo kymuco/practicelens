@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from pathlib import Path
-from typing import Mapping
 
 from practicelens.application import AnalyzeRequest, OfflineReferenceAnalysisPipeline
 from practicelens.domain.models import AnalysisConfig

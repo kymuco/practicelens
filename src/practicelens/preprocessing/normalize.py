@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Iterable
+from collections.abc import Iterable
 
 
 def peak_normalize(samples: Iterable[float], *, floor: float = 1e-9) -> tuple[float, ...]:

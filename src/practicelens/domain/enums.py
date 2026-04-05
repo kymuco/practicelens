@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum as NativeStrEnum
 
 
-class StrEnum(str, Enum):
+class StrEnum(NativeStrEnum):
     """Simple string enum base for stable serialized contracts."""
 
 
