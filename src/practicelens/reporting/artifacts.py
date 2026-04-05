@@ -2,12 +2,20 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from practicelens.domain.models import AnalysisReport, ArtifactLink
 from practicelens.domain.enums import ArtifactKind
-from practicelens.reporting import report_to_csv_text, report_to_json_text, report_to_markdown, report_to_svg
+from practicelens.domain.models import AnalysisReport, ArtifactLink
+from practicelens.reporting import (
+    report_to_csv_text,
+    report_to_json_text,
+    report_to_markdown,
+    report_to_svg,
+)
 
 
-def write_report_artifacts(report: AnalysisReport, out_dir: Path) -> tuple[AnalysisReport, tuple[ArtifactLink, ...]]:
+def write_report_artifacts(
+    report: AnalysisReport,
+    out_dir: Path,
+) -> tuple[AnalysisReport, tuple[ArtifactLink, ...]]:
     out_dir.mkdir(parents=True, exist_ok=True)
     json_path = out_dir / "report.json"
     markdown_path = out_dir / "report.md"
@@ -15,10 +23,26 @@ def write_report_artifacts(report: AnalysisReport, out_dir: Path) -> tuple[Analy
     svg_path = out_dir / "report.svg"
 
     artifacts = (
-        ArtifactLink(ArtifactKind.JSON_REPORT, str(json_path), "Structured analysis report."),
-        ArtifactLink(ArtifactKind.MARKDOWN_REPORT, str(markdown_path), "Human-readable analysis report."),
-        ArtifactLink(ArtifactKind.CSV_REPORT, str(csv_path), "Section-level table export."),
-        ArtifactLink(ArtifactKind.SVG_REPORT, str(svg_path), "Compact visual score summary."),
+        ArtifactLink(
+            ArtifactKind.JSON_REPORT,
+            str(json_path),
+            "Structured analysis report.",
+        ),
+        ArtifactLink(
+            ArtifactKind.MARKDOWN_REPORT,
+            str(markdown_path),
+            "Human-readable analysis report.",
+        ),
+        ArtifactLink(
+            ArtifactKind.CSV_REPORT,
+            str(csv_path),
+            "Section-level table export.",
+        ),
+        ArtifactLink(
+            ArtifactKind.SVG_REPORT,
+            str(svg_path),
+            "Compact visual score summary.",
+        ),
     )
 
     report_with_artifacts = AnalysisReport(
