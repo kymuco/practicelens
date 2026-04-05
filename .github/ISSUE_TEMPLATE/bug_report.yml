@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a reproducible problem in PracticeLens.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the bug clearly and directly.
+      placeholder: The command or flow failed, and here is what I expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include commands, file layout, payloads, or exact actions.
+      placeholder: |
+        1. Run ...
+        2. Provide ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Python version, OS, CLI or API flow, and any other relevant setup details.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or output
+      description: Paste the most relevant output, stack trace, or CI failure here.
+      render: shell
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Explain what this blocks or breaks.
