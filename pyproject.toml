@@ -38,6 +38,10 @@ dev = [
   "pytest>=8.0",
   "ruff>=0.11",
 ]
+api = [
+  "fastapi>=0.110",
+  "uvicorn>=0.29",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/practicelens"]
