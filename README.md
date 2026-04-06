@@ -38,6 +38,15 @@ The repository already includes a bounded working vertical slice with:
 
 This is not a final DSP product yet, but it is no longer just a skeleton repo.
 
+## Start here
+
+- Quickstart: [docs/quickstart.md](docs/quickstart.md)
+- API usage and payloads: [docs/api.md](docs/api.md)
+- CLI example notes: [examples/cli/README.md](examples/cli/README.md)
+- Example API payloads: [examples/api](examples/api)
+- Contribution flow: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Security reporting: [SECURITY.md](SECURITY.md)
+
 ## Core idea
 
 Given a user take and a reference recording, PracticeLens extracts audio features, aligns comparable sections, computes quality-oriented metrics, and generates feedback that is both machine-readable and human-readable.
@@ -205,11 +214,6 @@ Near-term work should focus on:
 - higher-confidence reporting UX;
 - better repo ergonomics and contributor trust;
 - future model-assisted scoring on top of the current deterministic baseline.
-
-## Contributing and security
-
-- Contribution flow: see [CONTRIBUTING.md](CONTRIBUTING.md)
-- Security reporting: see [SECURITY.md](SECURITY.md)
 
 ## License
 
