@@ -41,6 +41,8 @@ This is not a final DSP product yet, but it is no longer just a skeleton repo.
 ## Start here
 
 - Quickstart: [docs/quickstart.md](docs/quickstart.md)
+- Architecture overview: [docs/architecture.md](docs/architecture.md)
+- Repository map: [docs/repository-map.md](docs/repository-map.md)
 - API usage and payloads: [docs/api.md](docs/api.md)
 - Development workflow: [docs/development.md](docs/development.md)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
