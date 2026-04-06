@@ -1,0 +1,4 @@
+section_index,start_s,end_s,pitch_fidelity,rhythm_fidelity,timing_consistency,section_stability,findings_count,findings
+0,0.000,8.000,91.000,84.000,82.000,88.000,1,Opening phrase is stable and close to the reference.
+1,8.000,16.000,88.000,78.000,74.000,83.000,1,Small timing drift appears here and slightly compresses phrase spacing.
+2,16.000,24.000,90.000,84.000,81.000,92.000,1,Ending section recovers well and stays controlled.
