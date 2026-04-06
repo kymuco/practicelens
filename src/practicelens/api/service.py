@@ -2,7 +2,14 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 from pathlib import Path
+from typing import cast
 
+from practicelens.api.contracts import (
+    AnalyzeRequestPayload,
+    AnalyzeResponsePayload,
+    BatchCompareRequestPayload,
+    BatchCompareResponsePayload,
+)
 from practicelens.application import (
     AnalyzeRequest,
     BatchCompareRequest,
@@ -43,20 +50,22 @@ def build_batch_request_from_payload(payload: Mapping[str, object]) -> BatchComp
     )
 
 
-def analyze_payload(payload: Mapping[str, object]) -> dict[str, object]:
+def analyze_payload(payload: Mapping[str, object] | AnalyzeRequestPayload) -> AnalyzeResponsePayload:
     """Run one offline analysis request from a JSON-like payload."""
 
     request = build_request_from_payload(payload)
     result = OfflineReferenceAnalysisPipeline().analyze(request)
-    return report_to_json_payload(result.report)
+    return cast(AnalyzeResponsePayload, report_to_json_payload(result.report))
 
 
-def compare_batch_payload(payload: Mapping[str, object]) -> dict[str, object]:
+def compare_batch_payload(
+    payload: Mapping[str, object] | BatchCompareRequestPayload,
+) -> BatchCompareResponsePayload:
     """Run one batch comparison request from a JSON-like payload."""
 
     request = build_batch_request_from_payload(payload)
     result = OfflineBatchComparePipeline().compare(request)
-    return batch_compare_result_to_json_payload(result)
+    return cast(BatchCompareResponsePayload, batch_compare_result_to_json_payload(result))
 
 
 def _build_config(payload: Mapping[str, object]) -> AnalysisConfig:

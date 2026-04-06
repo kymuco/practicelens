@@ -78,7 +78,7 @@ def test_build_batch_request_from_payload_rejects_missing_take_paths() -> None:
         build_batch_request_from_payload({"reference_path": "reference.wav"})
 
 
-def test_analyze_payload_returns_json_ready_report(tmp_path: Path) -> None:
+def test_analyze_payload_returns_contract_shaped_report(tmp_path: Path) -> None:
     reference = tmp_path / "reference.wav"
     take = tmp_path / "take.wav"
     out_dir = tmp_path / "api-out"
@@ -99,12 +99,15 @@ def test_analyze_payload_returns_json_ready_report(tmp_path: Path) -> None:
 
     assert payload["overview"]["ok"] is True
     assert payload["inputs"]["reference_path"] == str(reference)
-    assert payload["scores"]
+    assert isinstance(payload["scores"], list)
+    assert isinstance(payload["metrics"], list)
+    assert isinstance(payload["sections"], list)
+    assert isinstance(payload["artifacts"], list)
     assert (out_dir / "report.json").exists()
     assert (out_dir / "report.md").exists()
 
 
-def test_compare_batch_payload_returns_ranked_batch_report(tmp_path: Path) -> None:
+def test_compare_batch_payload_returns_ranked_contract_report(tmp_path: Path) -> None:
     reference = tmp_path / "reference.wav"
     take_best = tmp_path / "take_best.wav"
     take_low = tmp_path / "take_low.wav"
@@ -125,8 +128,12 @@ def test_compare_batch_payload_returns_ranked_batch_report(tmp_path: Path) -> No
         }
     )
 
+    assert payload["summary"] is not None
     assert payload["entries"]
+    assert payload["entries"][0]["rank"] == 1
     assert payload["entries"][0]["take_path"].endswith("take_best.wav")
+    assert isinstance(payload["entries"][0]["artifacts"], list)
+    assert isinstance(payload["artifacts"], list)
     assert (out_dir / "batch_report.json").exists()
     assert (out_dir / "batch_report.md").exists()
     assert (out_dir / "batch_report.csv").exists()
