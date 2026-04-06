@@ -75,6 +75,7 @@ It does make it reviewable, understandable, and much harder to mistake for a ran
 - Evaluate the repo: [docs/evaluate.md](docs/evaluate.md)
 - Architecture overview: [docs/architecture.md](docs/architecture.md)
 - Repository map: [docs/repository-map.md](docs/repository-map.md)
+- Artifact guide: [docs/artifacts.md](docs/artifacts.md)
 - API usage and payloads: [docs/api.md](docs/api.md)
 - Development workflow: [docs/development.md](docs/development.md)
 - Roadmap snapshot: [docs/roadmap.md](docs/roadmap.md)
