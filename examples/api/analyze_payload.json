@@ -1,0 +1,9 @@
+{
+  "reference_path": "samples/reference.wav",
+  "take_path": "samples/take.wav",
+  "out_dir": "out/api-single",
+  "sample_rate": 16000,
+  "frame_length": 2048,
+  "hop_length": 512,
+  "segment_duration": 8.0
+}
