@@ -51,7 +51,7 @@ If you want to understand the repo in a few minutes, use this order:
 2. [Architecture overview](docs/architecture.md)
 3. [Repository map](docs/repository-map.md)
 4. [API notes](docs/api.md)
-5. [Examples](examples/api) and [CLI notes](examples/cli/README.md)
+5. [Examples](examples/api), [sample results](examples/results), and [CLI notes](examples/cli/README.md)
 
 If you want a sharper evaluator path, use [docs/evaluate.md](docs/evaluate.md).
 
@@ -76,6 +76,7 @@ It does make it reviewable, understandable, and much harder to mistake for a ran
 - Architecture overview: [docs/architecture.md](docs/architecture.md)
 - Repository map: [docs/repository-map.md](docs/repository-map.md)
 - Artifact guide: [docs/artifacts.md](docs/artifacts.md)
+- Sample result snapshots: [examples/results](examples/results)
 - API usage and payloads: [docs/api.md](docs/api.md)
 - Development workflow: [docs/development.md](docs/development.md)
 - Roadmap snapshot: [docs/roadmap.md](docs/roadmap.md)
