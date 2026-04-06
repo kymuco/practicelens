@@ -8,11 +8,17 @@
 
 It helps musicians turn raw practice recordings into precise, actionable feedback by analyzing pitch, rhythm, timing, alignment, section consistency, and take ranking against a reference.
 
+## What it is, in one line
+
+PracticeLens answers a more useful question than **"did that sound good?"**:
+
+**where exactly did this take diverge from the reference, and which of several takes is actually the strongest?**
+
 ## Why this project exists
 
-Practice recordings usually answer only one vague question: **"did that sound good?"**
+Practice recordings usually leave musicians with fuzzy self-judgment.
 
-PracticeLens aims to answer the questions that actually matter during improvement:
+PracticeLens aims to make that loop sharper by showing:
 
 - where timing drift starts;
 - where pitch becomes unstable;
@@ -21,30 +27,57 @@ PracticeLens aims to answer the questions that actually matter during improvemen
 - which of several takes is actually the strongest;
 - how a take differs from a reference recording.
 
-## Current repository status
+## What works today
 
-The repository already includes a bounded working vertical slice with:
+| Area | Current status |
+| --- | --- |
+| WAV loading and preprocessing | Working |
+| Deterministic feature extraction | Working |
+| Reference-aware DTW alignment | Working |
+| Explainable scoring | Working |
+| JSON / Markdown / CSV / SVG artifacts | Working |
+| Single-take CLI analysis | Working |
+| Multi-take batch comparison | Working |
+| Optional FastAPI surface | Working |
+| GitHub Actions CI | Working |
 
-- WAV loading and preprocessing;
-- deterministic feature extraction;
-- reference-aware DTW alignment;
-- explainable scoring;
-- JSON, Markdown, CSV, and SVG report artifacts;
-- offline single-take analysis;
-- batch comparison across multiple takes;
-- a CLI surface;
-- an optional FastAPI app surface;
-- GitHub Actions CI for lint and tests.
+This is still **pre-alpha**, but it is already a real bounded vertical slice, not just a project shell.
 
-This is not a final DSP product yet, but it is no longer just a skeleton repo.
+## Evaluate it quickly
+
+If you want to understand the repo in a few minutes, use this order:
+
+1. [Quickstart](docs/quickstart.md)
+2. [Architecture overview](docs/architecture.md)
+3. [Repository map](docs/repository-map.md)
+4. [API notes](docs/api.md)
+5. [Examples](examples/api) and [CLI notes](examples/cli/README.md)
+
+If you want a sharper evaluator path, use [docs/evaluate.md](docs/evaluate.md).
+
+## Why this repo feels trustworthy
+
+The repo already includes:
+
+- CI for lint and tests;
+- explicit contribution and security docs;
+- typed API payload contracts;
+- deterministic and explainable report outputs;
+- quickstart, architecture, API, and development documentation;
+- copyable CLI and API examples.
+
+That does not make the project finished.
+It does make it reviewable, understandable, and much harder to mistake for a random code dump.
 
 ## Start here
 
 - Quickstart: [docs/quickstart.md](docs/quickstart.md)
+- Evaluate the repo: [docs/evaluate.md](docs/evaluate.md)
 - Architecture overview: [docs/architecture.md](docs/architecture.md)
 - Repository map: [docs/repository-map.md](docs/repository-map.md)
 - API usage and payloads: [docs/api.md](docs/api.md)
 - Development workflow: [docs/development.md](docs/development.md)
+- Roadmap snapshot: [docs/roadmap.md](docs/roadmap.md)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 - CLI example notes: [examples/cli/README.md](examples/cli/README.md)
 - Example API payloads: [examples/api](examples/api)
@@ -187,14 +220,6 @@ CI runs the same baseline checks on pushes to `main` and on pull requests.
 
 For a more practical maintainer view, see [docs/development.md](docs/development.md).
 
-## Repository conventions
-
-- Keep PRs small and reviewable.
-- Prefer additive changes over broad rewrites.
-- Preserve CLI and API behavior unless the PR explicitly updates contracts.
-- Avoid placeholder production paths.
-- Prefer clear artifacts and explainable outputs over opaque magic.
-
 ## Project principles
 
 - **Local-first**: the tool should be useful without cloud infrastructure.
@@ -203,23 +228,14 @@ For a more practical maintainer view, see [docs/development.md](docs/development
 - **Clear interfaces**: the project should evolve cleanly into CLI and API layers.
 - **Extensible design**: future scoring models should fit on top of the core pipeline, not replace it chaotically.
 
-## Potential use cases
-
-- vocal take review;
-- guitar practice feedback;
-- reference-vs-take comparison;
-- repeated section analysis;
-- ranking multiple takes;
-- building datasets for future learned scoring models.
-
 ## Roadmap direction
 
 Near-term work should focus on:
 
-- stronger API contracts and examples;
+- stronger evaluation examples and demo assets;
 - higher-confidence reporting UX;
-- better repo ergonomics and contributor trust;
-- future model-assisted scoring on top of the current deterministic baseline.
+- more polished API and artifact ergonomics;
+- future model-assisted scoring on top of the deterministic baseline.
 
 ## License
 
