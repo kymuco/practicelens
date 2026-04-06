@@ -1,0 +1,107 @@
+{
+  "artifacts": [
+    {
+      "kind": "json_report",
+      "path": "examples/results/batch/batch_report.json"
+    },
+    {
+      "kind": "markdown_report",
+      "path": "examples/results/batch/batch_report.md"
+    },
+    {
+      "kind": "csv_report",
+      "path": "examples/results/batch/batch_report.csv"
+    }
+  ],
+  "entries": [
+    {
+      "artifacts": [
+        {
+          "description": "Structured analysis report.",
+          "kind": "json_report",
+          "path": "out/batch/takes/02-take_02/report.json"
+        },
+        {
+          "description": "Human-readable analysis report.",
+          "kind": "markdown_report",
+          "path": "out/batch/takes/02-take_02/report.md"
+        },
+        {
+          "description": "Section-level table export.",
+          "kind": "csv_report",
+          "path": "out/batch/takes/02-take_02/report.csv"
+        },
+        {
+          "description": "Compact visual score summary.",
+          "kind": "svg_report",
+          "path": "out/batch/takes/02-take_02/report.svg"
+        }
+      ],
+      "output_dir": "out/batch/takes/02-take_02",
+      "overall_score": 88.4,
+      "rank": 1,
+      "summary": "Strongest overall take with the most stable middle phrase and the cleanest ending.",
+      "take_path": "samples/take_02.wav"
+    },
+    {
+      "artifacts": [
+        {
+          "description": "Structured analysis report.",
+          "kind": "json_report",
+          "path": "out/batch/takes/01-take_01/report.json"
+        },
+        {
+          "description": "Human-readable analysis report.",
+          "kind": "markdown_report",
+          "path": "out/batch/takes/01-take_01/report.md"
+        },
+        {
+          "description": "Section-level table export.",
+          "kind": "csv_report",
+          "path": "out/batch/takes/01-take_01/report.csv"
+        },
+        {
+          "description": "Compact visual score summary.",
+          "kind": "svg_report",
+          "path": "out/batch/takes/01-take_01/report.svg"
+        }
+      ],
+      "output_dir": "out/batch/takes/01-take_01",
+      "overall_score": 84.7,
+      "rank": 2,
+      "summary": "Good reference match, but timing begins to loosen through the center of the take.",
+      "take_path": "samples/take_01.wav"
+    },
+    {
+      "artifacts": [
+        {
+          "description": "Structured analysis report.",
+          "kind": "json_report",
+          "path": "out/batch/takes/03-take_03/report.json"
+        },
+        {
+          "description": "Human-readable analysis report.",
+          "kind": "markdown_report",
+          "path": "out/batch/takes/03-take_03/report.md"
+        },
+        {
+          "description": "Section-level table export.",
+          "kind": "csv_report",
+          "path": "out/batch/takes/03-take_03/report.csv"
+        },
+        {
+          "description": "Compact visual score summary.",
+          "kind": "svg_report",
+          "path": "out/batch/takes/03-take_03/report.svg"
+        }
+      ],
+      "output_dir": "out/batch/takes/03-take_03",
+      "overall_score": 78.9,
+      "rank": 3,
+      "summary": "Pitch remains serviceable, but rhythmic stability and timing consistency fall behind the other takes.",
+      "take_path": "samples/take_03.wav"
+    }
+  ],
+  "reference_path": "samples/reference.wav",
+  "summary": "Best take: take_02.wav with 88.4/100 across 3 compared takes."
+}

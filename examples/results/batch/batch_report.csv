@@ -1,0 +1,4 @@
+rank,take_name,take_path,overall_score,delta_from_best,summary,output_dir
+1,take_02.wav,samples/take_02.wav,88.400,0.000,Strongest overall take with the most stable middle phrase and the cleanest ending.,out/batch/takes/02-take_02
+2,take_01.wav,samples/take_01.wav,84.700,3.700,Good reference match but timing begins to loosen through the center of the take.,out/batch/takes/01-take_01
+3,take_03.wav,samples/take_03.wav,78.900,9.500,Pitch remains serviceable but rhythmic stability and timing consistency fall behind the other takes.,out/batch/takes/03-take_03

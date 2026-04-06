@@ -1,0 +1,209 @@
+{
+  "artifacts": [
+    {
+      "description": "Structured analysis report.",
+      "kind": "json_report",
+      "path": "examples/results/single/report.json"
+    },
+    {
+      "description": "Human-readable analysis report.",
+      "kind": "markdown_report",
+      "path": "examples/results/single/report.md"
+    },
+    {
+      "description": "Section-level table export.",
+      "kind": "csv_report",
+      "path": "examples/results/single/report.csv"
+    },
+    {
+      "description": "Compact visual score summary.",
+      "kind": "svg_report",
+      "path": "examples/results/single/report.svg"
+    }
+  ],
+  "feature_flags": {
+    "energy_enabled": true,
+    "onset_enabled": true,
+    "pitch_enabled": true,
+    "tempo_enabled": true,
+    "voicing_enabled": true
+  },
+  "feedback": [
+    "Keep the same pitch approach; pitch stability is already strong.",
+    "Focus the next repetition on timing through the middle phrase.",
+    "The ending is one of the strongest parts of the take and should be preserved."
+  ],
+  "inputs": {
+    "mode": "reference",
+    "reference_path": "samples/reference.wav",
+    "take_path": "samples/take_take2.wav"
+  },
+  "metrics": [
+    {
+      "detail": "Stable contour with only small deviations around the middle phrase.",
+      "name": "pitch_fidelity",
+      "score": 90.0,
+      "severity": "info",
+      "value": 0.9
+    },
+    {
+      "detail": "Slight rhythmic looseness appears before the final section.",
+      "name": "rhythm_fidelity",
+      "score": 82.0,
+      "severity": "notice",
+      "value": 0.82
+    },
+    {
+      "detail": "Timing drift is small but visible in the center of the take.",
+      "name": "timing_consistency",
+      "score": 79.0,
+      "severity": "notice",
+      "value": 0.79
+    },
+    {
+      "detail": "Section-to-section consistency remains strong overall.",
+      "name": "section_stability",
+      "score": 88.0,
+      "severity": "info",
+      "value": 0.88
+    }
+  ],
+  "overall_score": 86.1,
+  "overview": {
+    "kind": "analysis_report",
+    "mode": "reference",
+    "ok": true,
+    "schema_version": 1,
+    "status": "success"
+  },
+  "scores": [
+    {
+      "name": "pitch_fidelity",
+      "score": 90.0,
+      "weight": 0.35
+    },
+    {
+      "name": "rhythm_fidelity",
+      "score": 82.0,
+      "weight": 0.3
+    },
+    {
+      "name": "timing_consistency",
+      "score": 79.0,
+      "weight": 0.2
+    },
+    {
+      "name": "section_stability",
+      "score": 88.0,
+      "weight": 0.15
+    }
+  ],
+  "sections": [
+    {
+      "component_scores": [
+        {
+          "name": "pitch_fidelity",
+          "score": 91.0,
+          "weight": 0.35
+        },
+        {
+          "name": "rhythm_fidelity",
+          "score": 84.0,
+          "weight": 0.3
+        },
+        {
+          "name": "timing_consistency",
+          "score": 82.0,
+          "weight": 0.2
+        },
+        {
+          "name": "section_stability",
+          "score": 88.0,
+          "weight": 0.15
+        }
+      ],
+      "end_s": 8.0,
+      "findings": [
+        {
+          "end_s": 8.0,
+          "message": "Opening phrase is stable and close to the reference.",
+          "severity": "info",
+          "start_s": 0.0
+        }
+      ],
+      "index": 0,
+      "start_s": 0.0
+    },
+    {
+      "component_scores": [
+        {
+          "name": "pitch_fidelity",
+          "score": 88.0,
+          "weight": 0.35
+        },
+        {
+          "name": "rhythm_fidelity",
+          "score": 78.0,
+          "weight": 0.3
+        },
+        {
+          "name": "timing_consistency",
+          "score": 74.0,
+          "weight": 0.2
+        },
+        {
+          "name": "section_stability",
+          "score": 83.0,
+          "weight": 0.15
+        }
+      ],
+      "end_s": 16.0,
+      "findings": [
+        {
+          "end_s": 16.0,
+          "message": "Small timing drift appears here and slightly compresses phrase spacing.",
+          "severity": "notice",
+          "start_s": 8.0
+        }
+      ],
+      "index": 1,
+      "start_s": 8.0
+    },
+    {
+      "component_scores": [
+        {
+          "name": "pitch_fidelity",
+          "score": 90.0,
+          "weight": 0.35
+        },
+        {
+          "name": "rhythm_fidelity",
+          "score": 84.0,
+          "weight": 0.3
+        },
+        {
+          "name": "timing_consistency",
+          "score": 81.0,
+          "weight": 0.2
+        },
+        {
+          "name": "section_stability",
+          "score": 92.0,
+          "weight": 0.15
+        }
+      ],
+      "end_s": 24.0,
+      "findings": [
+        {
+          "end_s": 24.0,
+          "message": "Ending section recovers well and stays controlled.",
+          "severity": "info",
+          "start_s": 16.0
+        }
+      ],
+      "index": 2,
+      "start_s": 16.0
+    }
+  ],
+  "summary": "Strong reference match overall. Minor timing looseness appears in the middle phrase, but pitch stability stays solid and the ending recovers well."
+}
