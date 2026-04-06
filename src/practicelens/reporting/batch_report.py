@@ -42,34 +42,68 @@ def batch_compare_result_to_json_text(result: BatchCompareResult) -> str:
 
 
 def batch_compare_result_to_markdown(result: BatchCompareResult) -> str:
+    best_score = result.entries[0].overall_score if result.entries else 0.0
     lines = ["# PracticeLens Batch Compare", ""]
-    lines.append(f"**Reference:** `{result.reference_path}`")
+    lines.append("## At a glance")
+    lines.append("")
+    lines.append(f"- **Reference:** `{result.reference_path}`")
+    lines.append(f"- **Compared takes:** {len(result.entries)}")
+    if result.entries:
+        lines.append(f"- **Best take:** `{result.entries[0].take_path.name}`")
+        lines.append(f"- **Best score:** {best_score:.1f}/100")
     if result.summary:
         lines.extend(["", result.summary])
+
     lines.extend(["", "## Ranking", ""])
+    lines.append("| Rank | Take | Score | Delta vs best | Output dir |")
+    lines.append("| --- | --- | ---: | ---: | --- |")
     for entry in result.entries:
+        delta = best_score - entry.overall_score
+        output_dir = f"`{entry.output_dir}`" if entry.output_dir is not None else "-"
         lines.append(
-            f"- **#{entry.rank}** `{entry.take_path.name}` — {entry.overall_score:.1f}/100"
+            f"| {entry.rank} | `{entry.take_path.name}` | {entry.overall_score:.1f} | {delta:.1f} | {output_dir} |"
         )
+
+    lines.extend(["", "## Take summaries", ""])
+    for entry in result.entries:
+        lines.append(f"### #{entry.rank} `{entry.take_path.name}`")
+        lines.append("")
+        lines.append(f"- Score: {entry.overall_score:.1f}/100")
         if entry.summary:
-            lines.append(f"  - {entry.summary}")
+            lines.append(f"- Summary: {entry.summary}")
+        lines.append(f"- Artifacts: {len(entry.result.report.artifacts)}")
+        lines.append("")
+
     if result.artifacts:
-        lines.extend(["", "## Batch Artifacts", ""])
+        lines.extend(["## Batch Artifacts", ""])
         for kind, path in result.artifacts:
             lines.append(f"- **{kind.value}**: `{path}`")
     return "\n".join(lines).rstrip() + "\n"
 
 
 def batch_compare_result_to_csv_text(result: BatchCompareResult) -> str:
+    best_score = result.entries[0].overall_score if result.entries else 0.0
     buffer = io.StringIO()
     writer = csv.writer(buffer)
-    writer.writerow(["rank", "take_path", "overall_score", "summary", "output_dir"])
+    writer.writerow(
+        [
+            "rank",
+            "take_name",
+            "take_path",
+            "overall_score",
+            "delta_from_best",
+            "summary",
+            "output_dir",
+        ]
+    )
     for entry in result.entries:
         writer.writerow(
             [
                 entry.rank,
+                entry.take_path.name,
                 str(entry.take_path),
                 f"{entry.overall_score:.3f}",
+                f"{best_score - entry.overall_score:.3f}",
                 entry.summary or "",
                 str(entry.output_dir) if entry.output_dir is not None else "",
             ]

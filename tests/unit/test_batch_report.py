@@ -63,4 +63,6 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
     assert payload["entries"][0]["rank"] == 1
     assert payload["entries"][0]["take_path"] == "take_a.wav"
     assert "# PracticeLens Batch Compare" in markdown_text
-    assert "rank,take_path,overall_score,summary,output_dir" in csv_text
+    assert "## At a glance" in markdown_text
+    assert "| Rank | Take | Score | Delta vs best | Output dir |" in markdown_text
+    assert "rank,take_name,take_path,overall_score,delta_from_best,summary,output_dir" in csv_text
