@@ -1,0 +1,13 @@
+{
+  "reference_path": "samples/reference.wav",
+  "take_paths": [
+    "samples/take_a.wav",
+    "samples/take_b.wav",
+    "samples/take_c.wav"
+  ],
+  "out_dir": "out/api-batch",
+  "sample_rate": 16000,
+  "frame_length": 2048,
+  "hop_length": 512,
+  "segment_duration": 8.0
+}
