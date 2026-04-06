@@ -42,6 +42,8 @@ This is not a final DSP product yet, but it is no longer just a skeleton repo.
 
 - Quickstart: [docs/quickstart.md](docs/quickstart.md)
 - API usage and payloads: [docs/api.md](docs/api.md)
+- Development workflow: [docs/development.md](docs/development.md)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
 - CLI example notes: [examples/cli/README.md](examples/cli/README.md)
 - Example API payloads: [examples/api](examples/api)
 - Contribution flow: [CONTRIBUTING.md](CONTRIBUTING.md)
@@ -180,6 +182,8 @@ pytest tests
 ```
 
 CI runs the same baseline checks on pushes to `main` and on pull requests.
+
+For a more practical maintainer view, see [docs/development.md](docs/development.md).
 
 ## Repository conventions
 
