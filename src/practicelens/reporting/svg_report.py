@@ -46,7 +46,7 @@ def report_to_svg(report: AnalysisReport) -> str:
         '</text>'
     )
     parts.append(
-        f'<text x="708" y="58" font-size="14" font-family="Arial" fill="#6b7280">'
+        '<text x="708" y="58" font-size="14" font-family="Arial" fill="#6b7280">'
         'Overall score'
         '</text>'
     )
