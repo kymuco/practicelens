@@ -81,4 +81,7 @@ def test_report_text_renderers_include_expected_sections() -> None:
     assert "## Component Scores" in markdown_text
     assert "section_index,start_s,end_s" in csv_text
     assert "<svg" in svg_text
-    assert "pitch_fidelity" in svg_text
+    assert "PracticeLens Summary" in svg_text
+    assert "Performance band" in svg_text
+    assert "Pitch Fidelity" in svg_text
+    assert "Section trend" in svg_text
