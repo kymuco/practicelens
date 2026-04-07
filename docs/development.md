@@ -29,12 +29,31 @@ pytest tests
 make check
 ```
 
+If you want the regression-only sanity layer:
+
+```bash
+make regression
+```
+
 If you only want the split commands:
 
 ```bash
 make lint
 make test
+make regression
 ```
+
+## Regression harness
+
+The regression harness is intentionally lightweight.
+
+It is meant to catch obvious drift in:
+
+- ranking order;
+- top-level score sanity;
+- simple synthetic reference-match expectations.
+
+It is **not** trying to present itself as a final benchmark suite.
 
 ## Current repository shape
 
@@ -80,5 +99,6 @@ make install-dev
 make install-api
 make lint
 make test
+make regression
 make check
 ```
