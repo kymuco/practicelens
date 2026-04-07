@@ -48,4 +48,5 @@ def test_batch_compare_pipeline_ranks_multiple_takes(tmp_path: Path) -> None:
     assert (out_dir / "batch_report.json").exists()
     assert (out_dir / "batch_report.md").exists()
     assert (out_dir / "batch_report.csv").exists()
+    assert (out_dir / "batch_report.svg").exists()
     assert (out_dir / "takes").exists()

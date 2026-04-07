@@ -16,6 +16,7 @@ from practicelens.reporting.batch_report import (
     batch_compare_result_to_json_text,
     batch_compare_result_to_markdown,
 )
+from practicelens.reporting.batch_svg_report import batch_compare_result_to_svg
 
 
 class OfflineBatchComparePipeline:
@@ -81,10 +82,12 @@ class OfflineBatchComparePipeline:
         json_path = out_dir / "batch_report.json"
         markdown_path = out_dir / "batch_report.md"
         csv_path = out_dir / "batch_report.csv"
+        svg_path = out_dir / "batch_report.svg"
 
         json_path.write_text(batch_compare_result_to_json_text(result), encoding="utf-8")
         markdown_path.write_text(batch_compare_result_to_markdown(result), encoding="utf-8")
         csv_path.write_text(batch_compare_result_to_csv_text(result), encoding="utf-8")
+        svg_path.write_text(batch_compare_result_to_svg(result), encoding="utf-8")
 
         return BatchCompareResult(
             reference_path=result.reference_path,
@@ -93,6 +96,7 @@ class OfflineBatchComparePipeline:
                 (ArtifactKind.JSON_REPORT, json_path),
                 (ArtifactKind.MARKDOWN_REPORT, markdown_path),
                 (ArtifactKind.CSV_REPORT, csv_path),
+                (ArtifactKind.SVG_REPORT, svg_path),
             ),
             summary=result.summary,
         )

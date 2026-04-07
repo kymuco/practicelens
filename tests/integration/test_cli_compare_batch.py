@@ -54,3 +54,4 @@ def test_cli_compare_batch_command_writes_batch_reports(tmp_path: Path) -> None:
     assert (out_dir / "batch_report.json").exists()
     assert (out_dir / "batch_report.md").exists()
     assert (out_dir / "batch_report.csv").exists()
+    assert (out_dir / "batch_report.svg").exists()
