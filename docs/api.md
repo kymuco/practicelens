@@ -8,25 +8,39 @@ The current API is intentionally simple:
 - `POST /analyze`
 - `POST /compare-batch`
 
-## Running the app
+## Fastest way to run it locally
 
-```python
-from practicelens.api.app import create_app
-
-app = create_app()
-```
-
-Example with uvicorn:
+Install API extras first:
 
 ```bash
-uvicorn your_module:app --reload
+pip install -e .[dev,api]
 ```
 
-## Health endpoint
+Then run the packaged app directly:
 
-Returns a small status payload.
+```bash
+uvicorn practicelens.api.app:app --reload
+```
 
-Example response shape:
+Or use the local helper target:
+
+```bash
+make run-api
+```
+
+Default local address:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Quick smoke check
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+Expected response shape:
 
 ```json
 {
@@ -35,6 +49,15 @@ Example response shape:
   "version": "0.1.0a0"
 }
 ```
+
+## Example payload files in this repo
+
+- `examples/api/analyze_payload.json`
+- `examples/api/compare_batch_payload.json`
+- `examples/api/curl_examples.sh`
+- `examples/api/practicelens.http`
+
+These are meant as copyable starting points for local use and manual testing.
 
 ## POST /analyze
 
@@ -66,6 +89,14 @@ Top-level response fields:
 - `feedback`
 - `artifacts`
 - `summary`
+
+Runnable `curl` example:
+
+```bash
+curl -X POST http://127.0.0.1:8000/analyze \
+  -H "Content-Type: application/json" \
+  --data @examples/api/analyze_payload.json
+```
 
 ## POST /compare-batch
 
@@ -101,6 +132,14 @@ Each `entries[]` item includes:
 - `output_dir`
 - `artifacts`
 
+Runnable `curl` example:
+
+```bash
+curl -X POST http://127.0.0.1:8000/compare-batch \
+  -H "Content-Type: application/json" \
+  --data @examples/api/compare_batch_payload.json
+```
+
 ## Error shape
 
 Bad payloads currently return a JSON error response with this general shape:
@@ -113,9 +152,8 @@ Bad payloads currently return a JSON error response with this general shape:
 }
 ```
 
-## Example files in this repo
+## Notes
 
-- `examples/api/analyze_payload.json`
-- `examples/api/compare_batch_payload.json`
-
-These are meant as copyable starting points for local use and manual testing.
+- Replace example file paths with your own local WAV paths.
+- The example payloads are for local use and manual smoke testing.
+- The `.http` file is useful if your editor or IDE supports HTTP request execution.

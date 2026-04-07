@@ -1,0 +1,14 @@
+### PracticeLens health check
+GET http://127.0.0.1:8000/health
+
+### PracticeLens single analysis
+POST http://127.0.0.1:8000/analyze
+Content-Type: application/json
+
+< ./examples/api/analyze_payload.json
+
+### PracticeLens batch comparison
+POST http://127.0.0.1:8000/compare-batch
+Content-Type: application/json
+
+< ./examples/api/compare_batch_payload.json

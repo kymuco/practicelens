@@ -1,4 +1,4 @@
-.PHONY: install-dev install-api lint test regression check
+.PHONY: install-dev install-api lint test regression check run-api
 
 install-dev:
 	pip install -e .[dev]
@@ -14,5 +14,8 @@ test:
 
 regression:
 	pytest tests/regression
+
+run-api:
+	uvicorn practicelens.api.app:app --reload
 
 check: lint test
