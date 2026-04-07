@@ -78,7 +78,10 @@ def test_report_text_renderers_include_expected_sections() -> None:
     json.loads(json_text)
 
     assert "# PracticeLens Report" in markdown_text
-    assert "## Component Scores" in markdown_text
+    assert "## At a glance" in markdown_text
+    assert "| Component | Score | Weight |" in markdown_text
+    assert "Pitch Fidelity" in markdown_text
+    assert "Section average" in markdown_text
     assert "section_index,start_s,end_s" in csv_text
     assert "<svg" in svg_text
     assert "PracticeLens Summary" in svg_text

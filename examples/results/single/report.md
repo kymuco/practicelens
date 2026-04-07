@@ -1,8 +1,12 @@
 # PracticeLens Report
 
-**Status:** success
-**Mode:** reference
-**Overall score:** 86.1/100
+## At a glance
+
+- **Status:** success
+- **Mode:** reference
+- **Take:** `take_take2.wav`
+- **Overall score:** 86.1/100
+- **Performance band:** Strong
 
 Strong reference match overall. Minor timing looseness appears in the middle phrase, but pitch stability stays solid and the ending recovers well.
 
@@ -13,17 +17,21 @@ Strong reference match overall. Minor timing looseness appears in the middle phr
 
 ## Component Scores
 
-- **pitch_fidelity**: 90.0/100 (weight 0.35)
-- **rhythm_fidelity**: 82.0/100 (weight 0.30)
-- **timing_consistency**: 79.0/100 (weight 0.20)
-- **section_stability**: 88.0/100 (weight 0.15)
+| Component | Score | Weight |
+| --- | ---: | ---: |
+| Pitch Fidelity | 90.0/100 | 35% |
+| Rhythm Fidelity | 82.0/100 | 30% |
+| Timing Consistency | 79.0/100 | 20% |
+| Section Stability | 88.0/100 | 15% |
 
 ## Metrics
 
-- **pitch_fidelity**: 90.0/100 [info] — Stable contour with only small deviations around the middle phrase.
-- **rhythm_fidelity**: 82.0/100 [notice] — Slight rhythmic looseness appears before the final section.
-- **timing_consistency**: 79.0/100 [notice] — Timing drift is small but visible in the center of the take.
-- **section_stability**: 88.0/100 [info] — Section-to-section consistency remains strong overall.
+| Metric | Score | Severity | Detail |
+| --- | ---: | --- | --- |
+| Pitch Fidelity | 90.0/100 | info | Stable contour with only small deviations around the middle phrase. |
+| Rhythm Fidelity | 82.0/100 | notice | Slight rhythmic looseness appears before the final section. |
+| Timing Consistency | 79.0/100 | notice | Timing drift is small but visible in the center of the take. |
+| Section Stability | 88.0/100 | info | Section-to-section consistency remains strong overall. |
 
 ## Feedback
 
@@ -35,33 +43,36 @@ Strong reference match overall. Minor timing looseness appears in the middle phr
 
 ### Section 0 (0.00s - 8.00s)
 
-- pitch_fidelity: 91.0/100
-- rhythm_fidelity: 84.0/100
-- timing_consistency: 82.0/100
-- section_stability: 88.0/100
-
-Findings:
-- [info] Opening phrase is stable and close to the reference.
+- Section average: 86.2/100
+- Component breakdown:
+  - Pitch Fidelity: 91.0/100
+  - Rhythm Fidelity: 84.0/100
+  - Timing Consistency: 82.0/100
+  - Section Stability: 88.0/100
+- Findings:
+  - [info] Opening phrase is stable and close to the reference.
 
 ### Section 1 (8.00s - 16.00s)
 
-- pitch_fidelity: 88.0/100
-- rhythm_fidelity: 78.0/100
-- timing_consistency: 74.0/100
-- section_stability: 83.0/100
-
-Findings:
-- [notice] Small timing drift appears here and slightly compresses phrase spacing.
+- Section average: 80.8/100
+- Component breakdown:
+  - Pitch Fidelity: 88.0/100
+  - Rhythm Fidelity: 78.0/100
+  - Timing Consistency: 74.0/100
+  - Section Stability: 83.0/100
+- Findings:
+  - [notice] Small timing drift appears here and slightly compresses phrase spacing.
 
 ### Section 2 (16.00s - 24.00s)
 
-- pitch_fidelity: 90.0/100
-- rhythm_fidelity: 84.0/100
-- timing_consistency: 81.0/100
-- section_stability: 92.0/100
-
-Findings:
-- [info] Ending section recovers well and stays controlled.
+- Section average: 86.8/100
+- Component breakdown:
+  - Pitch Fidelity: 90.0/100
+  - Rhythm Fidelity: 84.0/100
+  - Timing Consistency: 81.0/100
+  - Section Stability: 92.0/100
+- Findings:
+  - [info] Ending section recovers well and stays controlled.
 
 ## Artifacts
 
