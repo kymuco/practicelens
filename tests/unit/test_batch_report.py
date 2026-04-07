@@ -20,6 +20,7 @@ from practicelens.reporting.batch_report import (
     batch_compare_result_to_json_text,
     batch_compare_result_to_markdown,
 )
+from practicelens.reporting.batch_svg_report import batch_compare_result_to_svg
 
 
 def _sample_report(path: str, score: float) -> AnalysisReport:
@@ -59,6 +60,7 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
     json.loads(batch_compare_result_to_json_text(result))
     markdown_text = batch_compare_result_to_markdown(result)
     csv_text = batch_compare_result_to_csv_text(result)
+    svg_text = batch_compare_result_to_svg(result)
 
     assert payload["entries"][0]["rank"] == 1
     assert payload["entries"][0]["take_path"] == "take_a.wav"
@@ -66,3 +68,7 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
     assert "## At a glance" in markdown_text
     assert "| Rank | Take | Score | Delta vs best | Output dir |" in markdown_text
     assert "rank,take_name,take_path,overall_score,delta_from_best,summary,output_dir" in csv_text
+    assert "<svg" in svg_text
+    assert "PracticeLens Batch Compare" in svg_text
+    assert "Take ranking" in svg_text
+    assert "take_a.wav" in svg_text
