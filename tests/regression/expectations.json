@@ -1,0 +1,15 @@
+{
+  "exact_reference_match": {
+    "overall_score_min": 85.0,
+    "pitch_fidelity_min": 90.0
+  },
+  "three_take_ranking": {
+    "expected_order": [
+      "take_best.wav",
+      "take_mid.wav",
+      "take_low.wav"
+    ],
+    "best_score_min": 80.0,
+    "min_gap_best_vs_worst": 3.0
+  }
+}

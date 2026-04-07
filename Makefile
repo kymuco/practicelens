@@ -1,4 +1,4 @@
-.PHONY: install-dev install-api lint test check
+.PHONY: install-dev install-api lint test regression check
 
 install-dev:
 	pip install -e .[dev]
@@ -11,5 +11,8 @@ lint:
 
 test:
 	pytest tests
+
+regression:
+	pytest tests/regression
 
 check: lint test
