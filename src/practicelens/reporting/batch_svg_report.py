@@ -10,7 +10,6 @@ def batch_compare_result_to_svg(result: BatchCompareResult) -> str:
 
     width = 920
     row_height = 52
-    header_height = 96
     ranking_top = 148
     chart_height = max(180, len(result.entries) * row_height + 28)
     height = ranking_top + chart_height + 44
