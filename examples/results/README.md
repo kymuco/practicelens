@@ -37,6 +37,7 @@ Illustrative multi-take comparison outputs:
 - `batch_report.json`
 - `batch_report.md`
 - `batch_report.csv`
+- `batch_report.svg`
 
 ## How to use these
 

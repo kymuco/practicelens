@@ -78,6 +78,16 @@ Best for:
 - comparing deltas from the best take;
 - lightweight external analysis.
 
+### `batch_report.svg`
+
+Use this when you want the quickest visual overview of ranked takes.
+
+Best for:
+
+- showing best-take dominance at a glance;
+- comparing deltas visually;
+- demo browsing directly inside GitHub.
+
 ## Which artifact should you look at first?
 
 ### If you are a developer
@@ -85,7 +95,7 @@ Best for:
 Start with:
 
 1. `report.json` or `batch_report.json`
-2. then inspect Markdown or CSV if needed
+2. then inspect Markdown, CSV, or SVG if needed
 
 ### If you are evaluating output quality visually
 
@@ -98,8 +108,9 @@ Start with:
 
 Start with:
 
-1. `batch_report.md`
-2. then `batch_report.csv`
+1. `batch_report.svg`
+2. then `batch_report.md`
+3. then `batch_report.csv`
 
 ## Practical advice
 
