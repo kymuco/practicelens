@@ -2,6 +2,13 @@
 
 These examples are meant to show the current local-first workflow shape.
 
+## Fastest practical path
+
+If you want the shortest path from WAV files to artifacts, use:
+
+- `docs/cli-walkthrough.md`
+- `examples/cli/run_demo.sh`
+
 ## Single analysis
 
 ```bash
@@ -21,6 +28,18 @@ practicelens compare-batch \
   --take samples/take_03.wav \
   --out out/batch
 ```
+
+## What to open first after running
+
+Single analysis:
+
+- `out/single/report.svg`
+- `out/single/report.md`
+
+Batch comparison:
+
+- `out/batch/batch_report.svg`
+- `out/batch/batch_report.md`
 
 ## Notes
 
