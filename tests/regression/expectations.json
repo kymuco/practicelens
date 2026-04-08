@@ -3,6 +3,10 @@
     "overall_score_min": 85.0,
     "pitch_fidelity_min": 90.0
   },
+  "exact_vs_shifted_single": {
+    "min_overall_gap": 5.0,
+    "min_pitch_gap": 8.0
+  },
   "three_take_ranking": {
     "expected_order": [
       "take_best.wav",
@@ -10,6 +14,12 @@
       "take_low.wav"
     ],
     "best_score_min": 80.0,
-    "min_gap_best_vs_worst": 3.0
+    "min_gap_best_vs_worst": 3.0,
+    "expected_artifact_kinds": [
+      "json_report",
+      "markdown_report",
+      "csv_report",
+      "svg_report"
+    ]
   }
 }
