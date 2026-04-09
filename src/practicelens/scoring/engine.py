@@ -321,7 +321,7 @@ def _focus_message(metric_name: MetricName) -> str:
 
 
 def _overall_guidance(score: float) -> str:
-    if score >= 85.0:
+    if score >= 80.0:
         return (
             "Overall the take is strong; preserve the current strengths while improving one weaker "
             "area at a time."
