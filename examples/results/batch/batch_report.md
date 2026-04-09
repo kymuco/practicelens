@@ -22,19 +22,19 @@ Best take: take_02.wav with 88.4/100 across 3 compared takes.
 ### #1 `take_02.wav`
 
 - Score: 88.4/100
-- Summary: Strongest overall take with the most stable middle phrase and the cleanest ending.
+- Summary: Strong reference match overall. Best area: Section Stability (91.0/100). Main improvement area: Rhythm Fidelity (84.0/100).
 - Artifacts: 4
 
 ### #2 `take_01.wav`
 
 - Score: 84.7/100
-- Summary: Good reference match, but timing begins to loosen through the center of the take.
+- Summary: Strong reference match overall. Best area: Pitch Fidelity (88.0/100). Main improvement area: Timing Consistency (80.0/100).
 - Artifacts: 4
 
 ### #3 `take_03.wav`
 
 - Score: 78.9/100
-- Summary: Pitch remains serviceable, but rhythmic stability and timing consistency fall behind the other takes.
+- Summary: Promising reference match overall. Best area: Pitch Fidelity (81.0/100). Main improvement area: Rhythm Fidelity (73.0/100).
 - Artifacts: 4
 
 ## Batch Artifacts
