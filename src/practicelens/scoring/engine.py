@@ -277,29 +277,78 @@ def _ref_time(reference: FeatureBundle, reference_index: int) -> float:
 
 
 def _feedback(component_scores: tuple[ComponentScore, ...]) -> tuple[str, ...]:
-    messages: list[str] = []
-    score_map = {score.name: score.score for score in component_scores}
-    if score_map[MetricName.PITCH_FIDELITY] < 70.0:
-        messages.append("Pitch fidelity needs focused repetition against the reference.")
-    if score_map[MetricName.RHYTHM_FIDELITY] < 70.0:
-        messages.append("Rhythm fidelity is weaker than pitch and should be slowed down for practice.")
-    if score_map[MetricName.TIMING_CONSISTENCY] < 70.0:
-        messages.append("Timing consistency drifts across the take; section practice is recommended.")
-    if score_map[MetricName.SECTION_STABILITY] < 70.0:
-        messages.append("Section quality is uneven across the take.")
-    if not messages:
-        messages.append("The take is broadly consistent against the reference baseline.")
-    return tuple(messages)
+    strongest = max(component_scores, key=lambda score: score.score)
+    weakest = min(component_scores, key=lambda score: score.score)
+    overall_score = sum(score.score * score.weight for score in component_scores)
+
+    return (
+        f"Keep leaning on {_metric_label(strongest.name.value)}; it is currently the clearest strength in the take.",
+        _focus_message(weakest.name),
+        _overall_guidance(overall_score),
+    )
 
 
 def _summary(component_scores: tuple[ComponentScore, ...], overall_score: float) -> str:
     weakest = min(component_scores, key=lambda score: score.score)
     strongest = max(component_scores, key=lambda score: score.score)
     return (
-        f"Overall score {overall_score:.1f}/100. "
-        f"Strongest component: {strongest.name.value}. "
-        f"Weakest component: {weakest.name.value}."
+        f"{_summary_lead(overall_score)} "
+        f"Best area: {_metric_label(strongest.name.value)} ({strongest.score:.1f}/100). "
+        f"Main improvement area: {_metric_label(weakest.name.value)} ({weakest.score:.1f}/100)."
     )
+
+
+def _focus_message(metric_name: MetricName) -> str:
+    if metric_name == MetricName.PITCH_FIDELITY:
+        return (
+            "Primary focus area: Pitch Fidelity. Slow the passage down and match sustained notes "
+            "more deliberately against the reference."
+        )
+    if metric_name == MetricName.RHYTHM_FIDELITY:
+        return (
+            "Primary focus area: Rhythm Fidelity. Rehearse the passage slower and re-lock the onset "
+            "pattern against the reference."
+        )
+    if metric_name == MetricName.TIMING_CONSISTENCY:
+        return (
+            "Primary focus area: Timing Consistency. Tighten phrase timing so the take stops drifting "
+            "across the section."
+        )
+    return (
+        "Primary focus area: Section Stability. The take quality changes too much between sections, "
+        "so isolate weaker segments and repeat them."
+    )
+
+
+def _overall_guidance(score: float) -> str:
+    if score >= 85.0:
+        return (
+            "Overall the take is strong; preserve the current strengths while improving one weaker "
+            "area at a time."
+        )
+    if score >= 70.0:
+        return (
+            "Overall the take is promising; the fastest win will come from tightening the weakest "
+            "area before changing everything else."
+        )
+    return (
+        "Overall the take still diverges noticeably from the reference; reduce tempo and rebuild the "
+        "weakest area first."
+    )
+
+
+def _summary_lead(score: float) -> str:
+    if score >= 90.0:
+        return "Excellent reference match overall."
+    if score >= 80.0:
+        return "Strong reference match overall."
+    if score >= 70.0:
+        return "Promising reference match overall."
+    return "The take diverges noticeably from the reference overall."
+
+
+def _metric_label(raw_name: str) -> str:
+    return raw_name.replace('_', ' ').title()
 
 
 def _severity_for_score(score: float) -> Severity:
