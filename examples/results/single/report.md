@@ -8,7 +8,7 @@
 - **Overall score:** 86.1/100
 - **Performance band:** Strong
 
-Strong reference match overall. Minor timing looseness appears in the middle phrase, but pitch stability stays solid and the ending recovers well.
+Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main improvement area: Timing Consistency (79.0/100).
 
 ## Inputs
 
@@ -35,9 +35,9 @@ Strong reference match overall. Minor timing looseness appears in the middle phr
 
 ## Feedback
 
-- Keep the same pitch approach; pitch stability is already strong.
-- Focus the next repetition on timing through the middle phrase.
-- The ending is one of the strongest parts of the take and should be preserved.
+- Keep leaning on Pitch Fidelity; it is currently the clearest strength in the take.
+- Primary focus area: Timing Consistency. Tighten phrase timing so the take stops drifting across the section.
+- Overall the take is strong; preserve the current strengths while improving one weaker area at a time.
 
 ## Sections
 
