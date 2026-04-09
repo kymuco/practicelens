@@ -72,6 +72,7 @@ It does make it reviewable, understandable, and much harder to mistake for a ran
 ## Start here
 
 - Quickstart: [docs/quickstart.md](docs/quickstart.md)
+- CLI walkthrough: [docs/cli_walkthrough.md](docs/cli_walkthrough.md)
 - Evaluate the repo: [docs/evaluate.md](docs/evaluate.md)
 - Architecture overview: [docs/architecture.md](docs/architecture.md)
 - Repository map: [docs/repository-map.md](docs/repository-map.md)
@@ -162,6 +163,7 @@ Batch outputs:
 - `batch_report.json`
 - `batch_report.md`
 - `batch_report.csv`
+- `batch_report.svg`
 - per-take artifact folders under `out/takes/`
 
 ### Shared tuning flags
