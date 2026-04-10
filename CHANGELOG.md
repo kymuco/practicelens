@@ -8,7 +8,7 @@ The format is inspired by Keep a Changelog, and the project currently follows a 
 
 ### Added
 
-- Release/readiness documentation and local task shortcuts.
+- Package/release discipline improvements: centralized version source, CI build smoke, and release notes.
 
 ## [0.1.0a0] - 2026-04-06
 
