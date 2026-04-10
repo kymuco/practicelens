@@ -35,13 +35,30 @@ If you want the regression-only sanity layer:
 make regression
 ```
 
+If you want a package build smoke locally:
+
+```bash
+make build-package
+```
+
 If you only want the split commands:
 
 ```bash
 make lint
 make test
 make regression
+make build-package
 ```
+
+## Version source of truth
+
+Package version is defined in:
+
+```text
+src/practicelens/__about__.py
+```
+
+That version is reused by package metadata and the optional API surface.
 
 ## Regression harness
 
@@ -90,7 +107,8 @@ Before cutting a release-like milestone or sharing the repo more broadly, check:
 - README is still accurate;
 - quickstart and example files still match reality;
 - API docs still reflect actual request/response shapes;
-- changelog has been updated for meaningful user-facing changes.
+- changelog has been updated for meaningful user-facing changes;
+- package build smoke passes.
 
 ## Common commands
 
@@ -100,5 +118,6 @@ make install-api
 make lint
 make test
 make regression
+make build-package
 make check
 ```

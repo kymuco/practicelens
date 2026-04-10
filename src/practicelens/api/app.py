@@ -9,6 +9,7 @@ except ImportError:  # pragma: no cover - optional dependency
     FastAPI = None  # type: ignore[assignment]
     JSONResponse = None  # type: ignore[assignment]
 
+from practicelens import __version__
 from practicelens.api.contracts import (
     AnalyzeResponsePayload,
     ApiErrorPayload,
@@ -26,14 +27,14 @@ def create_app() -> Any:
             "FastAPI is not installed. Install the 'api' extra to use the HTTP service."
         )
 
-    app = FastAPI(title="PracticeLens API", version="0.1.0a0")
+    app = FastAPI(title="PracticeLens API", version=__version__)
 
     @app.get("/health")
     def health() -> ApiHealthPayload:
         return {
             "status": "ok",
             "service": "practicelens-api",
-            "version": "0.1.0a0",
+            "version": __version__,
         }
 
     @app.post("/analyze")
