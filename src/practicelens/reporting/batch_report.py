@@ -5,6 +5,7 @@ import io
 import json
 
 from practicelens.application.contracts import BatchCompareResult
+from practicelens.domain.enums import ArtifactKind
 
 
 def batch_compare_result_to_json_payload(result: BatchCompareResult) -> dict[str, object]:
@@ -27,11 +28,21 @@ def batch_compare_result_to_json_payload(result: BatchCompareResult) -> dict[str
         for entry in result.entries
     ]
     return {
+        "overview": {
+            "kind": result.overview.kind,
+            "schema_version": int(result.overview.schema_version),
+            "status": result.overview.status,
+            "ok": result.overview.ok,
+        },
         "reference_path": str(result.reference_path),
         "summary": result.summary,
         "entries": entries,
         "artifacts": [
-            {"kind": kind.value, "path": str(path)}
+            {
+                "kind": kind.value,
+                "path": str(path),
+                "description": _batch_artifact_description(kind),
+            }
             for kind, path in result.artifacts
         ],
     }
@@ -109,3 +120,13 @@ def batch_compare_result_to_csv_text(result: BatchCompareResult) -> str:
             ]
         )
     return buffer.getvalue()
+
+
+def _batch_artifact_description(kind: ArtifactKind) -> str | None:
+    descriptions = {
+        ArtifactKind.JSON_REPORT: "Structured batch comparison report.",
+        ArtifactKind.MARKDOWN_REPORT: "Human-readable batch comparison report.",
+        ArtifactKind.CSV_REPORT: "Take ranking table export.",
+        ArtifactKind.SVG_REPORT: "Compact visual batch ranking summary.",
+    }
+    return descriptions.get(kind)

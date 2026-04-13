@@ -62,8 +62,20 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
     csv_text = batch_compare_result_to_csv_text(result)
     svg_text = batch_compare_result_to_svg(result)
 
+    assert tuple(payload) == ("overview", "reference_path", "summary", "entries", "artifacts")
+    assert payload["overview"] == {
+        "kind": "batch_compare_report",
+        "schema_version": 1,
+        "status": "completed",
+        "ok": True,
+    }
     assert payload["entries"][0]["rank"] == 1
     assert payload["entries"][0]["take_path"] == "take_a.wav"
+    assert payload["artifacts"][0] == {
+        "kind": "json_report",
+        "path": "batch_report.json",
+        "description": "Structured batch comparison report.",
+    }
     assert "# PracticeLens Batch Compare" in markdown_text
     assert "## At a glance" in markdown_text
     assert "| Rank | Take | Score | Delta vs best | Output dir |" in markdown_text

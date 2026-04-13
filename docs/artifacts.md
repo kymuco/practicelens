@@ -4,6 +4,40 @@ PracticeLens currently produces a small set of artifact types for single-take an
 
 This guide explains what each artifact is good for.
 
+## Stable JSON contract envelope
+
+Both `report.json` and `batch_report.json` are versioned JSON artifacts.
+
+Consumers should treat `overview.kind` and `overview.schema_version` as the dispatch keys for the payload shape instead of guessing based on filename or path.
+
+Current envelopes:
+
+- `report.json` → `overview.kind = "analysis_report"`, `overview.schema_version = 1`
+- `batch_report.json` → `overview.kind = "batch_compare_report"`, `overview.schema_version = 1`
+
+Stable top-level fields for `report.json`:
+
+- `overview`
+- `inputs`
+- `feature_flags`
+- `overall_score`
+- `scores`
+- `metrics`
+- `sections`
+- `feedback`
+- `artifacts`
+- `summary`
+
+Stable top-level fields for `batch_report.json`:
+
+- `overview`
+- `reference_path`
+- `summary`
+- `entries`
+- `artifacts`
+
+This contract is intended to evolve additively. If a future breaking change becomes necessary, it should move through a new schema version instead of silently mutating the current shape.
+
 ## Single-take artifacts
 
 ### `report.json`

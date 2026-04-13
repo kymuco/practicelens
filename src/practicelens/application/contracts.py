@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from practicelens.domain.enums import ArtifactKind
-from practicelens.domain.models import AnalysisConfig, AnalysisInput, AnalysisReport
+from practicelens.domain.models import AnalysisConfig, AnalysisInput, AnalysisReport, BatchCompareOverview
 
 
 @dataclass(slots=True, frozen=True)
@@ -75,6 +75,7 @@ class BatchCompareResult:
 
     reference_path: Path
     entries: tuple[BatchCompareEntry, ...]
+    overview: BatchCompareOverview = BatchCompareOverview()
     artifacts: tuple[tuple[ArtifactKind, Path], ...] = ()
     summary: str | None = None
 

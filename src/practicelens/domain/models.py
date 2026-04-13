@@ -134,6 +134,16 @@ class AnalysisOverview:
 
 
 @dataclass(slots=True, frozen=True)
+class BatchCompareOverview:
+    """Compact, stable top-level overview contract for a finished batch comparison."""
+
+    kind: str = "batch_compare_report"
+    schema_version: SchemaVersion = SchemaVersion(1)
+    status: str = "completed"
+    ok: bool = True
+
+
+@dataclass(slots=True, frozen=True)
 class AnalysisReport:
     """Stable additive report surface for v0.1 analysis outputs."""
 
