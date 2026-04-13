@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from typing import NotRequired, TypedDict
 
+# These payloads mirror both the API response shapes and the stable JSON artifact
+# shapes written to disk by PracticeLens reporting.
+
 
 class AnalyzeRequestPayload(TypedDict, total=False):
     reference_path: str
@@ -29,6 +32,13 @@ class AnalysisOverviewPayload(TypedDict):
     status: str
     ok: bool
     mode: str
+
+
+class BatchCompareOverviewPayload(TypedDict):
+    kind: str
+    schema_version: int
+    status: str
+    ok: bool
 
 
 class AnalysisInputsPayload(TypedDict):
@@ -102,16 +112,12 @@ class BatchEntryPayload(TypedDict):
     artifacts: list[ArtifactPayload]
 
 
-class BatchArtifactPayload(TypedDict):
-    kind: str
-    path: str
-
-
 class BatchCompareResponsePayload(TypedDict):
+    overview: BatchCompareOverviewPayload
     reference_path: str
     summary: str | None
     entries: list[BatchEntryPayload]
-    artifacts: list[BatchArtifactPayload]
+    artifacts: list[ArtifactPayload]
 
 
 class ApiHealthPayload(TypedDict):

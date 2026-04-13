@@ -1,3 +1,4 @@
+import json
 import math
 import wave
 from pathlib import Path
@@ -44,3 +45,24 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
     assert (out_dir / "report.md").exists()
     assert (out_dir / "report.csv").exists()
     assert (out_dir / "report.svg").exists()
+
+    payload = json.loads((out_dir / "report.json").read_text(encoding="utf-8"))
+    assert set(payload) == {
+        "overview",
+        "inputs",
+        "feature_flags",
+        "overall_score",
+        "scores",
+        "metrics",
+        "sections",
+        "feedback",
+        "artifacts",
+        "summary",
+    }
+    assert payload["overview"] == {
+        "kind": "analysis_report",
+        "schema_version": 1,
+        "status": "completed",
+        "ok": True,
+        "mode": "reference",
+    }

@@ -92,6 +92,7 @@ class OfflineBatchComparePipeline:
         return BatchCompareResult(
             reference_path=result.reference_path,
             entries=result.entries,
+            overview=result.overview,
             artifacts=(
                 (ArtifactKind.JSON_REPORT, json_path),
                 (ArtifactKind.MARKDOWN_REPORT, markdown_path),

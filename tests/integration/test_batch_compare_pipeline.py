@@ -1,3 +1,4 @@
+import json
 import math
 import wave
 from pathlib import Path
@@ -50,3 +51,18 @@ def test_batch_compare_pipeline_ranks_multiple_takes(tmp_path: Path) -> None:
     assert (out_dir / "batch_report.csv").exists()
     assert (out_dir / "batch_report.svg").exists()
     assert (out_dir / "takes").exists()
+
+    payload = json.loads((out_dir / "batch_report.json").read_text(encoding="utf-8"))
+    assert set(payload) == {"overview", "reference_path", "summary", "entries", "artifacts"}
+    assert payload["overview"] == {
+        "kind": "batch_compare_report",
+        "schema_version": 1,
+        "status": "completed",
+        "ok": True,
+    }
+    assert {artifact["kind"] for artifact in payload["artifacts"]} == {
+        "json_report",
+        "markdown_report",
+        "csv_report",
+        "svg_report",
+    }
