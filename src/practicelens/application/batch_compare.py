@@ -84,12 +84,7 @@ class OfflineBatchComparePipeline:
         csv_path = out_dir / "batch_report.csv"
         svg_path = out_dir / "batch_report.svg"
 
-        json_path.write_text(batch_compare_result_to_json_text(result), encoding="utf-8")
-        markdown_path.write_text(batch_compare_result_to_markdown(result), encoding="utf-8")
-        csv_path.write_text(batch_compare_result_to_csv_text(result), encoding="utf-8")
-        svg_path.write_text(batch_compare_result_to_svg(result), encoding="utf-8")
-
-        return BatchCompareResult(
+        result_with_artifacts = BatchCompareResult(
             reference_path=result.reference_path,
             entries=result.entries,
             overview=result.overview,
@@ -101,6 +96,13 @@ class OfflineBatchComparePipeline:
             ),
             summary=result.summary,
         )
+
+        json_path.write_text(batch_compare_result_to_json_text(result_with_artifacts), encoding="utf-8")
+        markdown_path.write_text(batch_compare_result_to_markdown(result_with_artifacts), encoding="utf-8")
+        csv_path.write_text(batch_compare_result_to_csv_text(result_with_artifacts), encoding="utf-8")
+        svg_path.write_text(batch_compare_result_to_svg(result_with_artifacts), encoding="utf-8")
+
+        return result_with_artifacts
 
     def _summary(self, entries: tuple[BatchCompareEntry, ...]) -> str:
         best = entries[0]
