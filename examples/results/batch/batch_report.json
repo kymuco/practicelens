@@ -1,16 +1,24 @@
 {
   "artifacts": [
     {
+      "description": "Structured batch comparison report.",
       "kind": "json_report",
       "path": "examples/results/batch/batch_report.json"
     },
     {
+      "description": "Human-readable batch comparison report.",
       "kind": "markdown_report",
       "path": "examples/results/batch/batch_report.md"
     },
     {
+      "description": "Take ranking table export.",
       "kind": "csv_report",
       "path": "examples/results/batch/batch_report.csv"
+    },
+    {
+      "description": "Compact visual batch ranking summary.",
+      "kind": "svg_report",
+      "path": "examples/results/batch/batch_report.svg"
     }
   ],
   "entries": [
@@ -102,6 +110,12 @@
       "take_path": "samples/take_03.wav"
     }
   ],
+  "overview": {
+    "kind": "batch_compare_report",
+    "ok": true,
+    "schema_version": 1,
+    "status": "completed"
+  },
   "reference_path": "samples/reference.wav",
   "summary": "Best take: take_02.wav with 88.4/100 across 3 compared takes."
 }
