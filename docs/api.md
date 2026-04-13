@@ -90,6 +90,8 @@ Top-level response fields:
 - `artifacts`
 - `summary`
 
+`overview.kind` is currently `analysis_report` and `overview.schema_version` is currently `1`.
+
 Runnable `curl` example:
 
 ```bash
@@ -118,10 +120,13 @@ Example payload:
 
 Top-level response fields:
 
+- `overview`
 - `reference_path`
 - `summary`
 - `entries`
 - `artifacts`
+
+`overview.kind` is currently `batch_compare_report` and `overview.schema_version` is currently `1`.
 
 Each `entries[]` item includes:
 
