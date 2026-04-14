@@ -37,7 +37,7 @@ def normalize_artifacts(artifacts: list[dict[str, object]]) -> list[dict[str, ob
 
 def normalize_single_payload(payload: dict[str, object]) -> dict[str, object]:
     return {
-        "top_level_keys": tuple(payload),
+        "top_level_keys": tuple(sorted(payload)),
         "overview": payload["overview"],
         "inputs": payload["inputs"],
         "feature_flags": payload["feature_flags"],
@@ -54,7 +54,7 @@ def normalize_single_payload(payload: dict[str, object]) -> dict[str, object]:
 def normalize_batch_payload(payload: dict[str, object]) -> dict[str, object]:
     entries: list[dict[str, object]] = payload["entries"]
     return {
-        "top_level_keys": tuple(payload),
+        "top_level_keys": tuple(sorted(payload)),
         "overview": payload["overview"],
         "reference_path": payload["reference_path"],
         "entries": [
