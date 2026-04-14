@@ -86,6 +86,9 @@ Top-level response fields:
 - `scores`
 - `metrics`
 - `sections`
+- `top_strengths`
+- `top_weaknesses`
+- `next_practice_step`
 - `feedback`
 - `artifacts`
 - `summary`

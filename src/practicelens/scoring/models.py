@@ -13,5 +13,8 @@ class ScoringBundle:
     component_scores: tuple[ComponentScore, ...]
     metrics: tuple[MetricResult, ...]
     sections: tuple[SectionReport, ...]
+    top_strengths: tuple[str, ...] = ()
+    top_weaknesses: tuple[str, ...] = ()
+    next_practice_step: str | None = None
     feedback: tuple[str, ...] = ()
     summary: str | None = None

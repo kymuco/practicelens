@@ -40,6 +40,9 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
     )
 
     assert result.report.summary is not None
+    assert result.report.top_strengths
+    assert result.report.top_weaknesses
+    assert result.report.next_practice_step is not None
     assert len(result.report.artifacts) == 4
     assert (out_dir / "report.json").exists()
     assert (out_dir / "report.md").exists()
@@ -55,6 +58,9 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
         "scores",
         "metrics",
         "sections",
+        "top_strengths",
+        "top_weaknesses",
+        "next_practice_step",
         "feedback",
         "artifacts",
         "summary",

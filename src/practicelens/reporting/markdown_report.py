@@ -18,6 +18,9 @@ def report_to_markdown(report: AnalysisReport) -> str:
     lines.append(f"- **Take:** `{take_name}`")
     lines.append(f"- **Overall score:** {overall_score:.1f}/100")
     lines.append(f"- **Performance band:** {_score_band(overall_score)}")
+    if report.next_practice_step:
+        step_summary = report.next_practice_step.removeprefix("Next practice step: ")
+        lines.append(f"- **Next practice step:** {step_summary}")
     if report.summary:
         lines.extend(["", report.summary])
 
@@ -45,6 +48,26 @@ def report_to_markdown(report: AnalysisReport) -> str:
     else:
         lines.append("No metric rows were produced.")
 
+    lines.extend(["", "## Top Strengths", ""])
+    if report.top_strengths:
+        for item in report.top_strengths:
+            lines.append(f"- {item}")
+    else:
+        lines.append("- No strengths were generated.")
+
+    lines.extend(["", "## Top Weaknesses", ""])
+    if report.top_weaknesses:
+        for item in report.top_weaknesses:
+            lines.append(f"- {item}")
+    else:
+        lines.append("- No weaknesses were generated.")
+
+    lines.extend(["", "## Next Practice Step", ""])
+    if report.next_practice_step:
+        lines.append(report.next_practice_step)
+    else:
+        lines.append("No next-step guidance was generated.")
+
     lines.extend(["", "## Feedback", ""])
     if report.feedback:
         for item in report.feedback:
@@ -54,12 +77,8 @@ def report_to_markdown(report: AnalysisReport) -> str:
 
     lines.extend(["", "## Sections", ""])
     for section in report.sections:
-        section_avg = sum(score.score for score in section.component_scores) / max(
-            1, len(section.component_scores)
-        )
-        lines.append(
-            f"### Section {section.index} ({section.start_s:.2f}s - {section.end_s:.2f}s)"
-        )
+        section_avg = sum(score.score for score in section.component_scores) / max(1, len(section.component_scores))
+        lines.append(f"### Section {section.index} ({section.start_s:.2f}s - {section.end_s:.2f}s)")
         lines.append("")
         lines.append(f"- Section average: {section_avg:.1f}/100")
         lines.append("- Component breakdown:")

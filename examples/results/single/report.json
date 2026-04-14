@@ -68,6 +68,7 @@
       "value": 0.88
     }
   ],
+  "next_practice_step": "Next practice step: loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.",
   "overall_score": 86.1,
   "overview": {
     "kind": "analysis_report",
@@ -123,14 +124,7 @@
         }
       ],
       "end_s": 8.0,
-      "findings": [
-        {
-          "end_s": 8.0,
-          "message": "Opening phrase is stable and close to the reference.",
-          "severity": "info",
-          "start_s": 0.0
-        }
-      ],
+      "findings": [],
       "index": 0,
       "start_s": 0.0
     },
@@ -161,7 +155,7 @@
       "findings": [
         {
           "end_s": 16.0,
-          "message": "Small timing drift appears here and slightly compresses phrase spacing.",
+          "message": "Best focus here: Timing Consistency. Tighten phrase timing so the take stops drifting across the section.",
           "severity": "notice",
           "start_s": 8.0
         }
@@ -196,8 +190,8 @@
       "findings": [
         {
           "end_s": 24.0,
-          "message": "Ending section recovers well and stays controlled.",
-          "severity": "info",
+          "message": "Best focus here: Timing Consistency. Tighten phrase timing so the take stops drifting across the section.",
+          "severity": "notice",
           "start_s": 16.0
         }
       ],
@@ -205,5 +199,13 @@
       "start_s": 16.0
     }
   ],
-  "summary": "Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main improvement area: Timing Consistency (79.0/100)."
+  "summary": "Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main improvement area: Timing Consistency (79.0/100).",
+  "top_strengths": [
+    "Pitch Fidelity is a clear current strength at 90.0/100; keep preserving that control.",
+    "Section Stability is a clear current strength at 88.0/100; keep repeating that steadiness across the full take."
+  ],
+  "top_weaknesses": [
+    "Timing Consistency is the main weakness at 79.0/100. Tighten phrase timing so the take stops drifting across the section.",
+    "Rhythm Fidelity is the next weakness at 82.0/100. Rehearse the onset pattern slower and re-lock attacks against the reference."
+  ]
 }

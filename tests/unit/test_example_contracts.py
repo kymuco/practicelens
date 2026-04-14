@@ -40,11 +40,14 @@ def test_single_example_result_matches_current_contract_shape() -> None:
         "feedback",
         "inputs",
         "metrics",
+        "next_practice_step",
         "overall_score",
         "overview",
         "scores",
         "sections",
         "summary",
+        "top_strengths",
+        "top_weaknesses",
     )
     assert payload["overview"] == {
         "kind": "analysis_report",
@@ -53,6 +56,9 @@ def test_single_example_result_matches_current_contract_shape() -> None:
         "schema_version": 1,
         "status": "completed",
     }
+    assert payload["top_strengths"]
+    assert payload["top_weaknesses"]
+    assert payload["next_practice_step"] is not None
     assert [artifact["kind"] for artifact in payload["artifacts"]] == [
         "json_report",
         "markdown_report",
