@@ -79,6 +79,9 @@ def score_aligned_features(
             detail="Coverage of both frame sequences by the alignment path.",
         ),
     )
+    top_strengths = _top_strengths(component_scores)
+    top_weaknesses = _top_weaknesses(component_scores)
+    next_practice_step = _next_practice_step(component_scores, sections)
     feedback = _feedback(component_scores)
     summary = _summary(component_scores, overall_score)
 
@@ -87,6 +90,9 @@ def score_aligned_features(
         component_scores=component_scores,
         metrics=metrics,
         sections=sections,
+        top_strengths=top_strengths,
+        top_weaknesses=top_weaknesses,
+        next_practice_step=next_practice_step,
         feedback=feedback,
         summary=summary,
     )
@@ -241,17 +247,49 @@ def _section_findings(
     timing_score: float,
 ) -> tuple[SectionFinding, ...]:
     findings: list[SectionFinding] = []
+    local_metric_scores = {
+        MetricName.PITCH_FIDELITY: pitch_score,
+        MetricName.RHYTHM_FIDELITY: rhythm_score,
+        MetricName.TIMING_CONSISTENCY: timing_score,
+    }
     if pitch_score < 65.0:
         findings.append(
-            SectionFinding(start_s, end_s, Severity.WARNING, "Pitch stability drops in this section.")
+            SectionFinding(
+                start_s,
+                end_s,
+                Severity.WARNING,
+                "Pitch stability drops in this section. Slow the phrase down and match sustained notes more deliberately.",
+            )
         )
     if rhythm_score < 65.0:
         findings.append(
-            SectionFinding(start_s, end_s, Severity.WARNING, "Onset timing is weak in this section.")
+            SectionFinding(
+                start_s,
+                end_s,
+                Severity.WARNING,
+                "Rhythm weakens in this section. Rehearse the onset pattern slower and re-lock attacks against the reference.",
+            )
         )
     if timing_score < 65.0:
         findings.append(
-            SectionFinding(start_s, end_s, Severity.WARNING, "Reference alignment drifts in this section.")
+            SectionFinding(
+                start_s,
+                end_s,
+                Severity.WARNING,
+                "Timing drifts in this section. Tighten phrase timing before running the full take again.",
+            )
+        )
+
+    weakest_metric_name = min(local_metric_scores, key=local_metric_scores.get)
+    weakest_score = local_metric_scores[weakest_metric_name]
+    if not findings and weakest_score < 85.0:
+        findings.append(
+            SectionFinding(
+                start_s,
+                end_s,
+                Severity.NOTICE,
+                f"Best focus here: {_metric_label(weakest_metric_name.value)}. {_practice_hint(weakest_metric_name)}",
+            )
         )
     return tuple(findings)
 
@@ -288,6 +326,45 @@ def _feedback(component_scores: tuple[ComponentScore, ...]) -> tuple[str, ...]:
     )
 
 
+def _top_strengths(component_scores: tuple[ComponentScore, ...]) -> tuple[str, ...]:
+    ranked = sorted(component_scores, key=lambda score: (-score.score, score.name.value))
+    return tuple(_strength_message(score) for score in ranked[:2])
+
+
+def _top_weaknesses(component_scores: tuple[ComponentScore, ...]) -> tuple[str, ...]:
+    ranked = sorted(component_scores, key=lambda score: (score.score, score.name.value))
+    return tuple(_weakness_message(index, score) for index, score in enumerate(ranked[:2]))
+
+
+def _next_practice_step(
+    component_scores: tuple[ComponentScore, ...],
+    sections: tuple[SectionReport, ...],
+) -> str:
+    weakest_metric = min(component_scores, key=lambda score: score.score)
+    if not sections:
+        return (
+            f"Next practice step: focus on {_metric_label(weakest_metric.name.value)}. "
+            f"{_practice_hint(weakest_metric.name)}"
+        )
+
+    weakest_section = min(
+        sections,
+        key=lambda section: _section_metric_score(section, weakest_metric.name),
+    )
+    return (
+        f"Next practice step: loop Section {weakest_section.index} "
+        f"({weakest_section.start_s:.2f}s - {weakest_section.end_s:.2f}s) and focus on "
+        f"{_metric_label(weakest_metric.name.value)}. {_practice_hint(weakest_metric.name)}"
+    )
+
+
+def _section_metric_score(section: SectionReport, metric_name: MetricName) -> float:
+    for score in section.component_scores:
+        if score.name == metric_name:
+            return score.score
+    raise ScoringError(f"missing section component score for {metric_name.value}")
+
+
 def _summary(component_scores: tuple[ComponentScore, ...], overall_score: float) -> str:
     weakest = min(component_scores, key=lambda score: score.score)
     strongest = max(component_scores, key=lambda score: score.score)
@@ -299,25 +376,36 @@ def _summary(component_scores: tuple[ComponentScore, ...], overall_score: float)
 
 
 def _focus_message(metric_name: MetricName) -> str:
+    return f"Primary focus area: {_metric_label(metric_name.value)}. {_practice_hint(metric_name)}"
+
+
+def _practice_hint(metric_name: MetricName) -> str:
     if metric_name == MetricName.PITCH_FIDELITY:
-        return (
-            "Primary focus area: Pitch Fidelity. Slow the passage down and match sustained notes "
-            "more deliberately against the reference."
-        )
+        return "Slow the phrase down and match sustained notes more deliberately against the reference."
     if metric_name == MetricName.RHYTHM_FIDELITY:
-        return (
-            "Primary focus area: Rhythm Fidelity. Rehearse the passage slower and re-lock the onset "
-            "pattern against the reference."
-        )
+        return "Rehearse the onset pattern slower and re-lock attacks against the reference."
     if metric_name == MetricName.TIMING_CONSISTENCY:
-        return (
-            "Primary focus area: Timing Consistency. Tighten phrase timing so the take stops drifting "
-            "across the section."
-        )
+        return "Tighten phrase timing so the take stops drifting across the section."
+    return "Isolate the weaker segment and repeat it until the section feels as controlled as the rest of the take."
+
+
+def _strength_message(score: ComponentScore) -> str:
+    if score.name == MetricName.SECTION_STABILITY:
+        guidance = "keep repeating that steadiness across the full take."
+    else:
+        guidance = "keep preserving that control."
     return (
-        "Primary focus area: Section Stability. The take quality changes too much between sections, "
-        "so isolate weaker segments and repeat them."
+        f"{_metric_label(score.name.value)} is a clear current strength at {score.score:.1f}/100; "
+        f"{guidance}"
     )
+
+
+def _weakness_message(index: int, score: ComponentScore) -> str:
+    if index == 0:
+        lead = f"{_metric_label(score.name.value)} is the main weakness at {score.score:.1f}/100."
+    else:
+        lead = f"{_metric_label(score.name.value)} is the next weakness at {score.score:.1f}/100."
+    return f"{lead} {_practice_hint(score.name)}"
 
 
 def _overall_guidance(score: float) -> str:

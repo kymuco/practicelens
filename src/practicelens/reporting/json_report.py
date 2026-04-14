@@ -73,6 +73,9 @@ def report_to_json_payload(report: AnalysisReport) -> dict[str, object]:
             }
             for section in report.sections
         ],
+        "top_strengths": list(report.top_strengths),
+        "top_weaknesses": list(report.top_weaknesses),
+        "next_practice_step": report.next_practice_step,
         "feedback": list(report.feedback),
         "artifacts": [
             {

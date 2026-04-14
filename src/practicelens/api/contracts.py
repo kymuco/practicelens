@@ -98,6 +98,9 @@ class AnalyzeResponsePayload(TypedDict):
     scores: list[ComponentScorePayload]
     metrics: list[MetricPayload]
     sections: list[SectionPayload]
+    top_strengths: list[str]
+    top_weaknesses: list[str]
+    next_practice_step: str | None
     feedback: list[str]
     artifacts: list[ArtifactPayload]
     summary: str | None

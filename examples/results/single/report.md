@@ -2,11 +2,12 @@
 
 ## At a glance
 
-- **Status:** success
+- **Status:** completed
 - **Mode:** reference
 - **Take:** `take_take2.wav`
 - **Overall score:** 86.1/100
 - **Performance band:** Strong
+- **Next practice step:** loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.
 
 Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main improvement area: Timing Consistency (79.0/100).
 
@@ -33,6 +34,20 @@ Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main impro
 | Timing Consistency | 79.0/100 | notice | Timing drift is small but visible in the center of the take. |
 | Section Stability | 88.0/100 | info | Section-to-section consistency remains strong overall. |
 
+## Top Strengths
+
+- Pitch Fidelity is a clear current strength at 90.0/100; keep preserving that control.
+- Section Stability is a clear current strength at 88.0/100; keep repeating that steadiness across the full take.
+
+## Top Weaknesses
+
+- Timing Consistency is the main weakness at 79.0/100. Tighten phrase timing so the take stops drifting across the section.
+- Rhythm Fidelity is the next weakness at 82.0/100. Rehearse the onset pattern slower and re-lock attacks against the reference.
+
+## Next Practice Step
+
+Next practice step: loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.
+
 ## Feedback
 
 - Keep leaning on Pitch Fidelity; it is currently the clearest strength in the take.
@@ -49,8 +64,7 @@ Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main impro
   - Rhythm Fidelity: 84.0/100
   - Timing Consistency: 82.0/100
   - Section Stability: 88.0/100
-- Findings:
-  - [info] Opening phrase is stable and close to the reference.
+- Findings: none
 
 ### Section 1 (8.00s - 16.00s)
 
@@ -61,7 +75,7 @@ Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main impro
   - Timing Consistency: 74.0/100
   - Section Stability: 83.0/100
 - Findings:
-  - [notice] Small timing drift appears here and slightly compresses phrase spacing.
+  - [notice] Best focus here: Timing Consistency. Tighten phrase timing so the take stops drifting across the section.
 
 ### Section 2 (16.00s - 24.00s)
 
@@ -72,7 +86,7 @@ Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main impro
   - Timing Consistency: 81.0/100
   - Section Stability: 92.0/100
 - Findings:
-  - [info] Ending section recovers well and stays controlled.
+  - [notice] Best focus here: Timing Consistency. Tighten phrase timing so the take stops drifting across the section.
 
 ## Artifacts
 

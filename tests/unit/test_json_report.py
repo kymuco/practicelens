@@ -32,6 +32,9 @@ def _sample_report() -> AnalysisReport:
                 findings=(SectionFinding(0.0, 8.0, Severity.INFO, "Opening phrase is stable."),),
             ),
         ),
+        top_strengths=("Pitch Fidelity is a clear current strength at 92.0/100; keep preserving that control.",),
+        top_weaknesses=("Pitch Fidelity is the main weakness at 92.0/100. Keep preserving that control.",),
+        next_practice_step="Next practice step: keep the current pitch control steady through the full phrase.",
         feedback=("Keep the current pitch stability.",),
         artifacts=(ArtifactLink(ArtifactKind.JSON_REPORT, "report.json", "Structured analysis report."),),
         summary="Strong reference match overall.",
@@ -50,6 +53,9 @@ def test_report_json_payload_has_stable_top_level_contract() -> None:
         "scores",
         "metrics",
         "sections",
+        "top_strengths",
+        "top_weaknesses",
+        "next_practice_step",
         "feedback",
         "artifacts",
         "summary",
@@ -62,6 +68,15 @@ def test_report_json_payload_has_stable_top_level_contract() -> None:
         "ok": True,
         "mode": "reference",
     }
+    assert payload["top_strengths"] == [
+        "Pitch Fidelity is a clear current strength at 92.0/100; keep preserving that control."
+    ]
+    assert payload["top_weaknesses"] == [
+        "Pitch Fidelity is the main weakness at 92.0/100. Keep preserving that control."
+    ]
+    assert payload["next_practice_step"] == (
+        "Next practice step: keep the current pitch control steady through the full phrase."
+    )
     assert payload["artifacts"][0] == {
         "kind": "json_report",
         "path": "report.json",
