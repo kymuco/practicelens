@@ -1,11 +1,11 @@
 {
-  "reference_path": "samples/reference.wav",
+  "reference_path": "examples/demo_assets/generated/reference.wav",
   "take_paths": [
-    "samples/take_a.wav",
-    "samples/take_b.wav",
-    "samples/take_c.wav"
+    "examples/demo_assets/generated/take_01.wav",
+    "examples/demo_assets/generated/take_02.wav",
+    "examples/demo_assets/generated/take_03.wav"
   ],
-  "out_dir": "out/api-batch",
+  "out_dir": "out/demo-api-batch",
   "sample_rate": 16000,
   "frame_length": 2048,
   "hop_length": 512,
