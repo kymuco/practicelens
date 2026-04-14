@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tests._helpers import read_json
+from .._helpers import read_json
 
 
 def test_api_example_payload_files_match_supported_request_keys() -> None:

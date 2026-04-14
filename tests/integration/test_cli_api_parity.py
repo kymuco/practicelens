@@ -4,7 +4,7 @@ from pathlib import Path
 
 from practicelens.api import analyze_payload, compare_batch_payload
 from practicelens.cli.main import run
-from tests._helpers import normalize_batch_payload, normalize_single_payload, read_json, write_sine_wav
+from .._helpers import normalize_batch_payload, normalize_single_payload, read_json, write_sine_wav
 
 
 def test_cli_and_api_single_analysis_stay_in_contract_parity(tmp_path: Path) -> None:
