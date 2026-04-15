@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from practicelens.api import analyze_payload, compare_batch_payload
+from practicelens.api import compare_batch_payload
 from practicelens.cli.main import run
 from practicelens.demo_assets import generate_demo_assets
 
