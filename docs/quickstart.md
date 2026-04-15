@@ -16,23 +16,31 @@ For API usage as well:
 pip install -e .[dev,api]
 ```
 
-## 2. Prepare audio files
+## 2. Generate demo audio files
 
-PracticeLens currently expects local WAV files.
+PracticeLens does not commit real practice audio into the repository.
 
-You need:
+Instead, it ships a deterministic generator for small synthetic demo WAV files.
 
-- one reference WAV file;
-- one take WAV file for single analysis;
-- or several take WAV files for batch comparison.
+Generate them with:
+
+```bash
+make generate-demo-assets
+```
+
+This writes demo WAVs under:
+
+```text
+examples/demo_assets/generated/
+```
 
 ## 3. Run single analysis
 
 ```bash
 practicelens analyze \
-  --reference samples/reference.wav \
-  --take samples/take.wav \
-  --out out/single
+  --reference examples/demo_assets/generated/reference.wav \
+  --take examples/demo_assets/generated/take.wav \
+  --out out/demo/single
 ```
 
 Generated artifacts:
@@ -46,11 +54,11 @@ Generated artifacts:
 
 ```bash
 practicelens compare-batch \
-  --reference samples/reference.wav \
-  --take samples/take_01.wav \
-  --take samples/take_02.wav \
-  --take samples/take_03.wav \
-  --out out/batch
+  --reference examples/demo_assets/generated/reference.wav \
+  --take examples/demo_assets/generated/take_01.wav \
+  --take examples/demo_assets/generated/take_02.wav \
+  --take examples/demo_assets/generated/take_03.wav \
+  --out out/demo/batch
 ```
 
 Generated batch artifacts:
@@ -73,9 +81,9 @@ Example:
 
 ```bash
 practicelens analyze \
-  --reference samples/reference.wav \
-  --take samples/take.wav \
-  --out out/single \
+  --reference examples/demo_assets/generated/reference.wav \
+  --take examples/demo_assets/generated/take.wav \
+  --out out/demo/single \
   --sample-rate 16000 \
   --frame-length 1024 \
   --hop-length 256 \
@@ -94,3 +102,4 @@ pytest tests
 - The current workflow is bounded and offline-first.
 - The project is aimed first at monophonic or near-monophonic material.
 - This is a practical baseline, not a final polished DSP standard.
+- The generator under `tools/generate_demo_assets.py` is the intended demo asset path for onboarding, examples, and smoke tests.

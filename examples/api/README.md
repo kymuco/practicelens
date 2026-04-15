@@ -18,8 +18,8 @@ These examples are intended for:
 
 Typical flow:
 
-1. Start the API with `make run-api` or `uvicorn practicelens.api.app:app --reload`
-2. Adjust local WAV paths inside the JSON payloads
-3. Run the shell examples or execute the `.http` requests from your editor
+1. Generate demo WAV assets with `make generate-demo-assets` or `python tools/generate_demo_assets.py`
+2. Start the API with `make run-api` or `uvicorn practicelens.api.app:app --reload`
+3. Execute the example payloads and requests in this directory
 
-Replace the file paths with your own local WAV paths before using them.
+The example JSON payloads already point at `examples/demo_assets/generated/`, so they become directly runnable after you generate the demo assets.

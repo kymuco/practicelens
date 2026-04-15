@@ -6,24 +6,30 @@ For the full end-to-end story, use:
 
 - [docs/cli_walkthrough.md](../../docs/cli_walkthrough.md)
 
+Before running the CLI examples below, generate the demo WAV assets:
+
+```bash
+make generate-demo-assets
+```
+
 ## Single analysis
 
 ```bash
 practicelens analyze \
-  --reference samples/reference.wav \
-  --take samples/take.wav \
-  --out out/single
+  --reference examples/demo_assets/generated/reference.wav \
+  --take examples/demo_assets/generated/take.wav \
+  --out out/demo/single
 ```
 
 ## Batch comparison
 
 ```bash
 practicelens compare-batch \
-  --reference samples/reference.wav \
-  --take samples/take_01.wav \
-  --take samples/take_02.wav \
-  --take samples/take_03.wav \
-  --out out/batch
+  --reference examples/demo_assets/generated/reference.wav \
+  --take examples/demo_assets/generated/take_01.wav \
+  --take examples/demo_assets/generated/take_02.wav \
+  --take examples/demo_assets/generated/take_03.wav \
+  --out out/demo/batch
 ```
 
 ## What to open first
@@ -44,6 +50,6 @@ Batch comparison:
 
 ## Notes
 
-- The repository does not currently ship real demo WAV files.
-- Replace the example paths with your own local WAV files.
+- The repository does not commit real demo WAV files.
+- Use the generator under `examples/demo_assets/` to create deterministic synthetic demo assets.
 - Outputs are written into the selected `--out` directory.

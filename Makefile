@@ -1,4 +1,4 @@
-.PHONY: install-dev install-api lint test regression check run-api build-package
+.PHONY: install-dev install-api lint test regression check run-api build-package generate-demo-assets
 
 install-dev:
 	pip install -e .[dev]
@@ -15,10 +15,13 @@ test:
 regression:
 	pytest tests/regression
 
+check: lint test
+
 run-api:
 	uvicorn practicelens.api.app:app --reload
 
 build-package:
 	python -m build
 
-check: lint test
+generate-demo-assets:
+	python tools/generate_demo_assets.py

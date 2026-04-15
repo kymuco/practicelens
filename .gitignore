@@ -13,3 +13,5 @@ venv/
 .env
 .coverage
 htmlcov/
+examples/demo_assets/generated/
+out/demo/
