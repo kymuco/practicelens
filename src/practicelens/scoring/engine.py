@@ -10,6 +10,7 @@ from practicelens.domain.models import (
     AnalysisConfig,
     ComponentScore,
     MetricResult,
+    PracticeLoop,
     SectionFinding,
     SectionReport,
 )
@@ -79,6 +80,7 @@ def score_aligned_features(
             detail="Coverage of both frame sequences by the alignment path.",
         ),
     )
+    practice_loops = _practice_loops(sections)
     top_strengths = _top_strengths(component_scores)
     top_weaknesses = _top_weaknesses(component_scores)
     next_practice_step = _next_practice_step(component_scores, sections)
@@ -90,6 +92,7 @@ def score_aligned_features(
         component_scores=component_scores,
         metrics=metrics,
         sections=sections,
+        practice_loops=practice_loops,
         top_strengths=top_strengths,
         top_weaknesses=top_weaknesses,
         next_practice_step=next_practice_step,
@@ -178,8 +181,7 @@ def _section_reports(
         pairs = [
             pair
             for pair in alignment.pairs
-            if _ref_time(reference, pair.reference_index) >= start_s
-            and _ref_time(reference, pair.reference_index) < end_s
+            if _ref_time(reference, pair.reference_index) >= start_s and _ref_time(reference, pair.reference_index) < end_s
         ]
         if not pairs:
             continue
@@ -294,6 +296,34 @@ def _section_findings(
     return tuple(findings)
 
 
+def _practice_loops(sections: tuple[SectionReport, ...], *, limit: int = 3) -> tuple[PracticeLoop, ...]:
+    candidates: list[tuple[float, int, PracticeLoop]] = []
+    for section in sections:
+        scored_metrics = [score for score in section.component_scores if score.name != MetricName.SECTION_STABILITY]
+        if not scored_metrics:
+            continue
+        weakest = min(scored_metrics, key=lambda score: score.score)
+        if weakest.score >= 85.0:
+            continue
+        candidates.append(
+            (
+                weakest.score,
+                section.index,
+                PracticeLoop(
+                    section_index=section.index,
+                    start_s=section.start_s,
+                    end_s=section.end_s,
+                    focus=weakest.name,
+                    instruction=(
+                        f"Loop Section {section.index} ({section.start_s:.2f}s - {section.end_s:.2f}s) "
+                        f"and focus on {_metric_label(weakest.name.value)}. {_practice_hint(weakest.name)}"
+                    ),
+                ),
+            )
+        )
+    return tuple(loop for _, _, loop in sorted(candidates, key=lambda item: (item[0], item[1]))[:limit])
+
+
 def _normalize_times(values: tuple[float, ...], time_axis: tuple[float, ...]) -> tuple[float, ...]:
     if not values:
         return ()
@@ -342,10 +372,7 @@ def _next_practice_step(
 ) -> str:
     weakest_metric = min(component_scores, key=lambda score: score.score)
     if not sections:
-        return (
-            f"Next practice step: focus on {_metric_label(weakest_metric.name.value)}. "
-            f"{_practice_hint(weakest_metric.name)}"
-        )
+        return f"Next practice step: focus on {_metric_label(weakest_metric.name.value)}. {_practice_hint(weakest_metric.name)}"
 
     weakest_section = min(
         sections,
@@ -394,10 +421,7 @@ def _strength_message(score: ComponentScore) -> str:
         guidance = "keep repeating that steadiness across the full take."
     else:
         guidance = "keep preserving that control."
-    return (
-        f"{_metric_label(score.name.value)} is a clear current strength at {score.score:.1f}/100; "
-        f"{guidance}"
-    )
+    return f"{_metric_label(score.name.value)} is a clear current strength at {score.score:.1f}/100; {guidance}"
 
 
 def _weakness_message(index: int, score: ComponentScore) -> str:
@@ -410,19 +434,10 @@ def _weakness_message(index: int, score: ComponentScore) -> str:
 
 def _overall_guidance(score: float) -> str:
     if score >= 80.0:
-        return (
-            "Overall the take is strong; preserve the current strengths while improving one weaker "
-            "area at a time."
-        )
+        return "Overall the take is strong; preserve the current strengths while improving one weaker area at a time."
     if score >= 70.0:
-        return (
-            "Overall the take is promising; the fastest win will come from tightening the weakest "
-            "area before changing everything else."
-        )
-    return (
-        "Overall the take still diverges noticeably from the reference; reduce tempo and rebuild the "
-        "weakest area first."
-    )
+        return "Overall the take is promising; the fastest win will come from tightening the weakest area before changing everything else."
+    return "Overall the take still diverges noticeably from the reference; reduce tempo and rebuild the weakest area first."
 
 
 def _summary_lead(score: float) -> str:
