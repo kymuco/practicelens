@@ -7,6 +7,7 @@
 - **Take:** `take_take2.wav`
 - **Overall score:** 86.1/100
 - **Performance band:** Strong
+- **Analysis confidence:** High
 - **Next practice step:** loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.
 
 Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main improvement area: Timing Consistency (79.0/100).
@@ -15,6 +16,18 @@ Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main impro
 
 - Reference: `samples/reference.wav`
 - Take: `samples/take_take2.wav`
+
+## Analysis Confidence
+
+- Level: **High**
+- Reasons:
+  - Alignment coverage is broad enough for a stable reference-aware comparison.
+  - Voiced-frame coverage is sufficient for pitch-related feedback.
+  - Onset evidence is present for rhythm-oriented feedback.
+  - Section reports were produced, so local practice guidance has supporting spans.
+- Limitations:
+  - PracticeLens v0.1 uses deterministic signal-processing heuristics, not human musical judgment.
+  - Confidence is a sanity note for the current evidence quality, not a scientific accuracy guarantee.
 
 ## Component Scores
 
