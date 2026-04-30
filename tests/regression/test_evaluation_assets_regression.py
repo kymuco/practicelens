@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
+from typing import Any
 
 from practicelens.application import AnalyzeRequest, OfflineReferenceAnalysisPipeline
 from practicelens.domain.enums import MetricName
 from practicelens.domain.models import AnalysisConfig, AnalysisReport
 from practicelens.evaluation_assets import generate_evaluation_assets
+
+EXPECTATIONS = json.loads((Path(__file__).with_name("evaluation_expectations.json")).read_text(encoding="utf-8"))
 
 
 def _run(reference: Path, take: Path, out_dir: Path) -> AnalysisReport:
@@ -30,38 +34,59 @@ def _score(report: AnalysisReport, metric_name: MetricName) -> float:
     raise AssertionError(f"missing component score for {metric_name.value}")
 
 
-def test_realistic_exact_take_remains_stronger_than_obvious_pitch_drift(tmp_path: Path) -> None:
+def _metric_value(report: AnalysisReport, metric: str) -> float:
+    if metric == "overall_score":
+        return _overall_score(report)
+    return _score(report, MetricName(metric))
+
+
+def test_generated_evaluation_cases_match_calibration_expectation_manifest(tmp_path: Path) -> None:
     assets = generate_evaluation_assets(tmp_path / "assets")
-    reference = assets["reference_phrase"]
+    reference = assets[EXPECTATIONS["reference_case"]]
+    reports: dict[str, AnalysisReport] = {}
 
-    exact = _run(reference, assets["exact_take"], tmp_path / "exact-out")
-    pitch_drift = _run(reference, assets["pitch_drift_take"], tmp_path / "pitch-drift-out")
+    for case in EXPECTATIONS["cases"]:
+        case_name = case["name"]
+        reports[case_name] = _run(reference, assets[case_name], tmp_path / f"{case_name}-out")
 
-    assert _overall_score(exact) > _overall_score(pitch_drift)
-    assert _score(exact, MetricName.PITCH_FIDELITY) > _score(pitch_drift, MetricName.PITCH_FIDELITY)
-    assert exact.sections
-    assert pitch_drift.sections
-
-
-def test_realistic_cases_are_pipeline_analyzable_without_locking_fragile_scores(tmp_path: Path) -> None:
-    assets = generate_evaluation_assets(tmp_path / "assets")
-    reference = assets["reference_phrase"]
-    case_names = (
-        "exact_take",
-        "pitch_drift_take",
-        "timing_drift_take",
-        "rhythm_mistake_take",
-        "noisy_take",
-        "silence_mismatch_take",
-        "vibrato_take",
-        "pluck_take",
-        "tempo_mismatch_take",
-    )
-
-    for case_name in case_names:
-        report = _run(reference, assets[case_name], tmp_path / f"{case_name}-out")
+    for case in EXPECTATIONS["cases"]:
+        report = reports[case["name"]]
         assert 0.0 <= _overall_score(report) <= 100.0
         assert report.summary is not None
         assert report.feedback
-        assert report.sections
         assert report.artifacts
+        if case.get("must_have_sections", False):
+            assert report.sections
+        _assert_minimum_overall_score(report, case)
+        _assert_minimum_metric_scores(report, case)
+        _assert_relative_expectations(report, reports, case)
+
+
+def _assert_minimum_overall_score(report: AnalysisReport, case: dict[str, Any]) -> None:
+    minimum = case.get("minimum_overall_score")
+    if minimum is None:
+        return
+    assert _overall_score(report) >= minimum
+
+
+def _assert_minimum_metric_scores(report: AnalysisReport, case: dict[str, Any]) -> None:
+    minimum_metric_scores = case.get("minimum_metric_scores", {})
+    for metric, minimum in minimum_metric_scores.items():
+        assert _metric_value(report, metric) >= minimum
+
+
+def _assert_relative_expectations(
+    report: AnalysisReport,
+    reports: dict[str, AnalysisReport],
+    case: dict[str, Any],
+) -> None:
+    for expectation in case.get("relative_expectations", []):
+        metric = expectation["metric"]
+        baseline = reports[expectation["baseline"]]
+        relation = expectation["relation"]
+        if relation == "lower_than":
+            assert _metric_value(report, metric) < _metric_value(baseline, metric)
+        elif relation == "higher_than":
+            assert _metric_value(report, metric) > _metric_value(baseline, metric)
+        else:
+            raise AssertionError(f"unsupported relative expectation relation: {relation}")
