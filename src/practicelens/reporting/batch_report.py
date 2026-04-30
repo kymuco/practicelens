@@ -6,6 +6,7 @@ import json
 
 from practicelens.application.contracts import BatchCompareResult
 from practicelens.domain.enums import ArtifactKind
+from practicelens.domain.models import PracticeLoop
 
 
 def batch_compare_result_to_json_payload(result: BatchCompareResult) -> dict[str, object]:
@@ -16,6 +17,7 @@ def batch_compare_result_to_json_payload(result: BatchCompareResult) -> dict[str
             "overall_score": entry.overall_score,
             "summary": entry.summary,
             "output_dir": str(entry.output_dir) if entry.output_dir is not None else None,
+            "practice_loops": [_practice_loop_payload(loop) for loop in entry.result.report.practice_loops],
             "artifacts": [
                 {
                     "kind": artifact.kind.value,
@@ -82,6 +84,12 @@ def batch_compare_result_to_markdown(result: BatchCompareResult) -> str:
         lines.append(f"- Score: {entry.overall_score:.1f}/100")
         if entry.summary:
             lines.append(f"- Summary: {entry.summary}")
+        if entry.result.report.practice_loops:
+            first_loop = entry.result.report.practice_loops[0]
+            lines.append(f"- First practice loop: {first_loop.instruction}")
+            lines.append(f"- Practice loops: {len(entry.result.report.practice_loops)}")
+        else:
+            lines.append("- Practice loops: none")
         lines.append(f"- Artifacts: {len(entry.result.report.artifacts)}")
         lines.append("")
 
@@ -103,11 +111,13 @@ def batch_compare_result_to_csv_text(result: BatchCompareResult) -> str:
             "take_path",
             "overall_score",
             "delta_from_best",
+            "first_practice_loop",
             "summary",
             "output_dir",
         ]
     )
     for entry in result.entries:
+        first_loop = entry.result.report.practice_loops[0].instruction if entry.result.report.practice_loops else ""
         writer.writerow(
             [
                 entry.rank,
@@ -115,11 +125,22 @@ def batch_compare_result_to_csv_text(result: BatchCompareResult) -> str:
                 str(entry.take_path),
                 f"{entry.overall_score:.3f}",
                 f"{best_score - entry.overall_score:.3f}",
+                first_loop,
                 entry.summary or "",
                 str(entry.output_dir) if entry.output_dir is not None else "",
             ]
         )
     return buffer.getvalue()
+
+
+def _practice_loop_payload(loop: PracticeLoop) -> dict[str, object]:
+    return {
+        "section_index": loop.section_index,
+        "start_s": loop.start_s,
+        "end_s": loop.end_s,
+        "focus": loop.focus.value,
+        "instruction": loop.instruction,
+    }
 
 
 def _batch_artifact_description(kind: ArtifactKind) -> str | None:
