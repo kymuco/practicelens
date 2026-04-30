@@ -48,12 +48,36 @@ This is still **pre-alpha**, but it is already a real bounded vertical slice, no
 If you want to understand the repo in a few minutes, use this order:
 
 1. [Quickstart](docs/quickstart.md)
-2. [Architecture overview](docs/architecture.md)
-3. [Repository map](docs/repository-map.md)
-4. [API notes](docs/api.md)
-5. [Examples](examples/api), [sample results](examples/results), and [CLI notes](examples/cli/README.md)
+2. Generate the [evaluation showcase](examples/evaluation_showcase/README.md)
+3. [Architecture overview](docs/architecture.md)
+4. [Repository map](docs/repository-map.md)
+5. [API notes](docs/api.md)
+6. [Examples](examples/api), [sample results](examples/results), and [CLI notes](examples/cli/README.md)
 
 If you want a sharper evaluator path, use [docs/evaluate.md](docs/evaluate.md).
+
+## Evaluation showcase
+
+The fastest way to see PracticeLens behave end-to-end is to generate the synthetic evaluation showcase:
+
+```bash
+make generate-evaluation-showcase
+```
+
+This creates deterministic synthetic WAV assets, single-take reports, a batch comparison, and a compact summary under:
+
+```text
+examples/evaluation_showcase/generated/
+```
+
+Start with:
+
+- `examples/evaluation_showcase/generated/summary.json`
+- `examples/evaluation_showcase/generated/batch/batch_report.md`
+- `examples/evaluation_showcase/generated/single/pitch_drift_take/report.md`
+- `examples/evaluation_showcase/generated/single/timing_drift_take/report.md`
+
+These examples are synthetic sanity demos, not a scientific benchmark. They exist so a reviewer can inspect the product behavior quickly without third-party audio files.
 
 ## Why this repo feels trustworthy
 
@@ -72,6 +96,7 @@ It does make it reviewable, understandable, and much harder to mistake for a ran
 ## Start here
 
 - Quickstart: [docs/quickstart.md](docs/quickstart.md)
+- Evaluation showcase: [examples/evaluation_showcase/README.md](examples/evaluation_showcase/README.md)
 - CLI walkthrough: [docs/cli_walkthrough.md](docs/cli_walkthrough.md)
 - Evaluate the repo: [docs/evaluate.md](docs/evaluate.md)
 - Architecture overview: [docs/architecture.md](docs/architecture.md)
