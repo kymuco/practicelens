@@ -44,6 +44,7 @@ def test_single_example_result_matches_current_contract_shape() -> None:
         "next_practice_step",
         "overall_score",
         "overview",
+        "practice_loops",
         "scores",
         "sections",
         "summary",
@@ -60,6 +61,7 @@ def test_single_example_result_matches_current_contract_shape() -> None:
     assert payload["analysis_confidence"]["level"] in {"high", "medium", "low"}
     assert payload["analysis_confidence"]["reasons"]
     assert payload["analysis_confidence"]["limitations"]
+    assert isinstance(payload["practice_loops"], list)
     assert payload["top_strengths"]
     assert payload["top_weaknesses"]
     assert payload["next_practice_step"] is not None
