@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "description": "Broad, non-fragile expectations for generated synthetic evaluation cases. These expectations are intended to catch obvious scoring drift without pretending to be a scientific benchmark.",
+  "reference_case": "reference_phrase",
+  "cases": [
+    {
+      "name": "exact_take",
+      "minimum_overall_score": 70.0,
+      "minimum_metric_scores": {
+        "pitch_fidelity": 80.0
+      },
+      "must_have_sections": true
+    },
+    {
+      "name": "pitch_drift_take",
+      "relative_expectations": [
+        {
+          "baseline": "exact_take",
+          "metric": "overall_score",
+          "relation": "lower_than"
+        },
+        {
+          "baseline": "exact_take",
+          "metric": "pitch_fidelity",
+          "relation": "lower_than"
+        }
+      ],
+      "must_have_sections": true
+    },
+    {
+      "name": "timing_drift_take",
+      "must_have_sections": true
+    },
+    {
+      "name": "rhythm_mistake_take",
+      "must_have_sections": true
+    },
+    {
+      "name": "noisy_take",
+      "must_have_sections": true
+    },
+    {
+      "name": "silence_mismatch_take",
+      "must_have_sections": true
+    },
+    {
+      "name": "vibrato_take",
+      "must_have_sections": true
+    },
+    {
+      "name": "pluck_take",
+      "must_have_sections": true
+    },
+    {
+      "name": "tempo_mismatch_take",
+      "must_have_sections": true
+    }
+  ]
+}
