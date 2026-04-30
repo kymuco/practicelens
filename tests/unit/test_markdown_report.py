@@ -2,6 +2,7 @@ from pathlib import Path
 
 from practicelens.domain.enums import AnalysisMode, MetricName, Severity
 from practicelens.domain.models import (
+    AnalysisConfidence,
     AnalysisInput,
     AnalysisOverview,
     AnalysisReport,
@@ -40,6 +41,11 @@ def _sample_report() -> AnalysisReport:
                 ),
             ),
         ),
+        analysis_confidence=AnalysisConfidence(
+            level="medium",
+            reasons=("Onset evidence is present for rhythm-oriented feedback.",),
+            limitations=("Confidence is a sanity note for the current evidence quality, not a scientific accuracy guarantee.",),
+        ),
         top_strengths=("Pitch Fidelity is a clear current strength at 92.0/100; keep preserving that control.",),
         top_weaknesses=(
             "Timing Consistency is the main weakness at 74.0/100. Tighten phrase timing so the take stops drifting across the section.",
@@ -53,9 +59,14 @@ def _sample_report() -> AnalysisReport:
     )
 
 
-def test_markdown_report_surfaces_strengths_weaknesses_and_next_step() -> None:
+def test_markdown_report_surfaces_strengths_weaknesses_next_step_and_confidence() -> None:
     markdown = report_to_markdown(_sample_report())
 
+    assert "## Analysis Confidence" in markdown
+    assert "- **Analysis confidence:** Medium" in markdown
+    assert "- Level: **Medium**" in markdown
+    assert "Onset evidence is present for rhythm-oriented feedback." in markdown
+    assert "Confidence is a sanity note for the current evidence quality" in markdown
     assert "## Top Strengths" in markdown
     assert "Pitch Fidelity is a clear current strength at 92.0/100; keep preserving that control." in markdown
     assert "## Top Weaknesses" in markdown
