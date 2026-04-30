@@ -18,6 +18,7 @@ DEFAULT_SHOWCASE_CASES = (
     "rhythm_mistake_take",
     "tempo_mismatch_take",
 )
+DEFAULT_SHOWCASE_CONFIG = AnalysisConfig(frame_length=1024, hop_length=256, segment_duration_s=1.0)
 
 
 @dataclass(slots=True, frozen=True)
@@ -36,7 +37,7 @@ def generate_evaluation_showcase(
     out_dir: Path = DEFAULT_SHOWCASE_OUT_DIR,
     *,
     case_names: tuple[str, ...] = DEFAULT_SHOWCASE_CASES,
-    config: AnalysisConfig = AnalysisConfig(frame_length=1024, hop_length=256, segment_duration_s=1.0),
+    config: AnalysisConfig = DEFAULT_SHOWCASE_CONFIG,
 ) -> EvaluationShowcaseResult:
     """Generate synthetic assets plus single and batch reports for showcase inspection."""
 
