@@ -11,6 +11,7 @@ from practicelens.domain.models import (
     ComponentScore,
     FeatureFlags,
     MetricResult,
+    PracticeLoop,
     SectionFinding,
     SectionReport,
 )
@@ -37,6 +38,15 @@ def _sample_report(path: str, score: float) -> AnalysisReport:
                 end_s=8.0,
                 component_scores=(ComponentScore(MetricName.PITCH_FIDELITY, score, 1.0),),
                 findings=(SectionFinding(0.0, 8.0, Severity.NOTICE, "Section note"),),
+            ),
+        ),
+        practice_loops=(
+            PracticeLoop(
+                section_index=0,
+                start_s=0.0,
+                end_s=8.0,
+                focus=MetricName.PITCH_FIDELITY,
+                instruction=f"Loop Section 0 for {path} and focus on Pitch Fidelity.",
             ),
         ),
         feedback=("Feedback.",),
@@ -71,6 +81,15 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
     }
     assert payload["entries"][0]["rank"] == 1
     assert payload["entries"][0]["take_path"] == "take_a.wav"
+    assert payload["entries"][0]["practice_loops"] == [
+        {
+            "section_index": 0,
+            "start_s": 0.0,
+            "end_s": 8.0,
+            "focus": "pitch_fidelity",
+            "instruction": "Loop Section 0 for take_a.wav and focus on Pitch Fidelity.",
+        }
+    ]
     assert payload["artifacts"][0] == {
         "kind": "json_report",
         "path": "batch_report.json",
@@ -79,7 +98,9 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
     assert "# PracticeLens Batch Compare" in markdown_text
     assert "## At a glance" in markdown_text
     assert "| Rank | Take | Score | Delta vs best | Output dir |" in markdown_text
-    assert "rank,take_name,take_path,overall_score,delta_from_best,summary,output_dir" in csv_text
+    assert "First practice loop: Loop Section 0 for take_a.wav and focus on Pitch Fidelity." in markdown_text
+    assert "rank,take_name,take_path,overall_score,delta_from_best,first_practice_loop,summary,output_dir" in csv_text
+    assert "Loop Section 0 for take_a.wav and focus on Pitch Fidelity." in csv_text
     assert "<svg" in svg_text
     assert "PracticeLens Batch Compare" in svg_text
     assert "Take ranking" in svg_text
