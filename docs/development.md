@@ -53,6 +53,12 @@ If you want to refresh the more realistic synthetic evaluation assets:
 make generate-evaluation-assets
 ```
 
+If you want to generate the full evaluation showcase with assets, single reports, batch reports, and a summary:
+
+```bash
+make generate-evaluation-showcase
+```
+
 If you only want the split commands:
 
 ```bash
@@ -134,5 +140,6 @@ make regression
 make build-package
 make generate-demo-assets
 make generate-evaluation-assets
+make generate-evaluation-showcase
 make check
 ```
