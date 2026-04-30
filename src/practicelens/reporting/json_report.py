@@ -78,6 +78,16 @@ def report_to_json_payload(report: AnalysisReport) -> dict[str, object]:
             "reasons": list(report.analysis_confidence.reasons),
             "limitations": list(report.analysis_confidence.limitations),
         },
+        "practice_loops": [
+            {
+                "section_index": loop.section_index,
+                "start_s": loop.start_s,
+                "end_s": loop.end_s,
+                "focus": loop.focus.value,
+                "instruction": loop.instruction,
+            }
+            for loop in report.practice_loops
+        ],
         "top_strengths": list(report.top_strengths),
         "top_weaknesses": list(report.top_weaknesses),
         "next_practice_step": report.next_practice_step,
