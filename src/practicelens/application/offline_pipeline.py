@@ -36,6 +36,7 @@ class OfflineReferenceAnalysisPipeline(AnalysisPipeline):
             metrics=scoring.metrics,
             sections=scoring.sections,
             analysis_confidence=_analysis_confidence(reference_features, take_features, alignment, scoring),
+            practice_loops=scoring.practice_loops,
             top_strengths=scoring.top_strengths,
             top_weaknesses=scoring.top_weaknesses,
             next_practice_step=scoring.next_practice_step,
