@@ -65,6 +65,7 @@ def normalize_batch_payload(payload: dict[str, object]) -> dict[str, object]:
                 "take_path": entry["take_path"],
                 "overall_score": entry["overall_score"],
                 "summary": entry["summary"],
+                "practice_loops": entry["practice_loops"],
                 "artifacts": normalize_artifacts(entry["artifacts"]),
             }
             for entry in entries

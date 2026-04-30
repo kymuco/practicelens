@@ -47,6 +47,15 @@
       ],
       "output_dir": "out/batch/takes/02-take_02",
       "overall_score": 88.4,
+      "practice_loops": [
+        {
+          "end_s": 16.0,
+          "focus": "rhythm_fidelity",
+          "instruction": "Loop Section 1 (8.00s - 16.00s) and focus on Rhythm Fidelity. Rehearse the onset pattern slower and re-lock attacks against the reference.",
+          "section_index": 1,
+          "start_s": 8.0
+        }
+      ],
       "rank": 1,
       "summary": "Strong reference match overall. Best area: Section Stability (91.0/100). Main improvement area: Rhythm Fidelity (84.0/100).",
       "take_path": "samples/take_02.wav"
@@ -76,6 +85,15 @@
       ],
       "output_dir": "out/batch/takes/01-take_01",
       "overall_score": 84.7,
+      "practice_loops": [
+        {
+          "end_s": 16.0,
+          "focus": "timing_consistency",
+          "instruction": "Loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.",
+          "section_index": 1,
+          "start_s": 8.0
+        }
+      ],
       "rank": 2,
       "summary": "Strong reference match overall. Best area: Pitch Fidelity (88.0/100). Main improvement area: Timing Consistency (80.0/100).",
       "take_path": "samples/take_01.wav"
@@ -105,6 +123,15 @@
       ],
       "output_dir": "out/batch/takes/03-take_03",
       "overall_score": 78.9,
+      "practice_loops": [
+        {
+          "end_s": 16.0,
+          "focus": "rhythm_fidelity",
+          "instruction": "Loop Section 1 (8.00s - 16.00s) and focus on Rhythm Fidelity. Rehearse the onset pattern slower and re-lock attacks against the reference.",
+          "section_index": 1,
+          "start_s": 8.0
+        }
+      ],
       "rank": 3,
       "summary": "Promising reference match overall. Best area: Pitch Fidelity (81.0/100). Main improvement area: Rhythm Fidelity (73.0/100).",
       "take_path": "samples/take_03.wav"

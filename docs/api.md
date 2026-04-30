@@ -154,15 +154,10 @@ Each `entries[]` item includes:
 - `overall_score`
 - `summary`
 - `output_dir`
+- `practice_loops`
 - `artifacts`
 
-Runnable `curl` example:
-
-```bash
-curl -X POST http://127.0.0.1:8000/compare-batch \
-  -H "Content-Type: application/json" \
-  --data @examples/api/compare_batch_payload.json
-```
+`entries[].practice_loops` mirrors the single-take practice loop payload for that take.
 
 ## Error shape
 

@@ -128,6 +128,7 @@ class BatchEntryPayload(TypedDict):
     overall_score: float
     summary: str | None
     output_dir: str | None
+    practice_loops: list[PracticeLoopPayload]
     artifacts: list[ArtifactPayload]
 
 
