@@ -53,6 +53,7 @@ def write_report_artifacts(
         metrics=report.metrics,
         sections=report.sections,
         analysis_confidence=report.analysis_confidence,
+        practice_loops=report.practice_loops,
         top_strengths=report.top_strengths,
         top_weaknesses=report.top_weaknesses,
         next_practice_step=report.next_practice_step,

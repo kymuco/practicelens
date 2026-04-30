@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from practicelens.domain.models import ComponentScore, MetricResult, SectionReport
+from practicelens.domain.models import ComponentScore, MetricResult, PracticeLoop, SectionReport
 
 
 @dataclass(slots=True, frozen=True)
@@ -13,6 +13,7 @@ class ScoringBundle:
     component_scores: tuple[ComponentScore, ...]
     metrics: tuple[MetricResult, ...]
     sections: tuple[SectionReport, ...]
+    practice_loops: tuple[PracticeLoop, ...] = ()
     top_strengths: tuple[str, ...] = ()
     top_weaknesses: tuple[str, ...] = ()
     next_practice_step: str | None = None

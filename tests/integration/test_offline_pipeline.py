@@ -43,6 +43,7 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
     assert result.report.analysis_confidence.level in {"high", "medium", "low"}
     assert result.report.analysis_confidence.reasons
     assert result.report.analysis_confidence.limitations
+    assert isinstance(result.report.practice_loops, tuple)
     assert result.report.top_strengths
     assert result.report.top_weaknesses
     assert result.report.next_practice_step is not None
@@ -62,6 +63,7 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
         "metrics",
         "sections",
         "analysis_confidence",
+        "practice_loops",
         "top_strengths",
         "top_weaknesses",
         "next_practice_step",
@@ -79,3 +81,4 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
     assert payload["analysis_confidence"]["level"] in {"high", "medium", "low"}
     assert payload["analysis_confidence"]["reasons"]
     assert payload["analysis_confidence"]["limitations"]
+    assert isinstance(payload["practice_loops"], list)

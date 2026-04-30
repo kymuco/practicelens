@@ -11,6 +11,7 @@ from practicelens.domain.models import (
     ComponentScore,
     FeatureFlags,
     MetricResult,
+    PracticeLoop,
     SectionFinding,
     SectionReport,
 )
@@ -38,6 +39,15 @@ def _sample_report() -> AnalysisReport:
             reasons=("Alignment coverage is broad enough for a stable reference-aware comparison.",),
             limitations=("PracticeLens v0.1 uses deterministic signal-processing heuristics, not human musical judgment.",),
         ),
+        practice_loops=(
+            PracticeLoop(
+                section_index=0,
+                start_s=0.0,
+                end_s=8.0,
+                focus=MetricName.PITCH_FIDELITY,
+                instruction="Loop Section 0 (0.00s - 8.00s) and focus on Pitch Fidelity.",
+            ),
+        ),
         top_strengths=("Pitch Fidelity is a clear current strength at 92.0/100; keep preserving that control.",),
         top_weaknesses=("Pitch Fidelity is the main weakness at 92.0/100. Keep preserving that control.",),
         next_practice_step="Next practice step: keep the current pitch control steady through the full phrase.",
@@ -60,6 +70,7 @@ def test_report_json_payload_has_stable_top_level_contract() -> None:
         "metrics",
         "sections",
         "analysis_confidence",
+        "practice_loops",
         "top_strengths",
         "top_weaknesses",
         "next_practice_step",
@@ -80,6 +91,15 @@ def test_report_json_payload_has_stable_top_level_contract() -> None:
         "reasons": ["Alignment coverage is broad enough for a stable reference-aware comparison."],
         "limitations": ["PracticeLens v0.1 uses deterministic signal-processing heuristics, not human musical judgment."],
     }
+    assert payload["practice_loops"] == [
+        {
+            "section_index": 0,
+            "start_s": 0.0,
+            "end_s": 8.0,
+            "focus": "pitch_fidelity",
+            "instruction": "Loop Section 0 (0.00s - 8.00s) and focus on Pitch Fidelity.",
+        }
+    ]
     assert payload["top_strengths"] == ["Pitch Fidelity is a clear current strength at 92.0/100; keep preserving that control."]
     assert payload["top_weaknesses"] == ["Pitch Fidelity is the main weakness at 92.0/100. Keep preserving that control."]
     assert payload["next_practice_step"] == "Next practice step: keep the current pitch control steady through the full phrase."

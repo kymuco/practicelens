@@ -46,6 +46,7 @@ def normalize_single_payload(payload: dict[str, object]) -> dict[str, object]:
         "metrics": payload["metrics"],
         "sections": payload["sections"],
         "analysis_confidence": payload["analysis_confidence"],
+        "practice_loops": payload["practice_loops"],
         "feedback": payload["feedback"],
         "artifacts": normalize_artifacts(payload["artifacts"]),
         "summary": payload["summary"],

@@ -8,6 +8,7 @@
 - **Overall score:** 86.1/100
 - **Performance band:** Strong
 - **Analysis confidence:** High
+- **Practice loops:** 2 recommended
 - **Next practice step:** loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.
 
 Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main improvement area: Timing Consistency (79.0/100).
@@ -28,6 +29,18 @@ Strong reference match overall. Best area: Pitch Fidelity (90.0/100). Main impro
 - Limitations:
   - PracticeLens v0.1 uses deterministic signal-processing heuristics, not human musical judgment.
   - Confidence is a sanity note for the current evidence quality, not a scientific accuracy guarantee.
+
+## Practice Loops
+
+### Section 1 (8.00s - 16.00s)
+
+- Focus: Timing Consistency
+- Instruction: Loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.
+
+### Section 2 (16.00s - 24.00s)
+
+- Focus: Timing Consistency
+- Instruction: Loop Section 2 (16.00s - 24.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.
 
 ## Component Scores
 

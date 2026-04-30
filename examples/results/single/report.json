@@ -90,6 +90,22 @@
     "schema_version": 1,
     "status": "completed"
   },
+  "practice_loops": [
+    {
+      "end_s": 16.0,
+      "focus": "timing_consistency",
+      "instruction": "Loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.",
+      "section_index": 1,
+      "start_s": 8.0
+    },
+    {
+      "end_s": 24.0,
+      "focus": "timing_consistency",
+      "instruction": "Loop Section 2 (16.00s - 24.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.",
+      "section_index": 2,
+      "start_s": 16.0
+    }
+  ],
   "scores": [
     {
       "name": "pitch_fidelity",

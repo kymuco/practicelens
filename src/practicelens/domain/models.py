@@ -107,6 +107,17 @@ class SectionReport:
 
 
 @dataclass(slots=True, frozen=True)
+class PracticeLoop:
+    """One concrete section loop recommendation for focused practice."""
+
+    section_index: int
+    start_s: Seconds
+    end_s: Seconds
+    focus: MetricName
+    instruction: str
+
+
+@dataclass(slots=True, frozen=True)
 class ArtifactLink:
     """Stable reference to one generated artifact."""
 
@@ -156,6 +167,7 @@ class AnalysisReport:
     metrics: tuple[MetricResult, ...]
     sections: tuple[SectionReport, ...]
     analysis_confidence: AnalysisConfidence = AnalysisConfidence()
+    practice_loops: tuple[PracticeLoop, ...] = ()
     top_strengths: tuple[str, ...] = ()
     top_weaknesses: tuple[str, ...] = ()
     next_practice_step: str | None = None

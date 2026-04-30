@@ -9,6 +9,7 @@ from practicelens.domain.models import (
     ComponentScore,
     FeatureFlags,
     MetricResult,
+    PracticeLoop,
     SectionFinding,
     SectionReport,
 )
@@ -46,6 +47,15 @@ def _sample_report() -> AnalysisReport:
             reasons=("Onset evidence is present for rhythm-oriented feedback.",),
             limitations=("Confidence is a sanity note for the current evidence quality, not a scientific accuracy guarantee.",),
         ),
+        practice_loops=(
+            PracticeLoop(
+                section_index=1,
+                start_s=8.0,
+                end_s=16.0,
+                focus=MetricName.TIMING_CONSISTENCY,
+                instruction="Loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency.",
+            ),
+        ),
         top_strengths=("Pitch Fidelity is a clear current strength at 92.0/100; keep preserving that control.",),
         top_weaknesses=(
             "Timing Consistency is the main weakness at 74.0/100. Tighten phrase timing so the take stops drifting across the section.",
@@ -59,7 +69,7 @@ def _sample_report() -> AnalysisReport:
     )
 
 
-def test_markdown_report_surfaces_strengths_weaknesses_next_step_and_confidence() -> None:
+def test_markdown_report_surfaces_strengths_weaknesses_next_step_confidence_and_practice_loops() -> None:
     markdown = report_to_markdown(_sample_report())
 
     assert "## Analysis Confidence" in markdown
@@ -67,6 +77,11 @@ def test_markdown_report_surfaces_strengths_weaknesses_next_step_and_confidence(
     assert "- Level: **Medium**" in markdown
     assert "Onset evidence is present for rhythm-oriented feedback." in markdown
     assert "Confidence is a sanity note for the current evidence quality" in markdown
+    assert "- **Practice loops:** 1 recommended" in markdown
+    assert "## Practice Loops" in markdown
+    assert "### Section 1 (8.00s - 16.00s)" in markdown
+    assert "- Focus: Timing Consistency" in markdown
+    assert "Loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency." in markdown
     assert "## Top Strengths" in markdown
     assert "Pitch Fidelity is a clear current strength at 92.0/100; keep preserving that control." in markdown
     assert "## Top Weaknesses" in markdown

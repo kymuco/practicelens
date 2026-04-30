@@ -87,6 +87,7 @@ Top-level response fields:
 - `metrics`
 - `sections`
 - `analysis_confidence`
+- `practice_loops`
 - `top_strengths`
 - `top_weaknesses`
 - `next_practice_step`
@@ -99,6 +100,14 @@ Top-level response fields:
 - `level` — `high`, `medium`, or `low`
 - `reasons` — evidence-quality notes supporting the confidence level
 - `limitations` — explicit caveats about deterministic v0.1 analysis
+
+`practice_loops` includes focused section-repeat recommendations:
+
+- `section_index`
+- `start_s`
+- `end_s`
+- `focus`
+- `instruction`
 
 `overview.kind` is currently `analysis_report` and `overview.schema_version` is currently `1`.
 
