@@ -1,4 +1,4 @@
-.PHONY: install-dev install-api lint test regression check run-api build-package generate-demo-assets
+.PHONY: install-dev install-api lint test regression check run-api build-package generate-demo-assets generate-evaluation-assets
 
 install-dev:
 	pip install -e .[dev]
@@ -25,3 +25,6 @@ build-package:
 
 generate-demo-assets:
 	python tools/generate_demo_assets.py
+
+generate-evaluation-assets:
+	python tools/generate_evaluation_assets.py
