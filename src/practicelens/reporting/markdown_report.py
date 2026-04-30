@@ -19,6 +19,8 @@ def report_to_markdown(report: AnalysisReport) -> str:
     lines.append(f"- **Overall score:** {overall_score:.1f}/100")
     lines.append(f"- **Performance band:** {_score_band(overall_score)}")
     lines.append(f"- **Analysis confidence:** {report.analysis_confidence.level.title()}")
+    if report.practice_loops:
+        lines.append(f"- **Practice loops:** {len(report.practice_loops)} recommended")
     if report.next_practice_step:
         step_summary = report.next_practice_step.removeprefix("Next practice step: ")
         lines.append(f"- **Next practice step:** {step_summary}")
@@ -39,6 +41,17 @@ def report_to_markdown(report: AnalysisReport) -> str:
         lines.append("- Limitations:")
         for limitation in report.analysis_confidence.limitations:
             lines.append(f"  - {limitation}")
+
+    lines.extend(["", "## Practice Loops", ""])
+    if report.practice_loops:
+        for loop in report.practice_loops:
+            lines.append(f"### Section {loop.section_index} ({loop.start_s:.2f}s - {loop.end_s:.2f}s)")
+            lines.append("")
+            lines.append(f"- Focus: {_metric_label(loop.focus.value)}")
+            lines.append(f"- Instruction: {loop.instruction}")
+            lines.append("")
+    else:
+        lines.append("No focused practice loops were generated.")
 
     lines.extend(["", "## Component Scores", ""])
     lines.append("| Component | Score | Weight |")
