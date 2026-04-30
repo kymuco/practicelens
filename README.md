@@ -49,10 +49,11 @@ If you want to understand the repo in a few minutes, use this order:
 
 1. [Quickstart](docs/quickstart.md)
 2. Generate the [evaluation showcase](examples/evaluation_showcase/README.md)
-3. [Architecture overview](docs/architecture.md)
-4. [Repository map](docs/repository-map.md)
-5. [API notes](docs/api.md)
-6. [Examples](examples/api), [sample results](examples/results), and [CLI notes](examples/cli/README.md)
+3. Review the generated outputs with the [showcase review checklist](docs/showcase_review.md)
+4. [Architecture overview](docs/architecture.md)
+5. [Repository map](docs/repository-map.md)
+6. [API notes](docs/api.md)
+7. [Examples](examples/api), [sample results](examples/results), and [CLI notes](examples/cli/README.md)
 
 If you want a sharper evaluator path, use [docs/evaluate.md](docs/evaluate.md).
 
@@ -77,6 +78,8 @@ Start with:
 - `examples/evaluation_showcase/generated/single/pitch_drift_take/report.md`
 - `examples/evaluation_showcase/generated/single/timing_drift_take/report.md`
 
+Use [docs/showcase_review.md](docs/showcase_review.md) to judge whether the generated reports behave plausibly.
+
 These examples are synthetic sanity demos, not a scientific benchmark. They exist so a reviewer can inspect the product behavior quickly without third-party audio files.
 
 ## Why this repo feels trustworthy
@@ -97,6 +100,7 @@ It does make it reviewable, understandable, and much harder to mistake for a ran
 
 - Quickstart: [docs/quickstart.md](docs/quickstart.md)
 - Evaluation showcase: [examples/evaluation_showcase/README.md](examples/evaluation_showcase/README.md)
+- Showcase review checklist: [docs/showcase_review.md](docs/showcase_review.md)
 - CLI walkthrough: [docs/cli_walkthrough.md](docs/cli_walkthrough.md)
 - Evaluate the repo: [docs/evaluate.md](docs/evaluate.md)
 - Architecture overview: [docs/architecture.md](docs/architecture.md)
