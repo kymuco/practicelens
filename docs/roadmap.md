@@ -25,6 +25,7 @@ The repo should become easier to judge quickly.
 Examples:
 
 - clearer demo assets;
+- more realistic synthetic evaluation assets;
 - more polished README presentation;
 - stronger example outputs;
 - easier first-run walkthroughs.
@@ -59,6 +60,7 @@ Possible later work:
 
 - stronger scoring calibration;
 - better section-level heuristics;
+- broader evaluation cases before heavier scoring changes;
 - optional model-assisted scoring layered on top of deterministic features.
 
 ## Explicitly not the immediate goal

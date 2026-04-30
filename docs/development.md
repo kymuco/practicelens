@@ -41,6 +41,18 @@ If you want a package build smoke locally:
 make build-package
 ```
 
+If you want to refresh generated local demo assets:
+
+```bash
+make generate-demo-assets
+```
+
+If you want to refresh the more realistic synthetic evaluation assets:
+
+```bash
+make generate-evaluation-assets
+```
+
 If you only want the split commands:
 
 ```bash
@@ -68,7 +80,8 @@ It is meant to catch obvious drift in:
 
 - ranking order;
 - top-level score sanity;
-- simple synthetic reference-match expectations.
+- simple synthetic reference-match expectations;
+- broad behavior on generated synthetic evaluation cases.
 
 It is **not** trying to present itself as a final benchmark suite.
 
@@ -119,5 +132,7 @@ make lint
 make test
 make regression
 make build-package
+make generate-demo-assets
+make generate-evaluation-assets
 make check
 ```
