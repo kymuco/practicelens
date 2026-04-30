@@ -49,16 +49,9 @@ class AnalysisConfig:
         if self.segment_duration_s <= 0:
             raise InvalidAnalysisConfigError("segment_duration_s must be positive")
 
-        total_weight = (
-            self.pitch_weight
-            + self.rhythm_weight
-            + self.timing_weight
-            + self.stability_weight
-        )
+        total_weight = self.pitch_weight + self.rhythm_weight + self.timing_weight + self.stability_weight
         if abs(total_weight - 1.0) > 1e-9:
-            raise InvalidAnalysisConfigError(
-                "score weights must sum to 1.0 for deterministic aggregation"
-            )
+            raise InvalidAnalysisConfigError("score weights must sum to 1.0 for deterministic aggregation")
 
 
 @dataclass(slots=True, frozen=True)
@@ -123,6 +116,15 @@ class ArtifactLink:
 
 
 @dataclass(slots=True, frozen=True)
+class AnalysisConfidence:
+    """Human-facing confidence notes for the deterministic analysis result."""
+
+    level: str = "medium"
+    reasons: tuple[str, ...] = ()
+    limitations: tuple[str, ...] = ()
+
+
+@dataclass(slots=True, frozen=True)
 class AnalysisOverview:
     """Compact, stable top-level overview contract for a finished analysis."""
 
@@ -153,6 +155,7 @@ class AnalysisReport:
     scores: tuple[ComponentScore, ...]
     metrics: tuple[MetricResult, ...]
     sections: tuple[SectionReport, ...]
+    analysis_confidence: AnalysisConfidence = AnalysisConfidence()
     top_strengths: tuple[str, ...] = ()
     top_weaknesses: tuple[str, ...] = ()
     next_practice_step: str | None = None
