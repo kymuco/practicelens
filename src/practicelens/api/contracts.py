@@ -90,6 +90,14 @@ class AnalysisConfidencePayload(TypedDict):
     limitations: list[str]
 
 
+class PracticeLoopPayload(TypedDict):
+    section_index: int
+    start_s: float
+    end_s: float
+    focus: str
+    instruction: str
+
+
 class ArtifactPayload(TypedDict):
     kind: str
     path: str
@@ -105,6 +113,7 @@ class AnalyzeResponsePayload(TypedDict):
     metrics: list[MetricPayload]
     sections: list[SectionPayload]
     analysis_confidence: AnalysisConfidencePayload
+    practice_loops: list[PracticeLoopPayload]
     top_strengths: list[str]
     top_weaknesses: list[str]
     next_practice_step: str | None
