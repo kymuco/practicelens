@@ -35,6 +35,7 @@ def test_single_example_result_matches_current_contract_shape() -> None:
     payload = read_json(Path("examples/results/single/report.json"))
 
     assert tuple(payload) == (
+        "analysis_confidence",
         "artifacts",
         "feature_flags",
         "feedback",
@@ -56,6 +57,9 @@ def test_single_example_result_matches_current_contract_shape() -> None:
         "schema_version": 1,
         "status": "completed",
     }
+    assert payload["analysis_confidence"]["level"] in {"high", "medium", "low"}
+    assert payload["analysis_confidence"]["reasons"]
+    assert payload["analysis_confidence"]["limitations"]
     assert payload["top_strengths"]
     assert payload["top_weaknesses"]
     assert payload["next_practice_step"] is not None
