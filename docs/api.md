@@ -159,6 +159,14 @@ Each `entries[]` item includes:
 
 `entries[].practice_loops` mirrors the single-take practice loop payload for that take.
 
+Runnable `curl` example:
+
+```bash
+curl -X POST http://127.0.0.1:8000/compare-batch \
+  -H "Content-Type: application/json" \
+  --data @examples/api/compare_batch_payload.json
+```
+
 ## Error shape
 
 Bad payloads currently return a JSON error response with this general shape:
