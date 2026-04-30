@@ -96,6 +96,7 @@ def test_batch_example_result_matches_current_contract_shape() -> None:
         "svg_report",
     ]
     first_entry = payload["entries"][0]
+    assert first_entry["practice_loops"]
     assert [artifact["kind"] for artifact in first_entry["artifacts"]] == [
         "json_report",
         "markdown_report",
