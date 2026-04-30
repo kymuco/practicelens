@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from practicelens.evaluation_assets import generate_evaluation_assets
 
 
