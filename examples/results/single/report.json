@@ -1,4 +1,17 @@
 {
+  "analysis_confidence": {
+    "level": "high",
+    "limitations": [
+      "PracticeLens v0.1 uses deterministic signal-processing heuristics, not human musical judgment.",
+      "Confidence is a sanity note for the current evidence quality, not a scientific accuracy guarantee."
+    ],
+    "reasons": [
+      "Alignment coverage is broad enough for a stable reference-aware comparison.",
+      "Voiced-frame coverage is sufficient for pitch-related feedback.",
+      "Onset evidence is present for rhythm-oriented feedback.",
+      "Section reports were produced, so local practice guidance has supporting spans."
+    ]
+  },
   "artifacts": [
     {
       "description": "Structured analysis report.",

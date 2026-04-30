@@ -84,6 +84,12 @@ class SectionPayload(TypedDict):
     findings: list[SectionFindingPayload]
 
 
+class AnalysisConfidencePayload(TypedDict):
+    level: str
+    reasons: list[str]
+    limitations: list[str]
+
+
 class ArtifactPayload(TypedDict):
     kind: str
     path: str
@@ -98,6 +104,7 @@ class AnalyzeResponsePayload(TypedDict):
     scores: list[ComponentScorePayload]
     metrics: list[MetricPayload]
     sections: list[SectionPayload]
+    analysis_confidence: AnalysisConfidencePayload
     top_strengths: list[str]
     top_weaknesses: list[str]
     next_practice_step: str | None

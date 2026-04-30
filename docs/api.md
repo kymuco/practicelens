@@ -86,12 +86,19 @@ Top-level response fields:
 - `scores`
 - `metrics`
 - `sections`
+- `analysis_confidence`
 - `top_strengths`
 - `top_weaknesses`
 - `next_practice_step`
 - `feedback`
 - `artifacts`
 - `summary`
+
+`analysis_confidence` includes:
+
+- `level` — `high`, `medium`, or `low`
+- `reasons` — evidence-quality notes supporting the confidence level
+- `limitations` — explicit caveats about deterministic v0.1 analysis
 
 `overview.kind` is currently `analysis_report` and `overview.schema_version` is currently `1`.
 

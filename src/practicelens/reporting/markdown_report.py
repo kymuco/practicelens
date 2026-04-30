@@ -18,6 +18,7 @@ def report_to_markdown(report: AnalysisReport) -> str:
     lines.append(f"- **Take:** `{take_name}`")
     lines.append(f"- **Overall score:** {overall_score:.1f}/100")
     lines.append(f"- **Performance band:** {_score_band(overall_score)}")
+    lines.append(f"- **Analysis confidence:** {report.analysis_confidence.level.title()}")
     if report.next_practice_step:
         step_summary = report.next_practice_step.removeprefix("Next practice step: ")
         lines.append(f"- **Next practice step:** {step_summary}")
@@ -28,13 +29,22 @@ def report_to_markdown(report: AnalysisReport) -> str:
     lines.append(f"- Reference: `{report.inputs.reference_path}`")
     lines.append(f"- Take: `{report.inputs.take_path}`")
 
+    lines.extend(["", "## Analysis Confidence", ""])
+    lines.append(f"- Level: **{report.analysis_confidence.level.title()}**")
+    if report.analysis_confidence.reasons:
+        lines.append("- Reasons:")
+        for reason in report.analysis_confidence.reasons:
+            lines.append(f"  - {reason}")
+    if report.analysis_confidence.limitations:
+        lines.append("- Limitations:")
+        for limitation in report.analysis_confidence.limitations:
+            lines.append(f"  - {limitation}")
+
     lines.extend(["", "## Component Scores", ""])
     lines.append("| Component | Score | Weight |")
     lines.append("| --- | ---: | ---: |")
     for score in report.scores:
-        lines.append(
-            f"| {_metric_label(score.name.value)} | {score.score:.1f}/100 | {int(round(score.weight * 100))}% |"
-        )
+        lines.append(f"| {_metric_label(score.name.value)} | {score.score:.1f}/100 | {int(round(score.weight * 100))}% |")
 
     lines.extend(["", "## Metrics", ""])
     if report.metrics:
@@ -42,9 +52,7 @@ def report_to_markdown(report: AnalysisReport) -> str:
         lines.append("| --- | ---: | --- | --- |")
         for metric in report.metrics:
             detail = metric.detail or "-"
-            lines.append(
-                f"| {_metric_label(metric.name.value)} | {metric.score:.1f}/100 | {metric.severity.value} | {detail} |"
-            )
+            lines.append(f"| {_metric_label(metric.name.value)} | {metric.score:.1f}/100 | {metric.severity.value} | {detail} |")
     else:
         lines.append("No metric rows were produced.")
 
