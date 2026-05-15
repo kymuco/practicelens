@@ -19,7 +19,8 @@
       "json_report",
       "markdown_report",
       "csv_report",
-      "svg_report"
+      "svg_report",
+      "practice_plan"
     ]
   }
 }
