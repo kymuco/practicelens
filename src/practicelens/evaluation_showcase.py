@@ -171,7 +171,7 @@ def _generated_readme(summary: dict[str, object]) -> str:
             "1. Open `summary.json` for the compact machine-readable overview.",
             "2. Open `batch/practice_plan.md` for the session-level next action across takes.",
             "3. Open `batch/batch_report.md` for ranking details.",
-            "4. Open `single/pitch_drift_take/practice_plan.md` and `single/timing_drift_take/practice_plan.md` for focused per-take practice guidance.",
+            "4. Open the per-take `practice_plan.md` files for focused guidance.",
             "5. Open the matching `report.md` files when you want supporting analysis details.",
             "",
         ]
