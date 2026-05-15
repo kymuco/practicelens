@@ -149,5 +149,6 @@ def _batch_artifact_description(kind: ArtifactKind) -> str | None:
         ArtifactKind.MARKDOWN_REPORT: "Human-readable batch comparison report.",
         ArtifactKind.CSV_REPORT: "Take ranking table export.",
         ArtifactKind.SVG_REPORT: "Compact visual batch ranking summary.",
+        ArtifactKind.PRACTICE_PLAN: "Session-level practice plan across compared takes.",
     }
     return descriptions.get(kind)
