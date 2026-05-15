@@ -47,11 +47,18 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
     assert result.report.top_strengths
     assert result.report.top_weaknesses
     assert result.report.next_practice_step is not None
-    assert len(result.report.artifacts) == 4
+    assert len(result.report.artifacts) == 5
     assert (out_dir / "report.json").exists()
     assert (out_dir / "report.md").exists()
     assert (out_dir / "report.csv").exists()
     assert (out_dir / "report.svg").exists()
+    assert (out_dir / "practice_plan.md").exists()
+
+    practice_plan = (out_dir / "practice_plan.md").read_text(encoding="utf-8")
+    assert "# PracticeLens Practice Plan" in practice_plan
+    assert "## Goal for the next take" in practice_plan
+    assert "## Practice loops" in practice_plan
+    assert "## Next recording target" in practice_plan
 
     payload = json.loads((out_dir / "report.json").read_text(encoding="utf-8"))
     assert set(payload) == {
@@ -82,3 +89,10 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
     assert payload["analysis_confidence"]["reasons"]
     assert payload["analysis_confidence"]["limitations"]
     assert isinstance(payload["practice_loops"], list)
+    assert {artifact["kind"] for artifact in payload["artifacts"]} == {
+        "json_report",
+        "markdown_report",
+        "csv_report",
+        "svg_report",
+        "practice_plan",
+    }
