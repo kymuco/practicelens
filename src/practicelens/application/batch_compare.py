@@ -11,6 +11,7 @@ from practicelens.application.contracts import (
 )
 from practicelens.application.offline_pipeline import OfflineReferenceAnalysisPipeline
 from practicelens.domain.enums import ArtifactKind
+from practicelens.reporting.batch_practice_plan import batch_compare_result_to_practice_plan_markdown
 from practicelens.reporting.batch_report import (
     batch_compare_result_to_csv_text,
     batch_compare_result_to_json_text,
@@ -83,6 +84,7 @@ class OfflineBatchComparePipeline:
         markdown_path = out_dir / "batch_report.md"
         csv_path = out_dir / "batch_report.csv"
         svg_path = out_dir / "batch_report.svg"
+        practice_plan_path = out_dir / "practice_plan.md"
 
         result_with_artifacts = BatchCompareResult(
             reference_path=result.reference_path,
@@ -93,6 +95,7 @@ class OfflineBatchComparePipeline:
                 (ArtifactKind.MARKDOWN_REPORT, markdown_path),
                 (ArtifactKind.CSV_REPORT, csv_path),
                 (ArtifactKind.SVG_REPORT, svg_path),
+                (ArtifactKind.PRACTICE_PLAN, practice_plan_path),
             ),
             summary=result.summary,
         )
@@ -101,6 +104,7 @@ class OfflineBatchComparePipeline:
         markdown_path.write_text(batch_compare_result_to_markdown(result_with_artifacts), encoding="utf-8")
         csv_path.write_text(batch_compare_result_to_csv_text(result_with_artifacts), encoding="utf-8")
         svg_path.write_text(batch_compare_result_to_svg(result_with_artifacts), encoding="utf-8")
+        practice_plan_path.write_text(batch_compare_result_to_practice_plan_markdown(result_with_artifacts), encoding="utf-8")
 
         return result_with_artifacts
 
