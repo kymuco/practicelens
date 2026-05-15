@@ -12,8 +12,13 @@ from practicelens.evaluation_assets import generate_evaluation_assets
 EXPECTATIONS = json.loads((Path(__file__).with_name("evaluation_expectations.json")).read_text(encoding="utf-8"))
 
 
-def _run(reference: Path, take: Path, out_dir: Path) -> AnalysisReport:
-    return OfflineReferenceAnalysisPipeline().analyze(
+def _run(
+    pipeline: OfflineReferenceAnalysisPipeline,
+    reference: Path,
+    take: Path,
+    out_dir: Path,
+) -> AnalysisReport:
+    return pipeline.analyze(
         AnalyzeRequest(
             reference_path=reference,
             take_path=take,
@@ -43,11 +48,12 @@ def _metric_value(report: AnalysisReport, metric: str) -> float:
 def test_generated_evaluation_cases_match_calibration_expectation_manifest(tmp_path: Path) -> None:
     assets = generate_evaluation_assets(tmp_path / "assets")
     reference = assets[EXPECTATIONS["reference_case"]]
+    pipeline = OfflineReferenceAnalysisPipeline()
     reports: dict[str, AnalysisReport] = {}
 
     for case in EXPECTATIONS["cases"]:
         case_name = case["name"]
-        reports[case_name] = _run(reference, assets[case_name], tmp_path / f"{case_name}-out")
+        reports[case_name] = _run(pipeline, reference, assets[case_name], tmp_path / f"{case_name}-out")
 
     for case in EXPECTATIONS["cases"]:
         report = reports[case["name"]]

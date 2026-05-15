@@ -5,6 +5,7 @@ from pathlib import Path
 
 from practicelens.application import AnalyzeRequest, OfflineReferenceAnalysisPipeline
 from practicelens.domain.models import AnalysisConfig
+from practicelens.features import FeatureBundle
 
 
 def _write_wav(path: Path, samples: list[float], *, sample_rate: int = 16_000) -> None:
@@ -96,3 +97,38 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
         "svg_report",
         "practice_plan",
     }
+
+
+def test_offline_pipeline_reuses_reference_feature_extraction(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    import practicelens.application.offline_pipeline as offline_pipeline
+
+    reference = tmp_path / "reference.wav"
+    take_one = tmp_path / "take-one.wav"
+    take_two = tmp_path / "take-two.wav"
+
+    reference_samples = [math.sin(2.0 * math.pi * 220.0 * index / 16_000.0) for index in range(8000)]
+    take_one_samples = [math.sin(2.0 * math.pi * 220.0 * index / 16_000.0) for index in range(8000)]
+    take_two_samples = [math.sin(2.0 * math.pi * 233.08 * index / 16_000.0) for index in range(8000)]
+    _write_wav(reference, reference_samples)
+    _write_wav(take_one, take_one_samples)
+    _write_wav(take_two, take_two_samples)
+
+    original_extract = offline_pipeline.extract_feature_bundle
+    extracted_bundles: list[FeatureBundle] = []
+
+    def tracking_extract(*args, **kwargs):
+        bundle = original_extract(*args, **kwargs)
+        extracted_bundles.append(bundle)
+        return bundle
+
+    monkeypatch.setattr(offline_pipeline, "extract_feature_bundle", tracking_extract)
+
+    pipeline = OfflineReferenceAnalysisPipeline()
+    config = AnalysisConfig(frame_length=1024, hop_length=256, segment_duration_s=2.0)
+    pipeline.analyze(AnalyzeRequest(reference_path=reference, take_path=take_one, config=config))
+    pipeline.analyze(AnalyzeRequest(reference_path=reference, take_path=take_two, config=config))
+
+    assert len(extracted_bundles) == 3

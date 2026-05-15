@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from practicelens.alignment import AlignmentPath, align_feature_bundles
 from practicelens.application.contracts import AnalyzeRequest, AnalyzeResult
 from practicelens.application.pipeline import AnalysisPipeline
-from practicelens.domain.models import AnalysisConfidence, AnalysisOverview, AnalysisReport, FeatureFlags
+from practicelens.domain.models import AnalysisConfidence, AnalysisConfig, AnalysisOverview, AnalysisReport, FeatureFlags
 from practicelens.features import FeatureBundle, extract_feature_bundle
 from practicelens.io import ensure_finite_audio, load_wav_audio
 from practicelens.io.models import LoadedAudio
@@ -12,18 +14,22 @@ from practicelens.reporting.artifacts import write_report_artifacts
 from practicelens.scoring import score_aligned_features
 from practicelens.scoring.models import ScoringBundle
 
+_ReferenceFeatureCacheKey = tuple[Path, int, int, int, int, int]
+
 
 class OfflineReferenceAnalysisPipeline(AnalysisPipeline):
     """Concrete offline reference-aware analysis pipeline for v0.1."""
+
+    def __init__(self) -> None:
+        self._reference_feature_cache: dict[_ReferenceFeatureCacheKey, FeatureBundle] = {}
 
     def analyze(self, request: AnalyzeRequest) -> AnalyzeResult:
         analysis_input = request.to_analysis_input()
         config = request.config
 
-        reference_audio = self._prepare_audio(load_wav_audio(analysis_input.reference_path), config)
+        reference_features = self._reference_features(analysis_input.reference_path, config)
         take_audio = self._prepare_audio(load_wav_audio(analysis_input.take_path), config)
 
-        reference_features = extract_feature_bundle(reference_audio, config)
         take_features = extract_feature_bundle(take_audio, config)
         alignment = align_feature_bundles(reference_features, take_features)
         scoring = score_aligned_features(reference_features, take_features, alignment, config)
@@ -50,7 +56,18 @@ class OfflineReferenceAnalysisPipeline(AnalysisPipeline):
 
         return AnalyzeResult(report=report)
 
-    def _prepare_audio(self, audio: LoadedAudio, config) -> LoadedAudio:
+    def _reference_features(self, reference_path: Path, config: AnalysisConfig) -> FeatureBundle:
+        cache_key = _reference_feature_cache_key(reference_path, config)
+        cached = self._reference_feature_cache.get(cache_key)
+        if cached is not None:
+            return cached
+
+        reference_audio = self._prepare_audio(load_wav_audio(reference_path), config)
+        reference_features = extract_feature_bundle(reference_audio, config)
+        self._reference_feature_cache[cache_key] = reference_features
+        return reference_features
+
+    def _prepare_audio(self, audio: LoadedAudio, config: AnalysisConfig) -> LoadedAudio:
         audio = ensure_finite_audio(audio)
         samples = audio.samples
         target_rate = config.target_sample_rate
@@ -66,6 +83,19 @@ class OfflineReferenceAnalysisPipeline(AnalysisPipeline):
             source_channels=audio.source_channels,
             sample_width_bytes=audio.sample_width_bytes,
         )
+
+
+def _reference_feature_cache_key(reference_path: Path, config: AnalysisConfig) -> _ReferenceFeatureCacheKey:
+    resolved_path = reference_path.expanduser().resolve()
+    stat = resolved_path.stat()
+    return (
+        resolved_path,
+        stat.st_size,
+        stat.st_mtime_ns,
+        config.target_sample_rate,
+        config.frame_length,
+        config.hop_length,
+    )
 
 
 def _analysis_confidence(
