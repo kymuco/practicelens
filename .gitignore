@@ -10,7 +10,7 @@ dist/
 .ruff_cache/
 .venv/
 venv/
-[.]env
+.env
 .coverage
 htmlcov/
 examples/demo_assets/generated/
