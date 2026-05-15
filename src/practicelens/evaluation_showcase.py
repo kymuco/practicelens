@@ -92,6 +92,7 @@ def generate_evaluation_showcase(
         "reference_path": str(reference),
         "cases": single_outputs,
         "batch_report_path": str(batch_dir / "batch_report.json"),
+        "batch_practice_plan_path": str(batch_dir / "practice_plan.md"),
         "batch_ranking": [
             {
                 "rank": entry["rank"],
@@ -147,8 +148,8 @@ def _generated_readme(summary: dict[str, object]) -> str:
         "",
         f"- Reference: `{summary['reference_path']}`",
         "- Synthetic WAV assets under `assets/`",
-        "- Single-take reports under `single/<case_name>/`",
-        "- Batch comparison report under `batch/`",
+        "- Single-take reports and practice plans under `single/<case_name>/`",
+        "- Batch comparison report and session practice plan under `batch/`",
         "- Machine-readable summary in `summary.json`",
         "",
         "## Cases",
@@ -168,8 +169,10 @@ def _generated_readme(summary: dict[str, object]) -> str:
             "## Suggested inspection path",
             "",
             "1. Open `summary.json` for the compact machine-readable overview.",
-            "2. Open `batch/batch_report.md` for ranking across takes.",
-            "3. Open `single/pitch_drift_take/report.md` and `single/timing_drift_take/report.md` to inspect focused feedback.",
+            "2. Open `batch/practice_plan.md` for the session-level next action across takes.",
+            "3. Open `batch/batch_report.md` for ranking details.",
+            "4. Open `single/pitch_drift_take/practice_plan.md` and `single/timing_drift_take/practice_plan.md` for focused per-take practice guidance.",
+            "5. Open the matching `report.md` files when you want supporting analysis details.",
             "",
         ]
     )
