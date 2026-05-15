@@ -82,8 +82,12 @@ Generated batch artifacts:
 
 - `batch_report.json`
 - `batch_report.md`
+- `practice_plan.md`
 - `batch_report.csv`
+- `batch_report.svg`
 - per-take subdirectories under `out/batch/takes/`, each with its own `practice_plan.md`
+
+Start with top-level `practice_plan.md` if you want the session-level next action across all compared takes.
 
 ## 5. Useful tuning flags
 

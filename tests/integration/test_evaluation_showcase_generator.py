@@ -18,14 +18,17 @@ def test_generate_evaluation_showcase_writes_expected_outputs(tmp_path: Path) ->
     assert (result.assets_dir / "reference_phrase.wav").exists()
     assert (result.single_reports_dir / "exact_take" / "report.json").exists()
     assert (result.single_reports_dir / "pitch_drift_take" / "report.md").exists()
+    assert (result.single_reports_dir / "pitch_drift_take" / "practice_plan.md").exists()
     assert (result.batch_dir / "batch_report.json").exists()
     assert (result.batch_dir / "batch_report.md").exists()
+    assert (result.batch_dir / "practice_plan.md").exists()
     assert (result.batch_dir / "batch_report.csv").exists()
     assert (result.batch_dir / "batch_report.svg").exists()
 
     summary = json.loads(result.summary_path.read_text(encoding="utf-8"))
     assert summary["schema_version"] == 1
     assert summary["reference_case"] == "reference_phrase"
+    assert summary["batch_practice_plan_path"].endswith("batch/practice_plan.md")
     assert [case["case_name"] for case in summary["cases"]] == [
         "exact_take",
         "pitch_drift_take",
@@ -38,8 +41,16 @@ def test_generate_evaluation_showcase_writes_expected_outputs(tmp_path: Path) ->
     batch_payload = json.loads((result.batch_dir / "batch_report.json").read_text(encoding="utf-8"))
     assert len(batch_payload["entries"]) == 3
     assert all("practice_loops" in entry for entry in batch_payload["entries"])
+    assert {artifact["kind"] for artifact in batch_payload["artifacts"]} == {
+        "json_report",
+        "markdown_report",
+        "csv_report",
+        "svg_report",
+        "practice_plan",
+    }
 
     generated_readme = result.readme_path.read_text(encoding="utf-8")
     assert "# Generated Evaluation Showcase" in generated_readme
     assert "pitch_drift_take" in generated_readme
+    assert "batch/practice_plan.md" in generated_readme
     assert "batch/batch_report.md" in generated_readme

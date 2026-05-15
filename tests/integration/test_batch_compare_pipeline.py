@@ -50,10 +50,19 @@ def test_batch_compare_pipeline_ranks_multiple_takes(tmp_path: Path) -> None:
     assert (out_dir / "batch_report.md").exists()
     assert (out_dir / "batch_report.csv").exists()
     assert (out_dir / "batch_report.svg").exists()
+    assert (out_dir / "practice_plan.md").exists()
     assert (out_dir / "takes").exists()
     assert (out_dir / "takes" / "01-take_mid" / "practice_plan.md").exists()
     assert (out_dir / "takes" / "02-take_best" / "practice_plan.md").exists()
     assert (out_dir / "takes" / "03-take_low" / "practice_plan.md").exists()
+
+    practice_plan = (out_dir / "practice_plan.md").read_text(encoding="utf-8")
+    assert "# PracticeLens Batch Practice Plan" in practice_plan
+    assert "## Recurring weakness across takes" in practice_plan
+    assert "## Strongest stable area" in practice_plan
+    assert "## Top practice loops" in practice_plan
+    assert "## Next recording target" in practice_plan
+    assert "take_best.wav" in practice_plan
 
     payload = json.loads((out_dir / "batch_report.json").read_text(encoding="utf-8"))
     assert set(payload) == {"overview", "reference_path", "summary", "entries", "artifacts"}
@@ -68,4 +77,5 @@ def test_batch_compare_pipeline_ranks_multiple_takes(tmp_path: Path) -> None:
         "markdown_report",
         "csv_report",
         "svg_report",
+        "practice_plan",
     }
