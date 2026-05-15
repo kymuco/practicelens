@@ -16,6 +16,14 @@ For API usage as well:
 pip install -e .[dev,api]
 ```
 
+## Note for Windows users
+
+Some commands in this repository use `make` as a shortcut.
+
+On Linux and many developer environments, `make` is commonly available. On Windows, it may not be installed by default.
+
+You do not need `make` to use PracticeLens. Each Makefile shortcut maps to a direct Python command, and the docs include the direct command where it matters. Installing GNU Make through a Windows package manager is optional if you prefer the shorter `make ...` commands.
+
 ## 2. Generate demo audio files
 
 PracticeLens does not commit real practice audio into the repository.
@@ -26,6 +34,12 @@ Generate them with:
 
 ```bash
 make generate-demo-assets
+```
+
+If `make` is not available, run the generator directly:
+
+```bash
+python tools/generate_demo_assets.py
 ```
 
 This writes demo WAVs under:
