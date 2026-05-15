@@ -10,6 +10,7 @@ from practicelens.reporting import (
     report_to_markdown,
     report_to_svg,
 )
+from practicelens.reporting.practice_plan_report import report_to_practice_plan_markdown
 
 
 def write_report_artifacts(
@@ -21,6 +22,7 @@ def write_report_artifacts(
     markdown_path = out_dir / "report.md"
     csv_path = out_dir / "report.csv"
     svg_path = out_dir / "report.svg"
+    practice_plan_path = out_dir / "practice_plan.md"
 
     artifacts = (
         ArtifactLink(
@@ -42,6 +44,11 @@ def write_report_artifacts(
             ArtifactKind.SVG_REPORT,
             str(svg_path),
             "Compact visual score summary.",
+        ),
+        ArtifactLink(
+            ArtifactKind.PRACTICE_PLAN,
+            str(practice_plan_path),
+            "Focused next-practice plan.",
         ),
     )
 
@@ -66,4 +73,5 @@ def write_report_artifacts(
     markdown_path.write_text(report_to_markdown(report_with_artifacts), encoding="utf-8")
     csv_path.write_text(report_to_csv_text(report_with_artifacts), encoding="utf-8")
     svg_path.write_text(report_to_svg(report_with_artifacts), encoding="utf-8")
+    practice_plan_path.write_text(report_to_practice_plan_markdown(report_with_artifacts), encoding="utf-8")
     return report_with_artifacts, artifacts
