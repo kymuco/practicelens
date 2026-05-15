@@ -121,6 +121,20 @@ Best for:
 - reviewing which take came out strongest;
 - understanding score differences at a glance.
 
+### `practice_plan.md`
+
+Use this when you want one session-level practice plan across all compared takes.
+
+Best for:
+
+- choosing the best take to keep;
+- identifying the recurring weakness across takes;
+- seeing the strongest stable area to preserve;
+- picking the top practice loops from weaker takes;
+- setting the next recording target.
+
+This batch-level plan is different from the per-take `takes/<take>/practice_plan.md` files. The top-level plan summarizes the whole comparison session.
+
 ### `batch_report.csv`
 
 Use this when you want to inspect the ranked takes in a spreadsheet or other tabular tool.
@@ -168,7 +182,7 @@ Start with:
 
 Start with:
 
-1. `batch_report.svg`
+1. top-level `practice_plan.md`
 2. then `batch_report.md`
 3. then per-take `practice_plan.md` files under `takes/`
 
