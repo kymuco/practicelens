@@ -51,6 +51,9 @@ def test_batch_compare_pipeline_ranks_multiple_takes(tmp_path: Path) -> None:
     assert (out_dir / "batch_report.csv").exists()
     assert (out_dir / "batch_report.svg").exists()
     assert (out_dir / "takes").exists()
+    assert (out_dir / "takes" / "01-take_mid" / "practice_plan.md").exists()
+    assert (out_dir / "takes" / "02-take_best" / "practice_plan.md").exists()
+    assert (out_dir / "takes" / "03-take_low" / "practice_plan.md").exists()
 
     payload = json.loads((out_dir / "batch_report.json").read_text(encoding="utf-8"))
     assert set(payload) == {"overview", "reference_path", "summary", "entries", "artifacts"}

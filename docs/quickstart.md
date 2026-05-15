@@ -61,8 +61,11 @@ Generated artifacts:
 
 - `report.json`
 - `report.md`
+- `practice_plan.md`
 - `report.csv`
 - `report.svg`
+
+Start with `practice_plan.md` if you want the next concrete practice action. Read `report.md` when you want the supporting analysis details.
 
 ## 4. Run batch comparison
 
@@ -80,7 +83,7 @@ Generated batch artifacts:
 - `batch_report.json`
 - `batch_report.md`
 - `batch_report.csv`
-- per-take subdirectories under `out/batch/takes/`
+- per-take subdirectories under `out/batch/takes/`, each with its own `practice_plan.md`
 
 ## 5. Useful tuning flags
 

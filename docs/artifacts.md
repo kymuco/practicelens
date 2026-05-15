@@ -24,6 +24,11 @@ Stable top-level fields for `report.json`:
 - `scores`
 - `metrics`
 - `sections`
+- `analysis_confidence`
+- `practice_loops`
+- `top_strengths`
+- `top_weaknesses`
+- `next_practice_step`
 - `feedback`
 - `artifacts`
 - `summary`
@@ -60,6 +65,18 @@ Best for:
 - sharing the result in plain text form;
 - understanding the analysis structure.
 
+### `practice_plan.md`
+
+Use this when you want the shortest path from analysis to action.
+
+Best for:
+
+- deciding what to practice next;
+- seeing what to keep stable while improving the weakest area;
+- following focused loop recommendations before recording another take.
+
+This artifact is derived from the same report data as `report.md`, but it is intentionally more action-oriented: goal, current snapshot, keep/improve notes, practice loops, next recording target, and confidence notes.
+
 ### `report.csv`
 
 Use this when you care about section-by-section comparisons and want something spreadsheet-friendly.
@@ -91,6 +108,8 @@ Best for:
 - integrations;
 - ranking pipelines;
 - future evaluation tooling.
+
+Each per-take output folder under `takes/` also contains the normal single-take artifacts, including `practice_plan.md`.
 
 ### `batch_report.md`
 
@@ -138,17 +157,25 @@ Start with:
 1. `report.svg`
 2. then read `report.md`
 
+### If you want to practice immediately
+
+Start with:
+
+1. `practice_plan.md`
+2. then read `report.md` if you want the supporting details
+
 ### If you are comparing many takes
 
 Start with:
 
 1. `batch_report.svg`
 2. then `batch_report.md`
-3. then `batch_report.csv`
+3. then per-take `practice_plan.md` files under `takes/`
 
 ## Practical advice
 
 - Use Markdown when you want the result explained.
+- Use `practice_plan.md` when you want the next concrete practice action.
 - Use CSV when you want to compare rows quickly.
 - Use JSON when you want stable machine-readable structure.
 - Use SVG when you want the fastest visual summary.
