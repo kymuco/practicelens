@@ -42,12 +42,15 @@ examples/evaluation_showcase/generated/
     ...
   single/
     exact_take/report.md
+    exact_take/practice_plan.md
     pitch_drift_take/report.md
+    pitch_drift_take/practice_plan.md
     timing_drift_take/report.md
     rhythm_mistake_take/report.md
     tempo_mismatch_take/report.md
   batch/
     batch_report.md
+    practice_plan.md
     batch_report.json
     batch_report.csv
     batch_report.svg
@@ -65,13 +68,16 @@ examples/evaluation_showcase/generated/summary.json
 Then inspect:
 
 ```text
+examples/evaluation_showcase/generated/batch/practice_plan.md
 examples/evaluation_showcase/generated/batch/batch_report.md
 ```
 
 For focused feedback examples, compare:
 
 ```text
+examples/evaluation_showcase/generated/single/pitch_drift_take/practice_plan.md
 examples/evaluation_showcase/generated/single/pitch_drift_take/report.md
+examples/evaluation_showcase/generated/single/timing_drift_take/practice_plan.md
 examples/evaluation_showcase/generated/single/timing_drift_take/report.md
 examples/evaluation_showcase/generated/single/rhythm_mistake_take/report.md
 ```
