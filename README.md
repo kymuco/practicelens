@@ -59,10 +59,16 @@ If you want a sharper evaluator path, use [docs/evaluate.md](docs/evaluate.md).
 
 ## Evaluation showcase
 
-The fastest way to see PracticeLens behave end-to-end is to generate the synthetic evaluation showcase:
+The fastest way to see PracticeLens behave end-to-end is to generate the synthetic evaluation showcase from the repository root:
 
 ```bash
 make generate-evaluation-showcase
+```
+
+On Windows, `make` may not be installed by default. You can run the equivalent Python command instead:
+
+```bash
+python tools/generate_evaluation_showcase.py
 ```
 
 This creates deterministic synthetic WAV assets, single-take reports, a batch comparison, and a compact summary under:
@@ -71,8 +77,11 @@ This creates deterministic synthetic WAV assets, single-take reports, a batch co
 examples/evaluation_showcase/generated/
 ```
 
+Generated showcase files are local review artifacts and are intentionally not committed to the repository.
+
 Start with:
 
+- `examples/evaluation_showcase/generated/README.md`
 - `examples/evaluation_showcase/generated/summary.json`
 - `examples/evaluation_showcase/generated/batch/batch_report.md`
 - `examples/evaluation_showcase/generated/single/pitch_drift_take/report.md`
