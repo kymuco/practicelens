@@ -23,13 +23,37 @@ ruff check .
 pytest tests
 ```
 
+CI runs the full test suite with pytest duration reporting enabled:
+
+```bash
+pytest tests --durations=15
+```
+
+Use the duration output to identify expensive tests before optimizing the implementation or changing coverage.
+
 ## Recommended daily loop
+
+For a quick development loop while working on most code paths:
+
+```bash
+make lint
+make test-fast
+```
+
+For the full local gate before opening or merging a PR:
 
 ```bash
 make check
+make build-package
 ```
 
 If you want the regression-only sanity layer:
+
+```bash
+make test-regression
+```
+
+The legacy shortcut is still available:
 
 ```bash
 make regression
@@ -63,8 +87,9 @@ If you only want the split commands:
 
 ```bash
 make lint
+make test-fast
+make test-regression
 make test
-make regression
 make build-package
 ```
 
@@ -115,6 +140,7 @@ When changing the repo, be careful around:
 - Say clearly whether contracts changed.
 - Mention artifact changes explicitly.
 - Run lint and tests before opening the PR.
+- Use pytest duration output as evidence before changing slow tests or performance-sensitive internals.
 
 ## Release/readiness expectations
 
@@ -135,8 +161,10 @@ Before cutting a release-like milestone or sharing the repo more broadly, check:
 make install-dev
 make install-api
 make lint
-make test
+make test-fast
+make test-regression
 make regression
+make test
 make build-package
 make generate-demo-assets
 make generate-evaluation-assets
