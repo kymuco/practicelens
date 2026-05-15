@@ -6,8 +6,16 @@ The showcase generates synthetic evaluation WAV files, analyzes selected cases, 
 
 ## Generate the showcase
 
+Run from the repository root:
+
 ```bash
 make generate-evaluation-showcase
+```
+
+If `make` is not available on Windows, run the underlying Python script directly:
+
+```bash
+python tools/generate_evaluation_showcase.py
 ```
 
 Generated outputs are written under:
@@ -15,6 +23,8 @@ Generated outputs are written under:
 ```text
 examples/evaluation_showcase/generated/
 ```
+
+These generated files are local review artifacts and are intentionally not committed to the repository.
 
 ## Generated structure
 
@@ -48,6 +58,7 @@ examples/evaluation_showcase/generated/
 Start with:
 
 ```text
+examples/evaluation_showcase/generated/README.md
 examples/evaluation_showcase/generated/summary.json
 ```
 

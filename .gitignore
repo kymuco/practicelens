@@ -14,4 +14,6 @@ venv/
 .coverage
 htmlcov/
 examples/demo_assets/generated/
+examples/evaluation_assets/generated/
+examples/evaluation_showcase/generated/
 out/demo/

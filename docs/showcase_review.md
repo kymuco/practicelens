@@ -2,11 +2,19 @@
 
 The evaluation showcase is useful only if it helps reviewers judge PracticeLens behavior, not merely generate files.
 
-Use this document as a lightweight manual review checklist after running:
+Use this document as a lightweight manual review checklist after generating the showcase from the repository root:
 
 ```bash
 make generate-evaluation-showcase
 ```
+
+On Windows, `make` may not be installed by default. You do not need to install it just to run the showcase; the direct Python command is equivalent:
+
+```bash
+python tools/generate_evaluation_showcase.py
+```
+
+Installing GNU Make through a Windows package manager is optional if you prefer using the Makefile shortcuts.
 
 Generated outputs are written under:
 
@@ -14,17 +22,20 @@ Generated outputs are written under:
 examples/evaluation_showcase/generated/
 ```
 
+These generated files are local review artifacts and are intentionally not committed to the repository.
+
 ## Review path
 
 Start with these files, in this order:
 
-1. `examples/evaluation_showcase/generated/summary.json`
-2. `examples/evaluation_showcase/generated/batch/batch_report.md`
-3. `examples/evaluation_showcase/generated/single/exact_take/report.md`
-4. `examples/evaluation_showcase/generated/single/pitch_drift_take/report.md`
-5. `examples/evaluation_showcase/generated/single/timing_drift_take/report.md`
-6. `examples/evaluation_showcase/generated/single/rhythm_mistake_take/report.md`
-7. `examples/evaluation_showcase/generated/single/tempo_mismatch_take/report.md`
+1. `examples/evaluation_showcase/generated/README.md`
+2. `examples/evaluation_showcase/generated/summary.json`
+3. `examples/evaluation_showcase/generated/batch/batch_report.md`
+4. `examples/evaluation_showcase/generated/single/exact_take/report.md`
+5. `examples/evaluation_showcase/generated/single/pitch_drift_take/report.md`
+6. `examples/evaluation_showcase/generated/single/timing_drift_take/report.md`
+7. `examples/evaluation_showcase/generated/single/rhythm_mistake_take/report.md`
+8. `examples/evaluation_showcase/generated/single/tempo_mismatch_take/report.md`
 
 ## High-level questions
 
