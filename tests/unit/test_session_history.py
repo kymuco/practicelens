@@ -1,3 +1,4 @@
+import json
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -14,7 +15,10 @@ from practicelens.application.session_history import (
     append_session_history_entry,
     build_session_history_entry,
     format_session_history_entry,
+    format_session_show,
     read_session_history_entries,
+    read_session_manifest,
+    resolve_session_manifest_path,
 )
 from practicelens.domain.enums import AnalysisMode, MetricName
 from practicelens.domain.models import AnalysisInput, AnalysisOverview, AnalysisReport, ComponentScore, FeatureFlags
@@ -51,6 +55,21 @@ def _sample_result() -> BatchCompareResult:
             next_recording_target="Record one new take focused on improving Pitch Fidelity.",
         ),
     )
+
+
+def _sample_manifest() -> dict[str, object]:
+    return {
+        "schema_version": 1,
+        "kind": "practice_session_manifest",
+        "best_take": {"rank": 1, "take_path": "samples/take_a.wav", "overall_score": 91.0},
+        "weakest_take": {"rank": 2, "take_path": "samples/take_b.wav", "overall_score": 77.0},
+        "recurring_weakness": "pitch_fidelity",
+        "next_recording_target": "Record one new take focused on improving Pitch Fidelity.",
+        "entrypoints": {
+            "practice_plan": "out/session/practice_plan.md",
+            "batch_markdown": "out/session/batch_report.md",
+        },
+    }
 
 
 def test_build_session_history_entry_has_stable_shape() -> None:
@@ -106,6 +125,70 @@ def test_read_session_history_entries_rejects_invalid_json(tmp_path: Path) -> No
 
     with pytest.raises(ValueError, match="invalid session history JSON on line 1"):
         read_session_history_entries(index_path)
+
+
+def test_resolve_session_manifest_path_accepts_session_directory(tmp_path: Path) -> None:
+    session_dir = tmp_path / "session-a"
+    session_dir.mkdir()
+
+    assert resolve_session_manifest_path(str(session_dir), history_index_path=tmp_path / "missing.jsonl") == session_dir / "session_manifest.json"
+
+
+def test_resolve_session_manifest_path_accepts_manifest_file(tmp_path: Path) -> None:
+    manifest_path = tmp_path / "session_manifest.json"
+    manifest_path.write_text(json.dumps(_sample_manifest()), encoding="utf-8")
+
+    assert resolve_session_manifest_path(str(manifest_path), history_index_path=tmp_path / "missing.jsonl") == manifest_path
+
+
+def test_resolve_session_manifest_path_accepts_history_id(tmp_path: Path) -> None:
+    index_path = tmp_path / "index.jsonl"
+    manifest_a = tmp_path / "session-a" / "session_manifest.json"
+    manifest_b = tmp_path / "session-b" / "session_manifest.json"
+    index_path.write_text(
+        json.dumps({"session_dir": str(manifest_a.parent), "manifest_path": str(manifest_a)})
+        + "\n"
+        + json.dumps({"session_dir": str(manifest_b.parent), "manifest_path": str(manifest_b)})
+        + "\n",
+        encoding="utf-8",
+    )
+
+    assert resolve_session_manifest_path("2", history_index_path=index_path) == manifest_b
+
+
+def test_resolve_session_manifest_path_accepts_indexed_session_dir(tmp_path: Path) -> None:
+    index_path = tmp_path / "index.jsonl"
+    manifest_path = tmp_path / "session-a" / "session_manifest.json"
+    index_path.write_text(json.dumps({"session_dir": str(manifest_path.parent), "manifest_path": str(manifest_path)}) + "\n", encoding="utf-8")
+
+    assert resolve_session_manifest_path(str(manifest_path.parent), history_index_path=index_path) == manifest_path
+
+
+def test_resolve_session_manifest_path_rejects_missing_target(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="session 'missing-session' not found"):
+        resolve_session_manifest_path("missing-session", history_index_path=tmp_path / "missing.jsonl")
+
+
+def test_read_session_manifest_validates_kind(tmp_path: Path) -> None:
+    manifest_path = tmp_path / "session_manifest.json"
+    manifest_path.write_text(json.dumps({"kind": "other"}), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="invalid session manifest kind"):
+        read_session_manifest(manifest_path)
+
+
+def test_format_session_show_outputs_human_summary() -> None:
+    text = format_session_show(_sample_manifest(), manifest_path=Path("out/session/session_manifest.json"))
+
+    assert text == (
+        "Session manifest: out/session/session_manifest.json\n"
+        "Best take: samples/take_a.wav (91.0/100)\n"
+        "Weakest take: samples/take_b.wav (77.0/100)\n"
+        "Recurring weakness: pitch_fidelity\n"
+        "Next recording target: Record one new take focused on improving Pitch Fidelity.\n"
+        "Practice plan: out/session/practice_plan.md\n"
+        "Batch report: out/session/batch_report.md"
+    )
 
 
 def test_format_session_history_entry_outputs_compact_cli_line() -> None:
