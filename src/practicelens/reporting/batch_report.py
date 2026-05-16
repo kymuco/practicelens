@@ -72,6 +72,9 @@ def batch_compare_result_to_markdown(result: BatchCompareResult) -> str:
     if result.summary:
         lines.extend(["", result.summary])
 
+    if result.session_summary is not None:
+        lines.extend(_session_decision_lines(result.session_summary))
+
     lines.extend(["", "## Ranking", ""])
     lines.append("| Rank | Take | Score | Delta vs best | Output dir |")
     lines.append("| --- | --- | ---: | ---: | --- |")
@@ -136,6 +139,41 @@ def batch_compare_result_to_csv_text(result: BatchCompareResult) -> str:
             ]
         )
     return buffer.getvalue()
+
+
+def _session_decision_lines(summary: BatchSessionSummary) -> list[str]:
+    lines = [
+        "",
+        "## Session decision",
+        "",
+        f"- **Keep:** `{summary.best_take.take_path.name}` ({summary.best_take.overall_score:.1f}/100).",
+        f"- **Review weakest take:** `{summary.weakest_take.take_path.name}` ({summary.weakest_take.overall_score:.1f}/100).",
+        (
+            f"- **Main recurring weakness:** {_metric_label(summary.recurring_weakness.value)} "
+            f"({summary.recurring_weakness_count}/{summary.compared_takes} takes)."
+        ),
+        (
+            f"- **Protect stable area:** {_metric_label(summary.strongest_stable_area.value)} "
+            f"({summary.strongest_stable_area_average_score:.1f}/100 average)."
+        ),
+        f"- **Record next:** {summary.next_recording_target}",
+        "",
+        "## Recommended session loops",
+        "",
+    ]
+    if summary.practice_loops:
+        for index, loop in enumerate(summary.practice_loops, start=1):
+            lines.append(_session_loop_line(index, loop))
+    else:
+        lines.append("No session-level practice loops were selected.")
+    return lines
+
+
+def _session_loop_line(index: int, loop: SessionPracticeLoopSummary) -> str:
+    return (
+        f"{index}. `{loop.take_path.name}` section {loop.section_index} "
+        f"({loop.start_s:.2f}s - {loop.end_s:.2f}s): {loop.instruction}"
+    )
 
 
 def _session_summary_payload(summary: BatchSessionSummary | None) -> dict[str, object] | None:
