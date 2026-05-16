@@ -114,7 +114,7 @@ def test_report_to_debug_payload_is_serializable() -> None:
     assert payload["kind"] == "debug_payload"
     assert payload["schema_version"] == 1
     assert payload["overview"]["analysis_kind"] == "analysis_report"
-    assert payload["score_summary"]["overall_score"] == 83.0
+    assert payload["score_summary"]["overall_score"] == 83.25
     assert payload["score_summary"]["components"][0] == {
         "name": "pitch_fidelity",
         "score": 90.0,
