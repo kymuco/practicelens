@@ -29,6 +29,10 @@ def test_generate_evaluation_showcase_writes_expected_outputs(tmp_path: Path) ->
     assert summary["schema_version"] == 1
     assert summary["reference_case"] == "reference_phrase"
     assert summary["batch_practice_plan_path"].endswith("batch/practice_plan.md")
+    assert summary["batch_session_summary"]["schema_version"] == 1
+    assert summary["batch_session_summary"]["compared_takes"] == 3
+    assert summary["batch_session_summary"]["best_take"]
+    assert summary["batch_session_summary"]["next_recording_target"]
     assert [case["case_name"] for case in summary["cases"]] == [
         "exact_take",
         "pitch_drift_take",
@@ -40,6 +44,9 @@ def test_generate_evaluation_showcase_writes_expected_outputs(tmp_path: Path) ->
 
     batch_payload = json.loads((result.batch_dir / "batch_report.json").read_text(encoding="utf-8"))
     assert len(batch_payload["entries"]) == 3
+    assert batch_payload["session_summary"]["schema_version"] == 1
+    assert batch_payload["session_summary"]["compared_takes"] == 3
+    assert batch_payload["session_summary"]["next_recording_target"]
     assert all("practice_loops" in entry for entry in batch_payload["entries"])
     assert {artifact["kind"] for artifact in batch_payload["artifacts"]} == {
         "json_report",
