@@ -8,6 +8,7 @@ from typing import Any
 from practicelens.application.contracts import BatchCompareResult, SessionTakeSummary
 
 DEFAULT_SESSION_HISTORY_INDEX = Path(".practicelens") / "sessions" / "index.jsonl"
+SESSION_MANIFEST_FILENAME = "session_manifest.json"
 
 
 def build_session_history_entry(
@@ -69,6 +70,66 @@ def read_session_history_entries(index_path: Path) -> tuple[dict[str, object], .
     return tuple(entries)
 
 
+def resolve_session_manifest_path(target: str, *, history_index_path: Path) -> Path:
+    """Resolve a session target to a concrete session_manifest.json path."""
+
+    target_path = Path(target)
+    if target_path.is_dir():
+        return target_path / SESSION_MANIFEST_FILENAME
+    if target_path.is_file():
+        return target_path
+
+    entries = read_session_history_entries(history_index_path)
+    if target.isdigit():
+        index = int(target)
+        if index < 1 or index > len(entries):
+            raise ValueError(f"session id {target} not found in {history_index_path}")
+        return _manifest_path_from_entry(entries[index - 1])
+
+    for entry in entries:
+        if entry.get("session_dir") == target or entry.get("manifest_path") == target:
+            return _manifest_path_from_entry(entry)
+
+    raise ValueError(f"session {target!r} not found")
+
+
+def read_session_manifest(manifest_path: Path) -> dict[str, object]:
+    """Read one practice session manifest JSON file."""
+
+    if not manifest_path.exists():
+        raise FileNotFoundError(f"session manifest not found: {manifest_path}")
+    payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError(f"invalid session manifest: expected object at {manifest_path}")
+    if payload.get("kind") != "practice_session_manifest":
+        raise ValueError(f"invalid session manifest kind at {manifest_path}")
+    return payload
+
+
+def format_session_show(manifest: dict[str, object], *, manifest_path: Path) -> str:
+    """Format a session manifest as a compact human-readable CLI summary."""
+
+    best_take = _take_summary(manifest.get("best_take"))
+    weakest_take = _take_summary(manifest.get("weakest_take"))
+    recurring_weakness = _string_or_dash(manifest.get("recurring_weakness"))
+    next_target = _string_or_dash(manifest.get("next_recording_target"))
+    entrypoints = manifest.get("entrypoints") if isinstance(manifest.get("entrypoints"), dict) else {}
+    practice_plan = _string_or_dash(entrypoints.get("practice_plan"))
+    batch_report = _string_or_dash(entrypoints.get("batch_markdown"))
+
+    return "\n".join(
+        (
+            f"Session manifest: {manifest_path}",
+            f"Best take: {best_take}",
+            f"Weakest take: {weakest_take}",
+            f"Recurring weakness: {recurring_weakness}",
+            f"Next recording target: {next_target}",
+            f"Practice plan: {practice_plan}",
+            f"Batch report: {batch_report}",
+        )
+    )
+
+
 def format_session_history_entry(entry: dict[str, object]) -> str:
     """Format one compact CLI line for a session history entry."""
 
@@ -78,6 +139,26 @@ def format_session_history_entry(entry: dict[str, object]) -> str:
     score = _score(entry.get("best_score"))
     focus = _string_or_dash(entry.get("recurring_weakness"))
     return f"{created_at}  {session_dir}  best={best_take}  score={score}  focus={focus}"
+
+
+def _manifest_path_from_entry(entry: dict[str, object]) -> Path:
+    manifest_path = entry.get("manifest_path")
+    if isinstance(manifest_path, str) and manifest_path:
+        return Path(manifest_path)
+    session_dir = entry.get("session_dir")
+    if isinstance(session_dir, str) and session_dir:
+        return Path(session_dir) / SESSION_MANIFEST_FILENAME
+    raise ValueError("session history entry does not include manifest_path or session_dir")
+
+
+def _take_summary(value: Any) -> str:
+    if not isinstance(value, dict):
+        return "-"
+    take_path = _string_or_dash(value.get("take_path"))
+    score = _score(value.get("overall_score"))
+    if score == "-":
+        return take_path
+    return f"{take_path} ({score}/100)"
 
 
 def _date_part(value: Any) -> str:
