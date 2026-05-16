@@ -90,6 +90,7 @@ def test_single_example_result_matches_current_contract_shape() -> None:
 
 def test_batch_example_result_matches_current_contract_shape() -> None:
     payload = read_json(Path("examples/results/batch/batch_report.json"))
+    manifest = read_json(Path("examples/results/batch/session_manifest.json"))
 
     assert tuple(payload) == (
         "artifacts",
@@ -119,6 +120,7 @@ def test_batch_example_result_matches_current_contract_shape() -> None:
         "csv_report",
         "svg_report",
         "practice_plan",
+        "session_manifest",
     ]
     first_entry = payload["entries"][0]
     assert first_entry["practice_loops"]
@@ -130,3 +132,11 @@ def test_batch_example_result_matches_current_contract_shape() -> None:
         "practice_plan",
         "debug_payload",
     ]
+    assert manifest["kind"] == "practice_session_manifest"
+    assert manifest["schema_version"] == 1
+    assert manifest["best_take"] == payload["session_summary"]["best_take"]
+    assert manifest["weakest_take"] == payload["session_summary"]["weakest_take"]
+    assert manifest["next_recording_target"] == payload["session_summary"]["next_recording_target"]
+    assert manifest["entrypoints"]["batch_json"] == "examples/results/batch/batch_report.json"
+    assert manifest["entrypoints"]["practice_plan"] == "examples/results/batch/practice_plan.md"
+    assert manifest["entrypoints"]["session_manifest"] == "examples/results/batch/session_manifest.json"
