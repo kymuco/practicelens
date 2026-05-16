@@ -126,6 +126,17 @@ The `session_summary` field is the compact structured contract for the whole com
 
 Each per-take output folder under `takes/` also contains the normal single-take artifacts, including `practice_plan.md`.
 
+### `session_manifest.json`
+
+Use this when you want a compact entrypoint map for a batch or practice-session output folder.
+
+Best for:
+
+- opening a session directory from future UI tooling;
+- locating the main reports without guessing filenames;
+- building local session history and progress views;
+- quickly reading best take, weakest take, recurring weakness, and next target.
+
 ### `batch_report.md`
 
 Use this for human review of multiple takes and session-level practice decisions.
@@ -181,8 +192,9 @@ Best for:
 Start with:
 
 1. `report.json` or `batch_report.json`
-2. then inspect `debug_payload.json` for single-take diagnostics
-3. then inspect Markdown, CSV, or SVG if needed
+2. then inspect `session_manifest.json` when opening a batch/practice-session folder
+3. then inspect `debug_payload.json` for single-take diagnostics
+4. then inspect Markdown, CSV, or SVG if needed
 
 ### If you are evaluating output quality visually
 
@@ -204,7 +216,8 @@ Start with:
 
 1. top-level `practice_plan.md`
 2. then `batch_report.md`
-3. then per-take `practice_plan.md` files under `takes/`
+3. then `session_manifest.json` if you need the machine-readable session entrypoints
+4. then per-take `practice_plan.md` files under `takes/`
 
 ## Practical advice
 
@@ -212,5 +225,6 @@ Start with:
 - Use `practice_plan.md` when you want the next concrete practice action.
 - Use CSV when you want to compare rows quickly.
 - Use JSON when you want stable machine-readable structure.
+- Use `session_manifest.json` when you want to open or index a whole practice session.
 - Use `debug_payload.json` when you want diagnostics rather than user-facing output.
 - Use SVG when you want the fastest visual summary.
