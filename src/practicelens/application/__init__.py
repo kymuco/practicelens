@@ -7,6 +7,9 @@ from practicelens.application.contracts import (
     BatchCompareEntry,
     BatchCompareRequest,
     BatchCompareResult,
+    BatchSessionSummary,
+    SessionPracticeLoopSummary,
+    SessionTakeSummary,
 )
 from practicelens.application.offline_pipeline import OfflineReferenceAnalysisPipeline
 from practicelens.application.pipeline import AnalysisPipeline, PipelineDependencies
@@ -18,7 +21,10 @@ __all__ = [
     "BatchCompareEntry",
     "BatchCompareRequest",
     "BatchCompareResult",
+    "BatchSessionSummary",
     "OfflineBatchComparePipeline",
     "OfflineReferenceAnalysisPipeline",
     "PipelineDependencies",
+    "SessionPracticeLoopSummary",
+    "SessionTakeSummary",
 ]
