@@ -151,8 +151,8 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
     }
     assert "# PracticeLens Batch Compare" in markdown_text
     assert "## At a glance" in markdown_text
-    assert "Recurring weakness: Pitch Fidelity" in markdown_text
-    assert "Next target: Record one new take focused on improving Pitch Fidelity." in markdown_text
+    assert "**Recurring weakness:** Pitch Fidelity" in markdown_text
+    assert "**Next target:** Record one new take focused on improving Pitch Fidelity." in markdown_text
     assert "| Rank | Take | Score | Delta vs best | Output dir |" in markdown_text
     assert "First practice loop: Loop Section 0 for take_a.wav and focus on Pitch Fidelity." in markdown_text
     assert "rank,take_name,take_path,overall_score,delta_from_best,first_practice_loop,summary,output_dir" in csv_text
