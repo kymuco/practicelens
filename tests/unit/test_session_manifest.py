@@ -9,7 +9,13 @@ from practicelens.application.contracts import (
     SessionTakeSummary,
 )
 from practicelens.domain.enums import AnalysisMode, ArtifactKind, MetricName
-from practicelens.domain.models import AnalysisInput, AnalysisOverview, AnalysisReport, ComponentScore, FeatureFlags
+from practicelens.domain.models import (
+    AnalysisInput,
+    AnalysisOverview,
+    AnalysisReport,
+    ComponentScore,
+    FeatureFlags,
+)
 from practicelens.reporting.session_manifest import (
     batch_compare_result_to_session_manifest_payload,
     batch_compare_result_to_session_manifest_text,
@@ -22,6 +28,8 @@ def _sample_report(path: str, score: float) -> AnalysisReport:
         inputs=AnalysisInput(Path("reference.wav"), Path(path)),
         feature_flags=FeatureFlags(),
         scores=(ComponentScore(MetricName.PITCH_FIDELITY, score, 1.0),),
+        metrics=(),
+        sections=(),
         summary=f"Score {score:.1f}",
     )
 
