@@ -36,8 +36,10 @@ PracticeLens aims to make that loop sharper by showing:
 | Reference-aware DTW alignment | Working |
 | Explainable scoring | Working |
 | JSON / Markdown / CSV / SVG artifacts | Working |
+| Practice plans and diagnostics artifacts | Working |
 | Single-take CLI analysis | Working |
 | Multi-take batch comparison | Working |
+| Practice-session CLI review | Working |
 | Optional FastAPI surface | Working |
 | GitHub Actions CI | Working |
 
@@ -184,6 +186,8 @@ Outputs:
 - `report.md`
 - `report.csv`
 - `report.svg`
+- `practice_plan.md`
+- `debug_payload.json`
 
 ### Compare multiple takes
 
@@ -202,7 +206,21 @@ Batch outputs:
 - `batch_report.md`
 - `batch_report.csv`
 - `batch_report.svg`
+- `practice_plan.md`
 - per-take artifact folders under `out/takes/`
+
+### Run a practice session
+
+```bash
+practicelens practice-session \
+  --reference path/to/reference.wav \
+  --take path/to/take_01.wav \
+  --take path/to/take_02.wav \
+  --take path/to/take_03.wav \
+  --out out/session
+```
+
+`practice-session` uses the same analysis engine as `compare-batch`, but prints a session-oriented CLI summary: best take, weakest take, recurring weakness, next recording target, and the generated `practice_plan.md` path.
 
 ### Shared tuning flags
 
@@ -257,28 +275,3 @@ app = create_app()
 ruff check .
 pytest tests
 ```
-
-CI runs the same baseline checks on pushes to `main` and on pull requests.
-
-For a more practical maintainer view, see [docs/development.md](docs/development.md).
-
-## Project principles
-
-- **Local-first**: the tool should be useful without cloud infrastructure.
-- **Actionable output**: reports should help practice decisions, not just produce numbers.
-- **Signal processing first, ML second**: solid features come before model hype.
-- **Clear interfaces**: the project should evolve cleanly into CLI and API layers.
-- **Extensible design**: future scoring models should fit on top of the core pipeline, not replace it chaotically.
-
-## Roadmap direction
-
-Near-term work should focus on:
-
-- stronger evaluation examples and demo assets;
-- higher-confidence reporting UX;
-- more polished API and artifact ergonomics;
-- future model-assisted scoring on top of the deterministic baseline.
-
-## License
-
-Apache License 2.0.
