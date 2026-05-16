@@ -67,3 +67,4 @@ Best take: take_02.wav with 88.4/100 across 3 compared takes.
 - **csv_report**: `examples/results/batch/batch_report.csv`
 - **svg_report**: `examples/results/batch/batch_report.svg`
 - **practice_plan**: `examples/results/batch/practice_plan.md`
+- **session_manifest**: `examples/results/batch/session_manifest.json`
