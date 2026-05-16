@@ -5,7 +5,7 @@
 - **Status:** completed
 - **Mode:** reference
 - **Take:** `take_take2.wav`
-- **Overall score:** 86.1/100
+- **Overall score:** 85.1/100
 - **Performance band:** Strong
 - **Analysis confidence:** High
 - **Practice loops:** 2 recommended
@@ -120,3 +120,5 @@ Next practice step: loop Section 1 (8.00s - 16.00s) and focus on Timing Consiste
 - **markdown_report**: `examples/results/single/report.md` — Human-readable analysis report.
 - **csv_report**: `examples/results/single/report.csv` — Section-level table export.
 - **svg_report**: `examples/results/single/report.svg` — Compact visual score summary.
+- **practice_plan**: `examples/results/single/practice_plan.md` — Focused next-practice plan.
+- **debug_payload**: `examples/results/single/debug_payload.json` — Developer-facing diagnostic payload.
