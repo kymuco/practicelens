@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from pathlib import Path
+from typing import Any
 
 from practicelens.application.contracts import BatchCompareResult
 from practicelens.domain.enums import ArtifactKind
@@ -39,7 +39,7 @@ def batch_compare_result_to_session_manifest_text(result: BatchCompareResult) ->
     return json.dumps(batch_compare_result_to_session_manifest_payload(result), indent=2, sort_keys=True)
 
 
-def _take_payload(take) -> dict[str, object]:
+def _take_payload(take: Any) -> dict[str, object]:
     return {
         "rank": take.rank,
         "take_path": str(take.take_path),
