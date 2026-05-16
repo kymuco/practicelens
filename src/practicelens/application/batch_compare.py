@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from re import sub
 
+from practicelens.application.batch_session_summary import build_batch_session_summary
 from practicelens.application.contracts import (
     AnalyzeRequest,
     BatchCompareEntry,
@@ -71,6 +72,7 @@ class OfflineBatchComparePipeline:
             entries=ranked_entries,
             artifacts=(),
             summary=self._summary(ranked_entries),
+            session_summary=build_batch_session_summary(ranked_entries),
         )
 
         if request.out_dir is not None:
@@ -98,6 +100,7 @@ class OfflineBatchComparePipeline:
                 (ArtifactKind.PRACTICE_PLAN, practice_plan_path),
             ),
             summary=result.summary,
+            session_summary=result.session_summary,
         )
 
         json_path.write_text(batch_compare_result_to_json_text(result_with_artifacts), encoding="utf-8")
