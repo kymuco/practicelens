@@ -56,6 +56,17 @@ Best for:
 - programmatic inspection;
 - future dashboards or automation.
 
+### `debug_payload.json`
+
+Use this when you want a developer-facing diagnostic snapshot for one analysis run.
+
+Best for:
+
+- inspecting score contributions;
+- reviewing confidence reasons and limitations;
+- checking evidence counts such as sections, practice loops, feedback, and artifacts;
+- building future QA dashboards without changing the stable `report.json` contract.
+
 ### `report.md`
 
 Use this when you want a readable summary that a human can scan quickly.
@@ -170,7 +181,8 @@ Best for:
 Start with:
 
 1. `report.json` or `batch_report.json`
-2. then inspect Markdown, CSV, or SVG if needed
+2. then inspect `debug_payload.json` for single-take diagnostics
+3. then inspect Markdown, CSV, or SVG if needed
 
 ### If you are evaluating output quality visually
 
@@ -200,4 +212,5 @@ Start with:
 - Use `practice_plan.md` when you want the next concrete practice action.
 - Use CSV when you want to compare rows quickly.
 - Use JSON when you want stable machine-readable structure.
+- Use `debug_payload.json` when you want diagnostics rather than user-facing output.
 - Use SVG when you want the fastest visual summary.
