@@ -20,7 +20,8 @@
       "markdown_report",
       "csv_report",
       "svg_report",
-      "practice_plan"
+      "practice_plan",
+      "session_manifest"
     ]
   }
 }
