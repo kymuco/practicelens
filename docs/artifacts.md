@@ -117,13 +117,17 @@ Each per-take output folder under `takes/` also contains the normal single-take 
 
 ### `batch_report.md`
 
-Use this for human review of multiple takes.
+Use this for human review of multiple takes and session-level practice decisions.
 
 Best for:
 
 - quick decision-making;
 - reviewing which take came out strongest;
-- understanding score differences at a glance.
+- seeing which take needs review;
+- identifying the recurring weakness and stable area;
+- choosing recommended session loops before recording the next take.
+
+This report includes both a ranking table and a `Session decision` section derived from `session_summary`.
 
 ### `practice_plan.md`
 
