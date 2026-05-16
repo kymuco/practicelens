@@ -237,6 +237,32 @@ practicelens practice-session \
 
 PracticeLens does not write this history index unless `--history-index` is provided.
 
+### List indexed practice sessions
+
+```bash
+practicelens sessions list
+```
+
+By default this reads:
+
+```text
+.practicelens/sessions/index.jsonl
+```
+
+You can point it at a custom index:
+
+```bash
+practicelens sessions list \
+  --history-index path/to/index.jsonl
+```
+
+Example output:
+
+```text
+2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity
+2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency
+```
+
 ### Shared tuning flags
 
 - `--sample-rate`

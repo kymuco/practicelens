@@ -1,6 +1,7 @@
-import json
 from datetime import UTC, datetime
 from pathlib import Path
+
+import pytest
 
 from practicelens.application.contracts import (
     AnalyzeResult,
@@ -9,7 +10,12 @@ from practicelens.application.contracts import (
     BatchSessionSummary,
     SessionTakeSummary,
 )
-from practicelens.application.session_history import append_session_history_entry, build_session_history_entry
+from practicelens.application.session_history import (
+    append_session_history_entry,
+    build_session_history_entry,
+    format_session_history_entry,
+    read_session_history_entries,
+)
 from practicelens.domain.enums import AnalysisMode, MetricName
 from practicelens.domain.models import AnalysisInput, AnalysisOverview, AnalysisReport, ComponentScore, FeatureFlags
 
@@ -73,7 +79,7 @@ def test_build_session_history_entry_has_stable_shape() -> None:
     }
 
 
-def test_append_session_history_entry_writes_jsonl(tmp_path: Path) -> None:
+def test_append_and_read_session_history_entry_writes_jsonl(tmp_path: Path) -> None:
     index_path = tmp_path / ".practicelens" / "sessions" / "index.jsonl"
     entry = build_session_history_entry(
         _sample_result(),
@@ -87,5 +93,34 @@ def test_append_session_history_entry_writes_jsonl(tmp_path: Path) -> None:
 
     lines = index_path.read_text(encoding="utf-8").splitlines()
     assert len(lines) == 2
-    assert json.loads(lines[0]) == entry
-    assert json.loads(lines[1]) == entry
+    assert read_session_history_entries(index_path) == (entry, entry)
+
+
+def test_read_session_history_entries_returns_empty_for_missing_index(tmp_path: Path) -> None:
+    assert read_session_history_entries(tmp_path / "missing.jsonl") == ()
+
+
+def test_read_session_history_entries_rejects_invalid_json(tmp_path: Path) -> None:
+    index_path = tmp_path / "index.jsonl"
+    index_path.write_text("{not-json}\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="invalid session history JSON on line 1"):
+        read_session_history_entries(index_path)
+
+
+def test_format_session_history_entry_outputs_compact_cli_line() -> None:
+    line = format_session_history_entry(
+        {
+            "created_at": "2026-05-16T10:00:00+00:00",
+            "session_dir": "out/session-a",
+            "best_take": "samples/take_02.wav",
+            "best_score": 88.4,
+            "recurring_weakness": "rhythm_fidelity",
+        }
+    )
+
+    assert line == "2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity"
+
+
+def test_format_session_history_entry_handles_missing_optional_fields() -> None:
+    assert format_session_history_entry({}) == "-  -  best=-  score=-  focus=-"

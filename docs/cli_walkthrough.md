@@ -175,7 +175,33 @@ practicelens practice-session \
 
 This index is opt-in. PracticeLens does not write it unless `--history-index` is provided.
 
-## 5. Useful tuning flags
+## 5. List indexed practice sessions
+
+```bash
+practicelens sessions list
+```
+
+By default this reads:
+
+```text
+.practicelens/sessions/index.jsonl
+```
+
+For a custom index path:
+
+```bash
+practicelens sessions list \
+  --history-index .practicelens/sessions/index.jsonl
+```
+
+Example output:
+
+```text
+2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity
+2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency
+```
+
+## 6. Useful tuning flags
 
 Shared CLI flags:
 
@@ -197,7 +223,7 @@ practicelens analyze \
   --segment-duration 2.0
 ```
 
-## 6. What “good usage” looks like
+## 7. What “good usage” looks like
 
 A good practical path is:
 
@@ -205,12 +231,13 @@ A good practical path is:
 - use batch comparison when you want to decide which take to keep;
 - use practice-session when you want the next concrete practice action across several takes;
 - use `--history-index` when you want to build a local practice history intentionally;
+- use `sessions list` when you want to see previous indexed practice sessions;
 - use practice plans first when you want action;
 - use SVG first when you want a glanceable visual review;
 - use Markdown next for explanation;
 - use JSON/CSV when you want structure or external tooling.
 
-## 7. If you just want to browse example outputs
+## 8. If you just want to browse example outputs
 
 Use the illustrative snapshots already in the repo:
 

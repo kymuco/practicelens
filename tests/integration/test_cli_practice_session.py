@@ -122,3 +122,102 @@ def test_cli_practice_session_command_can_append_history_index(tmp_path: Path, c
     assert entry["recurring_weakness"]
     assert entry["strongest_stable_area"]
     assert entry["next_recording_target"]
+
+
+def test_cli_sessions_list_reports_empty_history(tmp_path: Path, capsys) -> None:
+    history_index = tmp_path / "missing-index.jsonl"
+
+    exit_code = run(["sessions", "list", "--history-index", str(history_index)])
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert captured.out == "No practice sessions found.\n"
+
+
+def test_cli_sessions_list_prints_indexed_sessions(tmp_path: Path, capsys) -> None:
+    history_index = tmp_path / ".practicelens" / "sessions" / "index.jsonl"
+    history_index.parent.mkdir(parents=True)
+    history_index.write_text(
+        "\n".join(
+            [
+                json.dumps(
+                    {
+                        "created_at": "2026-05-16T10:00:00+00:00",
+                        "session_dir": "out/session-a",
+                        "best_take": "samples/take_02.wav",
+                        "best_score": 88.4,
+                        "recurring_weakness": "rhythm_fidelity",
+                    },
+                    sort_keys=True,
+                ),
+                json.dumps(
+                    {
+                        "created_at": "2026-05-17T10:00:00+00:00",
+                        "session_dir": "out/session-b",
+                        "best_take": "samples/take_03.wav",
+                        "best_score": 90.1,
+                        "recurring_weakness": "timing_consistency",
+                    },
+                    sort_keys=True,
+                ),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    exit_code = run(["sessions", "list", "--history-index", str(history_index)])
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert captured.out == (
+        "2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity\n"
+        "2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency\n"
+    )
+
+
+def test_cli_practice_session_history_can_be_listed(tmp_path: Path, capsys) -> None:
+    reference = tmp_path / "reference.wav"
+    take_a = tmp_path / "take_a.wav"
+    take_b = tmp_path / "take_b.wav"
+    out_dir = tmp_path / "practice-session-out"
+    history_index = tmp_path / ".practicelens" / "sessions" / "index.jsonl"
+
+    _write_wav(reference, 220.0)
+    _write_wav(take_a, 220.0)
+    _write_wav(take_b, 246.94)
+
+    session_exit_code = run(
+        [
+            "practice-session",
+            "--reference",
+            str(reference),
+            "--take",
+            str(take_a),
+            "--take",
+            str(take_b),
+            "--out",
+            str(out_dir),
+            "--history-index",
+            str(history_index),
+            "--frame-length",
+            "1024",
+            "--hop-length",
+            "256",
+            "--segment-duration",
+            "2.0",
+        ]
+    )
+    capsys.readouterr()
+
+    list_exit_code = run(["sessions", "list", "--history-index", str(history_index)])
+    captured = capsys.readouterr()
+
+    assert session_exit_code == 0
+    assert list_exit_code == 0
+    assert str(out_dir) in captured.out
+    assert "best=" in captured.out
+    assert "score=" in captured.out
+    assert "focus=" in captured.out
