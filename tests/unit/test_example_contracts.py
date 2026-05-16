@@ -33,6 +33,7 @@ def test_api_example_payload_files_match_supported_request_keys() -> None:
 
 def test_single_example_result_matches_current_contract_shape() -> None:
     payload = read_json(Path("examples/results/single/report.json"))
+    debug_payload = read_json(Path("examples/results/single/debug_payload.json"))
 
     assert tuple(payload) == (
         "analysis_confidence",
@@ -70,6 +71,20 @@ def test_single_example_result_matches_current_contract_shape() -> None:
         "markdown_report",
         "csv_report",
         "svg_report",
+        "practice_plan",
+        "debug_payload",
+    ]
+    assert debug_payload["kind"] == "debug_payload"
+    assert debug_payload["schema_version"] == 1
+    assert debug_payload["score_summary"]["overall_score"] == payload["overall_score"]
+    assert debug_payload["evidence_summary"]["artifact_count"] == len(payload["artifacts"])
+    assert [artifact["kind"] for artifact in debug_payload["artifacts"]] == [
+        "json_report",
+        "markdown_report",
+        "csv_report",
+        "svg_report",
+        "practice_plan",
+        "debug_payload",
     ]
 
 
@@ -81,6 +96,7 @@ def test_batch_example_result_matches_current_contract_shape() -> None:
         "entries",
         "overview",
         "reference_path",
+        "session_summary",
         "summary",
     )
     assert payload["overview"] == {
@@ -89,11 +105,20 @@ def test_batch_example_result_matches_current_contract_shape() -> None:
         "schema_version": 1,
         "status": "completed",
     }
+    assert payload["session_summary"]["schema_version"] == 1
+    assert payload["session_summary"]["compared_takes"] == 3
+    assert payload["session_summary"]["best_take"]
+    assert payload["session_summary"]["weakest_take"]
+    assert payload["session_summary"]["recurring_weakness"]
+    assert payload["session_summary"]["strongest_stable_area"]
+    assert payload["session_summary"]["next_recording_target"]
+    assert payload["session_summary"]["practice_loops"]
     assert [artifact["kind"] for artifact in payload["artifacts"]] == [
         "json_report",
         "markdown_report",
         "csv_report",
         "svg_report",
+        "practice_plan",
     ]
     first_entry = payload["entries"][0]
     assert first_entry["practice_loops"]
@@ -102,4 +127,6 @@ def test_batch_example_result_matches_current_contract_shape() -> None:
         "markdown_report",
         "csv_report",
         "svg_report",
+        "practice_plan",
+        "debug_payload",
     ]
