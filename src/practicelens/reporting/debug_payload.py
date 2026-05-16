@@ -5,6 +5,8 @@ import json
 from practicelens.domain.enums import MetricName
 from practicelens.domain.models import AnalysisReport, MetricResult
 
+_SCORE_DIGITS = 6
+
 
 def report_to_debug_payload(report: AnalysisReport) -> dict[str, object]:
     """Build a developer-facing diagnostic payload for one analysis report."""
@@ -25,13 +27,13 @@ def report_to_debug_payload(report: AnalysisReport) -> dict[str, object]:
             "take_path": str(report.inputs.take_path),
         },
         "score_summary": {
-            "overall_score": overall_score,
+            "overall_score": _round_score(overall_score),
             "components": [
                 {
                     "name": score.name.value,
-                    "score": score.score,
-                    "weight": score.weight,
-                    "weighted_contribution": score.score * score.weight,
+                    "score": _round_score(score.score),
+                    "weight": _round_score(score.weight),
+                    "weighted_contribution": _round_score(score.score * score.weight),
                 }
                 for score in report.scores
             ],
@@ -85,8 +87,8 @@ def _metric_score(report: AnalysisReport, metric_name: MetricName) -> dict[str, 
     if metric is None:
         return None
     return {
-        "value": metric.value,
-        "score": metric.score,
+        "value": _round_score(metric.value),
+        "score": _round_score(metric.score),
         "severity": metric.severity.value,
         "detail": metric.detail,
     }
@@ -97,3 +99,7 @@ def _find_metric(report: AnalysisReport, metric_name: MetricName) -> MetricResul
         if metric.name == metric_name:
             return metric
     return None
+
+
+def _round_score(value: float) -> float:
+    return round(value, _SCORE_DIGITS)
