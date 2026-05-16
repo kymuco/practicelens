@@ -129,6 +129,11 @@ def test_compare_batch_payload_returns_ranked_contract_report(tmp_path: Path) ->
     )
 
     assert payload["summary"] is not None
+    assert payload["session_summary"]["schema_version"] == 1
+    assert payload["session_summary"]["compared_takes"] == 2
+    assert payload["session_summary"]["best_take"]["take_path"].endswith("take_best.wav")
+    assert payload["session_summary"]["weakest_take"]["take_path"].endswith("take_low.wav")
+    assert payload["session_summary"]["next_recording_target"]
     assert payload["entries"]
     assert payload["entries"][0]["rank"] == 1
     assert payload["entries"][0]["take_path"].endswith("take_best.wav")
