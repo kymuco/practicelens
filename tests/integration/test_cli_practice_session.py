@@ -221,3 +221,85 @@ def test_cli_practice_session_history_can_be_listed(tmp_path: Path, capsys) -> N
     assert "best=" in captured.out
     assert "score=" in captured.out
     assert "focus=" in captured.out
+
+
+def test_cli_sessions_show_can_read_session_directory(tmp_path: Path, capsys) -> None:
+    out_dir = _run_practice_session_fixture(tmp_path, capsys)
+
+    exit_code = run(["sessions", "show", str(out_dir)])
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert f"Session manifest: {out_dir / 'session_manifest.json'}" in captured.out
+    assert "Best take:" in captured.out
+    assert "Weakest take:" in captured.out
+    assert "Recurring weakness:" in captured.out
+    assert "Next recording target:" in captured.out
+    assert f"Practice plan: {out_dir / 'practice_plan.md'}" in captured.out
+    assert f"Batch report: {out_dir / 'batch_report.md'}" in captured.out
+
+
+def test_cli_sessions_show_can_read_manifest_file(tmp_path: Path, capsys) -> None:
+    out_dir = _run_practice_session_fixture(tmp_path, capsys)
+
+    exit_code = run(["sessions", "show", str(out_dir / "session_manifest.json")])
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert f"Session manifest: {out_dir / 'session_manifest.json'}" in captured.out
+    assert "Best take:" in captured.out
+    assert f"Practice plan: {out_dir / 'practice_plan.md'}" in captured.out
+    assert f"Batch report: {out_dir / 'batch_report.md'}" in captured.out
+
+
+def test_cli_sessions_show_can_resolve_history_id(tmp_path: Path, capsys) -> None:
+    history_index = tmp_path / ".practicelens" / "sessions" / "index.jsonl"
+    out_dir = _run_practice_session_fixture(tmp_path, capsys, history_index=history_index)
+
+    exit_code = run(["sessions", "show", "1", "--history-index", str(history_index)])
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert f"Session manifest: {out_dir / 'session_manifest.json'}" in captured.out
+    assert "Best take:" in captured.out
+    assert "Weakest take:" in captured.out
+    assert "Recurring weakness:" in captured.out
+    assert "Next recording target:" in captured.out
+
+
+def _run_practice_session_fixture(tmp_path: Path, capsys, *, history_index: Path | None = None) -> Path:
+    reference = tmp_path / "reference.wav"
+    take_a = tmp_path / "take_a.wav"
+    take_b = tmp_path / "take_b.wav"
+    out_dir = tmp_path / "practice-session-out"
+
+    _write_wav(reference, 220.0)
+    _write_wav(take_a, 220.0)
+    _write_wav(take_b, 246.94)
+
+    args = [
+        "practice-session",
+        "--reference",
+        str(reference),
+        "--take",
+        str(take_a),
+        "--take",
+        str(take_b),
+        "--out",
+        str(out_dir),
+        "--frame-length",
+        "1024",
+        "--hop-length",
+        "256",
+        "--segment-duration",
+        "2.0",
+    ]
+    if history_index is not None:
+        args.extend(["--history-index", str(history_index)])
+
+    assert run(args) == 0
+    capsys.readouterr()
+    return out_dir
