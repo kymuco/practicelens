@@ -207,6 +207,7 @@ Batch outputs:
 - `batch_report.csv`
 - `batch_report.svg`
 - `practice_plan.md`
+- `session_manifest.json`
 - per-take artifact folders under `out/takes/`
 
 ### Run a practice session
@@ -221,6 +222,20 @@ practicelens practice-session \
 ```
 
 `practice-session` uses the same analysis engine as `compare-batch`, but prints a session-oriented CLI summary: best take, weakest take, recurring weakness, next recording target, and the generated `practice_plan.md` path.
+
+Optionally append one compact JSONL entry to an explicit session history index:
+
+```bash
+practicelens practice-session \
+  --reference path/to/reference.wav \
+  --take path/to/take_01.wav \
+  --take path/to/take_02.wav \
+  --take path/to/take_03.wav \
+  --out out/session \
+  --history-index .practicelens/sessions/index.jsonl
+```
+
+PracticeLens does not write this history index unless `--history-index` is provided.
 
 ### Shared tuning flags
 

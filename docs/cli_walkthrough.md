@@ -93,6 +93,7 @@ out/batch/
 ├── batch_report.csv
 ├── batch_report.svg
 ├── practice_plan.md
+├── session_manifest.json
 └── takes/
     ├── 01-take_01/
     │   ├── report.json
@@ -123,9 +124,10 @@ Recommended order:
 
 1. `practice_plan.md` — session-level next action across all takes
 2. `batch_report.md` — readable ranked summary and session decision
-3. `batch_report.svg` — quickest visual ranking overview
-4. `batch_report.csv` — spreadsheet-friendly comparison
-5. one of the per-take `practice_plan.md`, `report.md`, or `report.svg` files for deeper inspection
+3. `session_manifest.json` — machine-readable entrypoints for the whole session folder
+4. `batch_report.svg` — quickest visual ranking overview
+5. `batch_report.csv` — spreadsheet-friendly comparison
+6. one of the per-take `practice_plan.md`, `report.md`, or `report.svg` files for deeper inspection
 
 ### How to use the batch result
 
@@ -157,6 +159,22 @@ practicelens practice-session \
 
 Use this command when your intent is not only to rank takes, but to decide what to practice before recording the next take.
 
+### Optional session history index
+
+`practice-session` can append one compact JSONL entry to an explicit history index:
+
+```bash
+practicelens practice-session \
+  --reference samples/reference.wav \
+  --take samples/take_01.wav \
+  --take samples/take_02.wav \
+  --take samples/take_03.wav \
+  --out out/session \
+  --history-index .practicelens/sessions/index.jsonl
+```
+
+This index is opt-in. PracticeLens does not write it unless `--history-index` is provided.
+
 ## 5. Useful tuning flags
 
 Shared CLI flags:
@@ -186,6 +204,7 @@ A good practical path is:
 - use single analysis when you want to understand one take deeply;
 - use batch comparison when you want to decide which take to keep;
 - use practice-session when you want the next concrete practice action across several takes;
+- use `--history-index` when you want to build a local practice history intentionally;
 - use practice plans first when you want action;
 - use SVG first when you want a glanceable visual review;
 - use Markdown next for explanation;

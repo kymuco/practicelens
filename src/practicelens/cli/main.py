@@ -11,6 +11,7 @@ from practicelens.application import (
     OfflineBatchComparePipeline,
     OfflineReferenceAnalysisPipeline,
 )
+from practicelens.application.session_history import append_session_history_entry, build_session_history_entry
 from practicelens.domain.enums import ArtifactKind
 from practicelens.domain.models import AnalysisConfig
 
@@ -37,6 +38,10 @@ def build_parser() -> argparse.ArgumentParser:
         help="Run a practice-session review across multiple takes.",
     )
     _add_batch_args(practice_session, out_help="Output directory for practice-session artifacts.")
+    practice_session.add_argument(
+        "--history-index",
+        help="Optional JSONL path where a compact practice-session history entry should be appended.",
+    )
     _add_common_analysis_args(practice_session)
 
     return parser
@@ -92,6 +97,17 @@ def _run_compare_batch(args: argparse.Namespace) -> int:
 def _run_practice_session(args: argparse.Namespace) -> int:
     try:
         result = _run_batch_compare_pipeline(args)
+        history_index_path = Path(args.history_index) if args.history_index else None
+        if history_index_path is not None:
+            manifest_path = _find_batch_artifact_path(result, ArtifactKind.SESSION_MANIFEST)
+            if manifest_path is None:
+                raise RuntimeError("practice-session history requires session_manifest.json")
+            history_entry = build_session_history_entry(
+                result,
+                session_dir=Path(args.out),
+                manifest_path=manifest_path,
+            )
+            append_session_history_entry(history_index_path, history_entry)
     except Exception as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
@@ -106,6 +122,8 @@ def _run_practice_session(args: argparse.Namespace) -> int:
     practice_plan_path = _find_batch_artifact_path(result, ArtifactKind.PRACTICE_PLAN)
     if practice_plan_path is not None:
         print(f"practice_plan: {practice_plan_path}")
+    if args.history_index:
+        print(f"history_index: {args.history_index}")
     return 0
 
 

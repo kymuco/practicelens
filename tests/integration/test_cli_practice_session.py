@@ -1,3 +1,4 @@
+import json
 import math
 import wave
 from pathlib import Path
@@ -62,4 +63,62 @@ def test_cli_practice_session_command_writes_session_outputs(tmp_path: Path, cap
     assert (out_dir / "batch_report.json").exists()
     assert (out_dir / "batch_report.md").exists()
     assert (out_dir / "practice_plan.md").exists()
+    assert (out_dir / "session_manifest.json").exists()
     assert (out_dir / "takes").exists()
+
+
+def test_cli_practice_session_command_can_append_history_index(tmp_path: Path, capsys) -> None:
+    reference = tmp_path / "reference.wav"
+    take_a = tmp_path / "take_a.wav"
+    take_b = tmp_path / "take_b.wav"
+    out_dir = tmp_path / "practice-session-out"
+    history_index = tmp_path / ".practicelens" / "sessions" / "index.jsonl"
+
+    _write_wav(reference, 220.0)
+    _write_wav(take_a, 220.0)
+    _write_wav(take_b, 246.94)
+
+    exit_code = run(
+        [
+            "practice-session",
+            "--reference",
+            str(reference),
+            "--take",
+            str(take_a),
+            "--take",
+            str(take_b),
+            "--out",
+            str(out_dir),
+            "--history-index",
+            str(history_index),
+            "--frame-length",
+            "1024",
+            "--hop-length",
+            "256",
+            "--segment-duration",
+            "2.0",
+        ]
+    )
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert f"history_index: {history_index}" in captured.out
+    assert history_index.exists()
+
+    lines = history_index.read_text(encoding="utf-8").splitlines()
+    assert len(lines) == 1
+    entry = json.loads(lines[0])
+    assert entry["kind"] == "practice_session_index_entry"
+    assert entry["schema_version"] == 1
+    assert entry["session_dir"] == str(out_dir)
+    assert entry["manifest_path"].endswith("session_manifest.json")
+    assert entry["reference_path"] == str(reference)
+    assert entry["compared_takes"] == 2
+    assert entry["best_take"]
+    assert entry["best_score"] is not None
+    assert entry["weakest_take"]
+    assert entry["weakest_score"] is not None
+    assert entry["recurring_weakness"]
+    assert entry["strongest_stable_area"]
+    assert entry["next_recording_target"]
