@@ -46,6 +46,12 @@ def test_batch_compare_pipeline_ranks_multiple_takes(tmp_path: Path) -> None:
     assert result.entries[0].take_path.name == "take_best.wav"
     assert result.entries[0].rank == 1
     assert len(result.entries) == 3
+    assert result.session_summary is not None
+    assert result.session_summary.compared_takes == 3
+    assert result.session_summary.best_take.take_path.name == "take_best.wav"
+    assert result.session_summary.weakest_take.take_path.name == "take_low.wav"
+    assert result.session_summary.next_recording_target
+    assert result.session_summary.practice_loops
     assert (out_dir / "batch_report.json").exists()
     assert (out_dir / "batch_report.md").exists()
     assert (out_dir / "batch_report.csv").exists()
@@ -65,13 +71,21 @@ def test_batch_compare_pipeline_ranks_multiple_takes(tmp_path: Path) -> None:
     assert "take_best.wav" in practice_plan
 
     payload = json.loads((out_dir / "batch_report.json").read_text(encoding="utf-8"))
-    assert set(payload) == {"overview", "reference_path", "summary", "entries", "artifacts"}
+    assert set(payload) == {"overview", "reference_path", "summary", "session_summary", "entries", "artifacts"}
     assert payload["overview"] == {
         "kind": "batch_compare_report",
         "schema_version": 1,
         "status": "completed",
         "ok": True,
     }
+    assert payload["session_summary"]["schema_version"] == 1
+    assert payload["session_summary"]["compared_takes"] == 3
+    assert payload["session_summary"]["best_take"]["take_path"].endswith("take_best.wav")
+    assert payload["session_summary"]["weakest_take"]["take_path"].endswith("take_low.wav")
+    assert payload["session_summary"]["recurring_weakness"]
+    assert payload["session_summary"]["strongest_stable_area"]
+    assert payload["session_summary"]["next_recording_target"]
+    assert payload["session_summary"]["practice_loops"]
     assert {artifact["kind"] for artifact in payload["artifacts"]} == {
         "json_report",
         "markdown_report",
