@@ -57,6 +57,7 @@ def test_batch_compare_pipeline_ranks_multiple_takes(tmp_path: Path) -> None:
     assert (out_dir / "batch_report.csv").exists()
     assert (out_dir / "batch_report.svg").exists()
     assert (out_dir / "practice_plan.md").exists()
+    assert (out_dir / "session_manifest.json").exists()
     assert (out_dir / "takes").exists()
     assert (out_dir / "takes" / "01-take_mid" / "practice_plan.md").exists()
     assert (out_dir / "takes" / "02-take_best" / "practice_plan.md").exists()
@@ -92,4 +93,17 @@ def test_batch_compare_pipeline_ranks_multiple_takes(tmp_path: Path) -> None:
         "csv_report",
         "svg_report",
         "practice_plan",
+        "session_manifest",
     }
+
+    manifest = json.loads((out_dir / "session_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["kind"] == "practice_session_manifest"
+    assert manifest["schema_version"] == 1
+    assert manifest["compared_takes"] == 3
+    assert manifest["best_take"]["take_path"].endswith("take_best.wav")
+    assert manifest["weakest_take"]["take_path"].endswith("take_low.wav")
+    assert manifest["next_recording_target"] == payload["session_summary"]["next_recording_target"]
+    assert manifest["entrypoints"]["batch_json"].endswith("batch_report.json")
+    assert manifest["entrypoints"]["batch_markdown"].endswith("batch_report.md")
+    assert manifest["entrypoints"]["practice_plan"].endswith("practice_plan.md")
+    assert manifest["entrypoints"]["session_manifest"].endswith("session_manifest.json")

@@ -22,6 +22,7 @@ def test_generate_evaluation_showcase_writes_expected_outputs(tmp_path: Path) ->
     assert (result.batch_dir / "batch_report.json").exists()
     assert (result.batch_dir / "batch_report.md").exists()
     assert (result.batch_dir / "practice_plan.md").exists()
+    assert (result.batch_dir / "session_manifest.json").exists()
     assert (result.batch_dir / "batch_report.csv").exists()
     assert (result.batch_dir / "batch_report.svg").exists()
 
@@ -54,7 +55,14 @@ def test_generate_evaluation_showcase_writes_expected_outputs(tmp_path: Path) ->
         "csv_report",
         "svg_report",
         "practice_plan",
+        "session_manifest",
     }
+
+    manifest = json.loads((result.batch_dir / "session_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["kind"] == "practice_session_manifest"
+    assert manifest["entrypoints"]["batch_json"].endswith("batch/batch_report.json")
+    assert manifest["entrypoints"]["practice_plan"].endswith("batch/practice_plan.md")
+    assert manifest["entrypoints"]["session_manifest"].endswith("batch/session_manifest.json")
 
     generated_readme = result.readme_path.read_text(encoding="utf-8")
     assert "# Generated Evaluation Showcase" in generated_readme

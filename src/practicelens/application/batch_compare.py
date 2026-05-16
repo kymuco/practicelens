@@ -19,6 +19,7 @@ from practicelens.reporting.batch_report import (
     batch_compare_result_to_markdown,
 )
 from practicelens.reporting.batch_svg_report import batch_compare_result_to_svg
+from practicelens.reporting.session_manifest import batch_compare_result_to_session_manifest_text
 
 
 class OfflineBatchComparePipeline:
@@ -87,6 +88,7 @@ class OfflineBatchComparePipeline:
         csv_path = out_dir / "batch_report.csv"
         svg_path = out_dir / "batch_report.svg"
         practice_plan_path = out_dir / "practice_plan.md"
+        session_manifest_path = out_dir / "session_manifest.json"
 
         result_with_artifacts = BatchCompareResult(
             reference_path=result.reference_path,
@@ -98,6 +100,7 @@ class OfflineBatchComparePipeline:
                 (ArtifactKind.CSV_REPORT, csv_path),
                 (ArtifactKind.SVG_REPORT, svg_path),
                 (ArtifactKind.PRACTICE_PLAN, practice_plan_path),
+                (ArtifactKind.SESSION_MANIFEST, session_manifest_path),
             ),
             summary=result.summary,
             session_summary=result.session_summary,
@@ -108,6 +111,7 @@ class OfflineBatchComparePipeline:
         csv_path.write_text(batch_compare_result_to_csv_text(result_with_artifacts), encoding="utf-8")
         svg_path.write_text(batch_compare_result_to_svg(result_with_artifacts), encoding="utf-8")
         practice_plan_path.write_text(batch_compare_result_to_practice_plan_markdown(result_with_artifacts), encoding="utf-8")
+        session_manifest_path.write_text(batch_compare_result_to_session_manifest_text(result_with_artifacts), encoding="utf-8")
 
         return result_with_artifacts
 

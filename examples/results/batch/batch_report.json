@@ -24,6 +24,11 @@
       "description": "Session-level practice plan across compared takes.",
       "kind": "practice_plan",
       "path": "examples/results/batch/practice_plan.md"
+    },
+    {
+      "description": "Practice session entrypoint manifest.",
+      "kind": "session_manifest",
+      "path": "examples/results/batch/session_manifest.json"
     }
   ],
   "entries": [

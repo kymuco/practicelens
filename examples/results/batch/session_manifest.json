@@ -1,0 +1,58 @@
+{
+  "artifacts": [
+    {
+      "kind": "json_report",
+      "path": "examples/results/batch/batch_report.json"
+    },
+    {
+      "kind": "markdown_report",
+      "path": "examples/results/batch/batch_report.md"
+    },
+    {
+      "kind": "csv_report",
+      "path": "examples/results/batch/batch_report.csv"
+    },
+    {
+      "kind": "svg_report",
+      "path": "examples/results/batch/batch_report.svg"
+    },
+    {
+      "kind": "practice_plan",
+      "path": "examples/results/batch/practice_plan.md"
+    },
+    {
+      "kind": "session_manifest",
+      "path": "examples/results/batch/session_manifest.json"
+    }
+  ],
+  "best_take": {
+    "overall_score": 88.4,
+    "rank": 1,
+    "take_path": "samples/take_02.wav"
+  },
+  "compared_takes": 3,
+  "entrypoints": {
+    "batch_csv": "examples/results/batch/batch_report.csv",
+    "batch_json": "examples/results/batch/batch_report.json",
+    "batch_markdown": "examples/results/batch/batch_report.md",
+    "batch_svg": "examples/results/batch/batch_report.svg",
+    "practice_plan": "examples/results/batch/practice_plan.md",
+    "session_manifest": "examples/results/batch/session_manifest.json"
+  },
+  "kind": "practice_session_manifest",
+  "next_recording_target": "Record one new take that improves Rhythm Fidelity while preserving Section Stability.",
+  "recurring_weakness": "rhythm_fidelity",
+  "reference_path": "samples/reference.wav",
+  "schema_version": 1,
+  "strongest_stable_area": "section_stability",
+  "take_paths": [
+    "samples/take_02.wav",
+    "samples/take_01.wav",
+    "samples/take_03.wav"
+  ],
+  "weakest_take": {
+    "overall_score": 78.9,
+    "rank": 3,
+    "take_path": "samples/take_03.wav"
+  }
+}
