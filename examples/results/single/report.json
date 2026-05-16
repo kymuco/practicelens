@@ -32,6 +32,16 @@
       "description": "Compact visual score summary.",
       "kind": "svg_report",
       "path": "examples/results/single/report.svg"
+    },
+    {
+      "description": "Focused next-practice plan.",
+      "kind": "practice_plan",
+      "path": "examples/results/single/practice_plan.md"
+    },
+    {
+      "description": "Developer-facing diagnostic payload.",
+      "kind": "debug_payload",
+      "path": "examples/results/single/debug_payload.json"
     }
   ],
   "feature_flags": {
@@ -82,7 +92,7 @@
     }
   ],
   "next_practice_step": "Next practice step: loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.",
-  "overall_score": 86.1,
+  "overall_score": 85.1,
   "overview": {
     "kind": "analysis_report",
     "mode": "reference",
