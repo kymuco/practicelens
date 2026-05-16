@@ -16,7 +16,10 @@ from practicelens.application.session_history import (
     append_session_history_entry,
     build_session_history_entry,
     format_session_history_entry,
+    format_session_show,
     read_session_history_entries,
+    read_session_manifest,
+    resolve_session_manifest_path,
 )
 from practicelens.domain.enums import ArtifactKind
 from practicelens.domain.models import AnalysisConfig
@@ -57,6 +60,13 @@ def build_parser() -> argparse.ArgumentParser:
         "--history-index",
         default=str(DEFAULT_SESSION_HISTORY_INDEX),
         help="JSONL session history index path to read.",
+    )
+    sessions_show = sessions_subparsers.add_parser("show", help="Show one practice session from a manifest path, session directory, or history id.")
+    sessions_show.add_argument("session", help="Session directory, session_manifest.json path, indexed session id, or indexed session path.")
+    sessions_show.add_argument(
+        "--history-index",
+        default=str(DEFAULT_SESSION_HISTORY_INDEX),
+        help="JSONL session history index path to use when resolving an indexed session.",
     )
 
     return parser
@@ -147,6 +157,8 @@ def _run_practice_session(args: argparse.Namespace) -> int:
 def _run_sessions(args: argparse.Namespace) -> int:
     if args.sessions_command == "list":
         return _run_sessions_list(args)
+    if args.sessions_command == "show":
+        return _run_sessions_show(args)
     print("error: missing sessions command", file=sys.stderr)
     return 1
 
@@ -164,6 +176,18 @@ def _run_sessions_list(args: argparse.Namespace) -> int:
 
     for entry in entries:
         print(format_session_history_entry(entry))
+    return 0
+
+
+def _run_sessions_show(args: argparse.Namespace) -> int:
+    try:
+        manifest_path = resolve_session_manifest_path(args.session, history_index_path=Path(args.history_index))
+        manifest = read_session_manifest(manifest_path)
+    except Exception as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+    print(format_session_show(manifest, manifest_path=manifest_path))
     return 0
 
 
