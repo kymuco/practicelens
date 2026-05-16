@@ -11,7 +11,13 @@ from practicelens.application import (
     OfflineBatchComparePipeline,
     OfflineReferenceAnalysisPipeline,
 )
-from practicelens.application.session_history import append_session_history_entry, build_session_history_entry
+from practicelens.application.session_history import (
+    DEFAULT_SESSION_HISTORY_INDEX,
+    append_session_history_entry,
+    build_session_history_entry,
+    format_session_history_entry,
+    read_session_history_entries,
+)
 from practicelens.domain.enums import ArtifactKind
 from practicelens.domain.models import AnalysisConfig
 
@@ -44,6 +50,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_common_analysis_args(practice_session)
 
+    sessions = subparsers.add_parser("sessions", help="Inspect local practice-session history.")
+    sessions_subparsers = sessions.add_subparsers(dest="sessions_command")
+    sessions_list = sessions_subparsers.add_parser("list", help="List indexed practice sessions.")
+    sessions_list.add_argument(
+        "--history-index",
+        default=str(DEFAULT_SESSION_HISTORY_INDEX),
+        help="JSONL session history index path to read.",
+    )
+
     return parser
 
 
@@ -57,6 +72,8 @@ def run(argv: list[str] | None = None) -> int:
         return _run_compare_batch(args)
     if args.command == "practice-session":
         return _run_practice_session(args)
+    if args.command == "sessions":
+        return _run_sessions(args)
 
     parser.print_help()
     return 1
@@ -124,6 +141,29 @@ def _run_practice_session(args: argparse.Namespace) -> int:
         print(f"practice_plan: {practice_plan_path}")
     if args.history_index:
         print(f"history_index: {args.history_index}")
+    return 0
+
+
+def _run_sessions(args: argparse.Namespace) -> int:
+    if args.sessions_command == "list":
+        return _run_sessions_list(args)
+    print("error: missing sessions command", file=sys.stderr)
+    return 1
+
+
+def _run_sessions_list(args: argparse.Namespace) -> int:
+    try:
+        entries = read_session_history_entries(Path(args.history_index))
+    except Exception as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+    if not entries:
+        print("No practice sessions found.")
+        return 0
+
+    for entry in entries:
+        print(format_session_history_entry(entry))
     return 0
 
 
