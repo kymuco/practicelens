@@ -10,11 +10,14 @@ from practicelens.domain.models import (
     ComponentScore,
     FeatureFlags,
     MetricResult,
+    PracticeLoop,
     SectionFinding,
     SectionReport,
 )
 from practicelens.reporting import (
     report_to_csv_text,
+    report_to_debug_payload,
+    report_to_debug_payload_text,
     report_to_json_payload,
     report_to_json_text,
     report_to_markdown,
@@ -35,6 +38,7 @@ def _sample_report() -> AnalysisReport:
         ),
         metrics=(
             MetricResult(MetricName.PITCH_FIDELITY, 0.9, 90.0, Severity.INFO, "Pitch detail"),
+            MetricResult(MetricName.ALIGNMENT_COVERAGE, 0.95, 95.0, Severity.INFO, "Coverage detail"),
         ),
         sections=(
             SectionReport(
@@ -48,6 +52,15 @@ def _sample_report() -> AnalysisReport:
                     ComponentScore(MetricName.SECTION_STABILITY, 85.0, 0.15),
                 ),
                 findings=(SectionFinding(0.0, 8.0, Severity.NOTICE, "Stable section"),),
+            ),
+        ),
+        practice_loops=(
+            PracticeLoop(
+                section_index=0,
+                start_s=0.0,
+                end_s=8.0,
+                focus=MetricName.PITCH_FIDELITY,
+                instruction="Loop Section 0 and focus on Pitch Fidelity.",
             ),
         ),
         feedback=("Good baseline.",),
@@ -88,3 +101,37 @@ def test_report_text_renderers_include_expected_sections() -> None:
     assert "Performance band" in svg_text
     assert "Pitch Fidelity" in svg_text
     assert "Section trend" in svg_text
+
+
+def test_report_to_debug_payload_is_serializable() -> None:
+    report = _sample_report()
+
+    payload = report_to_debug_payload(report)
+    debug_text = report_to_debug_payload_text(report)
+    parsed = json.loads(debug_text)
+
+    assert parsed == payload
+    assert payload["kind"] == "debug_payload"
+    assert payload["schema_version"] == 1
+    assert payload["overview"]["analysis_kind"] == "analysis_report"
+    assert payload["score_summary"]["overall_score"] == 83.0
+    assert payload["score_summary"]["components"][0] == {
+        "name": "pitch_fidelity",
+        "score": 90.0,
+        "weight": 0.35,
+        "weighted_contribution": 31.5,
+    }
+    assert payload["evidence_summary"] == {
+        "alignment_coverage": {
+            "value": 0.95,
+            "score": 95.0,
+            "severity": "info",
+            "detail": "Coverage detail",
+        },
+        "section_count": 1,
+        "practice_loop_count": 1,
+        "feedback_count": 1,
+        "artifact_count": 3,
+    }
+    assert payload["confidence"]["level"] == "medium"
+    assert payload["practice_guidance"]["practice_loops"][0]["focus"] == "pitch_fidelity"
