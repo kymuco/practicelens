@@ -19,6 +19,11 @@
       "description": "Compact visual batch ranking summary.",
       "kind": "svg_report",
       "path": "examples/results/batch/batch_report.svg"
+    },
+    {
+      "description": "Session-level practice plan across compared takes.",
+      "kind": "practice_plan",
+      "path": "examples/results/batch/practice_plan.md"
     }
   ],
   "entries": [
@@ -43,6 +48,16 @@
           "description": "Compact visual score summary.",
           "kind": "svg_report",
           "path": "out/batch/takes/02-take_02/report.svg"
+        },
+        {
+          "description": "Focused next-practice plan.",
+          "kind": "practice_plan",
+          "path": "out/batch/takes/02-take_02/practice_plan.md"
+        },
+        {
+          "description": "Developer-facing diagnostic payload.",
+          "kind": "debug_payload",
+          "path": "out/batch/takes/02-take_02/debug_payload.json"
         }
       ],
       "output_dir": "out/batch/takes/02-take_02",
@@ -81,6 +96,16 @@
           "description": "Compact visual score summary.",
           "kind": "svg_report",
           "path": "out/batch/takes/01-take_01/report.svg"
+        },
+        {
+          "description": "Focused next-practice plan.",
+          "kind": "practice_plan",
+          "path": "out/batch/takes/01-take_01/practice_plan.md"
+        },
+        {
+          "description": "Developer-facing diagnostic payload.",
+          "kind": "debug_payload",
+          "path": "out/batch/takes/01-take_01/debug_payload.json"
         }
       ],
       "output_dir": "out/batch/takes/01-take_01",
@@ -119,6 +144,16 @@
           "description": "Compact visual score summary.",
           "kind": "svg_report",
           "path": "out/batch/takes/03-take_03/report.svg"
+        },
+        {
+          "description": "Focused next-practice plan.",
+          "kind": "practice_plan",
+          "path": "out/batch/takes/03-take_03/practice_plan.md"
+        },
+        {
+          "description": "Developer-facing diagnostic payload.",
+          "kind": "debug_payload",
+          "path": "out/batch/takes/03-take_03/debug_payload.json"
         }
       ],
       "output_dir": "out/batch/takes/03-take_03",
@@ -144,5 +179,53 @@
     "status": "completed"
   },
   "reference_path": "samples/reference.wav",
+  "session_summary": {
+    "best_take": {
+      "overall_score": 88.4,
+      "rank": 1,
+      "take_path": "samples/take_02.wav"
+    },
+    "compared_takes": 3,
+    "next_recording_target": "Record one new take that improves Rhythm Fidelity while preserving Section Stability.",
+    "practice_loops": [
+      {
+        "end_s": 16.0,
+        "focus": "rhythm_fidelity",
+        "instruction": "Loop Section 1 (8.00s - 16.00s) and focus on Rhythm Fidelity. Rehearse the onset pattern slower and re-lock attacks against the reference.",
+        "section_index": 1,
+        "start_s": 8.0,
+        "take_path": "samples/take_03.wav",
+        "take_rank": 3
+      },
+      {
+        "end_s": 16.0,
+        "focus": "timing_consistency",
+        "instruction": "Loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency. Tighten phrase timing so the take stops drifting across the section.",
+        "section_index": 1,
+        "start_s": 8.0,
+        "take_path": "samples/take_01.wav",
+        "take_rank": 2
+      },
+      {
+        "end_s": 16.0,
+        "focus": "rhythm_fidelity",
+        "instruction": "Loop Section 1 (8.00s - 16.00s) and focus on Rhythm Fidelity. Rehearse the onset pattern slower and re-lock attacks against the reference.",
+        "section_index": 1,
+        "start_s": 8.0,
+        "take_path": "samples/take_02.wav",
+        "take_rank": 1
+      }
+    ],
+    "recurring_weakness": "rhythm_fidelity",
+    "recurring_weakness_count": 2,
+    "schema_version": 1,
+    "strongest_stable_area": "section_stability",
+    "strongest_stable_area_average_score": 88.0,
+    "weakest_take": {
+      "overall_score": 78.9,
+      "rank": 3,
+      "take_path": "samples/take_03.wav"
+    }
+  },
   "summary": "Best take: take_02.wav with 88.4/100 across 3 compared takes."
 }
