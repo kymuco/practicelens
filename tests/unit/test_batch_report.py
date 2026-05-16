@@ -1,7 +1,14 @@
 import json
 from pathlib import Path
 
-from practicelens.application.contracts import AnalyzeResult, BatchCompareEntry, BatchCompareResult
+from practicelens.application.contracts import (
+    AnalyzeResult,
+    BatchCompareEntry,
+    BatchCompareResult,
+    BatchSessionSummary,
+    SessionPracticeLoopSummary,
+    SessionTakeSummary,
+)
 from practicelens.domain.enums import AnalysisMode, ArtifactKind, MetricName, Severity
 from practicelens.domain.models import (
     AnalysisInput,
@@ -55,6 +62,30 @@ def _sample_report(path: str, score: float) -> AnalysisReport:
     )
 
 
+def _sample_session_summary() -> BatchSessionSummary:
+    return BatchSessionSummary(
+        compared_takes=2,
+        best_take=SessionTakeSummary(rank=1, take_path=Path("take_a.wav"), overall_score=91.0),
+        weakest_take=SessionTakeSummary(rank=2, take_path=Path("take_b.wav"), overall_score=77.0),
+        recurring_weakness=MetricName.PITCH_FIDELITY,
+        recurring_weakness_count=2,
+        strongest_stable_area=MetricName.PITCH_FIDELITY,
+        strongest_stable_area_average_score=84.0,
+        next_recording_target="Record one new take focused on improving Pitch Fidelity.",
+        practice_loops=(
+            SessionPracticeLoopSummary(
+                take_rank=2,
+                take_path=Path("take_b.wav"),
+                section_index=0,
+                start_s=0.0,
+                end_s=8.0,
+                focus=MetricName.PITCH_FIDELITY,
+                instruction="Loop Section 0 for take_b.wav and focus on Pitch Fidelity.",
+            ),
+        ),
+    )
+
+
 def test_batch_report_renderers_emit_ranking_outputs() -> None:
     result = BatchCompareResult(
         reference_path=Path("reference.wav"),
@@ -64,6 +95,7 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
         ),
         artifacts=((ArtifactKind.JSON_REPORT, Path("batch_report.json")),),
         summary="Best take: take_a.wav with 91.0/100 across 2 compared takes.",
+        session_summary=_sample_session_summary(),
     )
 
     payload = batch_compare_result_to_json_payload(result)
@@ -72,12 +104,34 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
     csv_text = batch_compare_result_to_csv_text(result)
     svg_text = batch_compare_result_to_svg(result)
 
-    assert tuple(payload) == ("overview", "reference_path", "summary", "entries", "artifacts")
+    assert tuple(payload) == ("overview", "reference_path", "summary", "session_summary", "entries", "artifacts")
     assert payload["overview"] == {
         "kind": "batch_compare_report",
         "schema_version": 1,
         "status": "completed",
         "ok": True,
+    }
+    assert payload["session_summary"] == {
+        "schema_version": 1,
+        "compared_takes": 2,
+        "best_take": {"rank": 1, "take_path": "take_a.wav", "overall_score": 91.0},
+        "weakest_take": {"rank": 2, "take_path": "take_b.wav", "overall_score": 77.0},
+        "recurring_weakness": "pitch_fidelity",
+        "recurring_weakness_count": 2,
+        "strongest_stable_area": "pitch_fidelity",
+        "strongest_stable_area_average_score": 84.0,
+        "next_recording_target": "Record one new take focused on improving Pitch Fidelity.",
+        "practice_loops": [
+            {
+                "take_rank": 2,
+                "take_path": "take_b.wav",
+                "section_index": 0,
+                "start_s": 0.0,
+                "end_s": 8.0,
+                "focus": "pitch_fidelity",
+                "instruction": "Loop Section 0 for take_b.wav and focus on Pitch Fidelity.",
+            }
+        ],
     }
     assert payload["entries"][0]["rank"] == 1
     assert payload["entries"][0]["take_path"] == "take_a.wav"
@@ -97,6 +151,8 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
     }
     assert "# PracticeLens Batch Compare" in markdown_text
     assert "## At a glance" in markdown_text
+    assert "Recurring weakness: Pitch Fidelity" in markdown_text
+    assert "Next target: Record one new take focused on improving Pitch Fidelity." in markdown_text
     assert "| Rank | Take | Score | Delta vs best | Output dir |" in markdown_text
     assert "First practice loop: Loop Section 0 for take_a.wav and focus on Pitch Fidelity." in markdown_text
     assert "rank,take_name,take_path,overall_score,delta_from_best,first_practice_loop,summary,output_dir" in csv_text
