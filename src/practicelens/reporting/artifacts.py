@@ -10,6 +10,7 @@ from practicelens.reporting import (
     report_to_markdown,
     report_to_svg,
 )
+from practicelens.reporting.debug_payload import report_to_debug_payload_text
 from practicelens.reporting.practice_plan_report import report_to_practice_plan_markdown
 
 
@@ -23,6 +24,7 @@ def write_report_artifacts(
     csv_path = out_dir / "report.csv"
     svg_path = out_dir / "report.svg"
     practice_plan_path = out_dir / "practice_plan.md"
+    debug_payload_path = out_dir / "debug_payload.json"
 
     artifacts = (
         ArtifactLink(
@@ -50,6 +52,11 @@ def write_report_artifacts(
             str(practice_plan_path),
             "Focused next-practice plan.",
         ),
+        ArtifactLink(
+            ArtifactKind.DEBUG_PAYLOAD,
+            str(debug_payload_path),
+            "Developer-facing diagnostic payload.",
+        ),
     )
 
     report_with_artifacts = AnalysisReport(
@@ -74,4 +81,5 @@ def write_report_artifacts(
     csv_path.write_text(report_to_csv_text(report_with_artifacts), encoding="utf-8")
     svg_path.write_text(report_to_svg(report_with_artifacts), encoding="utf-8")
     practice_plan_path.write_text(report_to_practice_plan_markdown(report_with_artifacts), encoding="utf-8")
+    debug_payload_path.write_text(report_to_debug_payload_text(report_with_artifacts), encoding="utf-8")
     return report_with_artifacts, artifacts
