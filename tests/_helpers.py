@@ -59,6 +59,7 @@ def normalize_batch_payload(payload: dict[str, object]) -> dict[str, object]:
         "top_level_keys": tuple(sorted(payload)),
         "overview": payload["overview"],
         "reference_path": payload["reference_path"],
+        "session_summary": payload["session_summary"],
         "entries": [
             {
                 "rank": entry["rank"],
