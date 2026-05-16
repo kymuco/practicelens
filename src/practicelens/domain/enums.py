@@ -41,3 +41,4 @@ class ArtifactKind(StrEnum):
     SVG_REPORT = "svg_report"
     PRACTICE_PLAN = "practice_plan"
     DEBUG_PAYLOAD = "debug_payload"
+    SESSION_MANIFEST = "session_manifest"
