@@ -93,6 +93,7 @@ def generate_evaluation_showcase(
         "cases": single_outputs,
         "batch_report_path": str(batch_dir / "batch_report.json"),
         "batch_practice_plan_path": str(batch_dir / "practice_plan.md"),
+        "batch_session_summary": batch_payload["session_summary"],
         "batch_ranking": [
             {
                 "rank": entry["rank"],
@@ -150,7 +151,7 @@ def _generated_readme(summary: dict[str, object]) -> str:
         "- Synthetic WAV assets under `assets/`",
         "- Single-take reports and practice plans under `single/<case_name>/`",
         "- Batch comparison report and session practice plan under `batch/`",
-        "- Machine-readable summary in `summary.json`",
+        "- Machine-readable session summary in `summary.json`",
         "",
         "## Cases",
         "",
@@ -168,7 +169,7 @@ def _generated_readme(summary: dict[str, object]) -> str:
             "",
             "## Suggested inspection path",
             "",
-            "1. Open `summary.json` for the compact machine-readable overview.",
+            "1. Open `summary.json` for the compact machine-readable session overview.",
             "2. Open `batch/practice_plan.md` for the session-level next action across takes.",
             "3. Open `batch/batch_report.md` for ranking details.",
             "4. Open the per-take `practice_plan.md` files for focused guidance.",

@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from practicelens.domain.enums import ArtifactKind
+from practicelens.domain.enums import ArtifactKind, MetricName
 from practicelens.domain.models import AnalysisConfig, AnalysisInput, AnalysisReport, BatchCompareOverview
 
 
@@ -70,6 +70,44 @@ class BatchCompareEntry:
 
 
 @dataclass(slots=True, frozen=True)
+class SessionTakeSummary:
+    """Stable reference to one take inside a session-level summary."""
+
+    rank: int
+    take_path: Path
+    overall_score: float
+
+
+@dataclass(slots=True, frozen=True)
+class SessionPracticeLoopSummary:
+    """Practice loop selected for session-level follow-up."""
+
+    take_rank: int
+    take_path: Path
+    section_index: int
+    start_s: float
+    end_s: float
+    focus: MetricName
+    instruction: str
+
+
+@dataclass(slots=True, frozen=True)
+class BatchSessionSummary:
+    """Stable session-level summary across all compared takes."""
+
+    compared_takes: int
+    best_take: SessionTakeSummary
+    weakest_take: SessionTakeSummary
+    recurring_weakness: MetricName
+    recurring_weakness_count: int
+    strongest_stable_area: MetricName
+    strongest_stable_area_average_score: float
+    next_recording_target: str
+    practice_loops: tuple[SessionPracticeLoopSummary, ...] = ()
+    schema_version: int = 1
+
+
+@dataclass(slots=True, frozen=True)
 class BatchCompareResult:
     """Result envelope for one batch comparison run."""
 
@@ -78,6 +116,7 @@ class BatchCompareResult:
     overview: BatchCompareOverview = BatchCompareOverview()
     artifacts: tuple[tuple[ArtifactKind, Path], ...] = ()
     summary: str | None = None
+    session_summary: BatchSessionSummary | None = None
 
     @property
     def best_entry(self) -> BatchCompareEntry:

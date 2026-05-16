@@ -38,6 +38,7 @@ Stable top-level fields for `batch_report.json`:
 - `overview`
 - `reference_path`
 - `summary`
+- `session_summary`
 - `entries`
 - `artifacts`
 
@@ -101,13 +102,16 @@ Best for:
 
 ### `batch_report.json`
 
-Use this for machine-readable ranking across multiple takes.
+Use this for machine-readable ranking and session decisions across multiple takes.
 
 Best for:
 
 - integrations;
 - ranking pipelines;
-- future evaluation tooling.
+- future evaluation tooling;
+- dashboards that need stable session-level fields.
+
+The `session_summary` field is the compact structured contract for the whole comparison session. It includes the best take, weakest take, recurring weakness, strongest stable area, next recording target, and selected practice loops.
 
 Each per-take output folder under `takes/` also contains the normal single-take artifacts, including `practice_plan.md`.
 
@@ -133,7 +137,7 @@ Best for:
 - picking the top practice loops from weaker takes;
 - setting the next recording target.
 
-This batch-level plan is different from the per-take `takes/<take>/practice_plan.md` files. The top-level plan summarizes the whole comparison session.
+This batch-level plan is different from the per-take `takes/<take>/practice_plan.md` files. The top-level plan summarizes the whole comparison session and is derived from `session_summary`.
 
 ### `batch_report.csv`
 
