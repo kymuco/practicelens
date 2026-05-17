@@ -67,7 +67,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     sessions_show.add_argument(
         "session",
-        help="Session directory, session_manifest.json path, indexed session id, or indexed session path.",
+        help=(
+            "Session directory, session_manifest.json path, indexed session id, "
+            "or indexed session path."
+        ),
     )
     sessions_show.add_argument(
         "--history-index",
