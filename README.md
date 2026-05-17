@@ -263,6 +263,21 @@ Example output:
 2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency
 ```
 
+### Show one practice session
+
+```bash
+practicelens sessions show out/session
+```
+
+You can also pass a manifest file or an indexed session id:
+
+```bash
+practicelens sessions show out/session/session_manifest.json
+practicelens sessions show 1 --history-index .practicelens/sessions/index.jsonl
+```
+
+Output includes the best take, weakest take, recurring weakness, next recording target, and paths to `practice_plan.md` and `batch_report.md`.
+
 ### Shared tuning flags
 
 - `--sample-rate`

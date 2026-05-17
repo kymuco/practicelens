@@ -201,7 +201,28 @@ Example output:
 2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency
 ```
 
-## 6. Useful tuning flags
+## 6. Show one practice session
+
+```bash
+practicelens sessions show out/session
+```
+
+You can also pass a manifest file directly:
+
+```bash
+practicelens sessions show out/session/session_manifest.json
+```
+
+Or show an indexed session by 1-based id:
+
+```bash
+practicelens sessions show 1 \
+  --history-index .practicelens/sessions/index.jsonl
+```
+
+The output includes the best take, weakest take, recurring weakness, next recording target, `practice_plan.md`, and `batch_report.md` paths.
+
+## 7. Useful tuning flags
 
 Shared CLI flags:
 
@@ -223,7 +244,7 @@ practicelens analyze \
   --segment-duration 2.0
 ```
 
-## 7. What “good usage” looks like
+## 8. What “good usage” looks like
 
 A good practical path is:
 
@@ -232,12 +253,13 @@ A good practical path is:
 - use practice-session when you want the next concrete practice action across several takes;
 - use `--history-index` when you want to build a local practice history intentionally;
 - use `sessions list` when you want to see previous indexed practice sessions;
+- use `sessions show` when you want to reopen one session through its manifest;
 - use practice plans first when you want action;
 - use SVG first when you want a glanceable visual review;
 - use Markdown next for explanation;
 - use JSON/CSV when you want structure or external tooling.
 
-## 8. If you just want to browse example outputs
+## 9. If you just want to browse example outputs
 
 Use the illustrative snapshots already in the repo:
 
