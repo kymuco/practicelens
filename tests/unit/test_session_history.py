@@ -14,6 +14,7 @@ from practicelens.application.contracts import (
 from practicelens.application.session_history import (
     append_session_history_entry,
     build_session_history_entry,
+    format_session_compare,
     format_session_history_entry,
     format_session_show,
     read_session_history_entries,
@@ -57,13 +58,19 @@ def _sample_result() -> BatchCompareResult:
     )
 
 
-def _sample_manifest() -> dict[str, object]:
+def _sample_manifest(
+    *,
+    best_score: float = 91.0,
+    recurring_weakness: str = "pitch_fidelity",
+    strongest_stable_area: str = "section_stability",
+) -> dict[str, object]:
     return {
         "schema_version": 1,
         "kind": "practice_session_manifest",
-        "best_take": {"rank": 1, "take_path": "samples/take_a.wav", "overall_score": 91.0},
+        "best_take": {"rank": 1, "take_path": "samples/take_a.wav", "overall_score": best_score},
         "weakest_take": {"rank": 2, "take_path": "samples/take_b.wav", "overall_score": 77.0},
-        "recurring_weakness": "pitch_fidelity",
+        "recurring_weakness": recurring_weakness,
+        "strongest_stable_area": strongest_stable_area,
         "next_recording_target": "Record one new take focused on improving Pitch Fidelity.",
         "entrypoints": {
             "practice_plan": "out/session/practice_plan.md",
@@ -194,6 +201,48 @@ def test_format_session_show_outputs_human_summary() -> None:
         "Next recording target: Record one new take focused on improving Pitch Fidelity.\n"
         "Practice plan: out/session/practice_plan.md\n"
         "Batch report: out/session/batch_report.md"
+    )
+
+
+def test_format_session_compare_outputs_progress_summary() -> None:
+    text = format_session_compare(
+        _sample_manifest(best_score=88.4, recurring_weakness="rhythm_fidelity"),
+        _sample_manifest(best_score=91.6, recurring_weakness="timing_consistency"),
+    )
+
+    assert text == (
+        "Overall score: +3.2\n"
+        "Recurring weakness: rhythm_fidelity -> timing_consistency\n"
+        "Best take: improved\n"
+        "Stable area: preserved (section_stability)"
+    )
+
+
+def test_format_session_compare_reports_stable_area_change() -> None:
+    text = format_session_compare(
+        _sample_manifest(best_score=91.0, strongest_stable_area="section_stability"),
+        _sample_manifest(best_score=90.0, strongest_stable_area="pitch_fidelity"),
+    )
+
+    assert text == (
+        "Overall score: -1.0\n"
+        "Recurring weakness: pitch_fidelity -> pitch_fidelity\n"
+        "Best take: declined\n"
+        "Stable area: changed (section_stability -> pitch_fidelity)"
+    )
+
+
+def test_format_session_compare_handles_missing_scores() -> None:
+    text = format_session_compare(
+        {"kind": "practice_session_manifest"},
+        {"kind": "practice_session_manifest"},
+    )
+
+    assert text == (
+        "Overall score: unknown\n"
+        "Recurring weakness: - -> -\n"
+        "Best take: unknown\n"
+        "Stable area: unknown"
     )
 
 
