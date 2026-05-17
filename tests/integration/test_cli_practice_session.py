@@ -270,6 +270,60 @@ def test_cli_sessions_show_can_resolve_history_id(tmp_path: Path, capsys) -> Non
     assert "Next recording target:" in captured.out
 
 
+def test_cli_sessions_compare_can_read_manifest_files(tmp_path: Path, capsys) -> None:
+    old_dir = tmp_path / "old-session"
+    new_dir = tmp_path / "new-session"
+    _write_manifest(old_dir, best_score=88.4, recurring_weakness="rhythm_fidelity")
+    _write_manifest(new_dir, best_score=91.6, recurring_weakness="timing_consistency")
+
+    exit_code = run(
+        [
+            "sessions",
+            "compare",
+            str(old_dir / "session_manifest.json"),
+            str(new_dir / "session_manifest.json"),
+        ]
+    )
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert captured.out == (
+        "Overall score: +3.2\n"
+        "Recurring weakness: rhythm_fidelity -> timing_consistency\n"
+        "Best take: improved\n"
+        "Stable area: preserved (section_stability)\n"
+    )
+
+
+def test_cli_sessions_compare_can_resolve_history_ids(tmp_path: Path, capsys) -> None:
+    old_dir = tmp_path / "old-session"
+    new_dir = tmp_path / "new-session"
+    history_index = tmp_path / ".practicelens" / "sessions" / "index.jsonl"
+    _write_manifest(old_dir, best_score=91.0, strongest_stable_area="section_stability")
+    _write_manifest(new_dir, best_score=90.0, strongest_stable_area="pitch_fidelity")
+    history_index.parent.mkdir(parents=True)
+    history_index.write_text(
+        json.dumps({"session_dir": str(old_dir), "manifest_path": str(old_dir / "session_manifest.json")})
+        + "\n"
+        + json.dumps({"session_dir": str(new_dir), "manifest_path": str(new_dir / "session_manifest.json")})
+        + "\n",
+        encoding="utf-8",
+    )
+
+    exit_code = run(["sessions", "compare", "1", "2", "--history-index", str(history_index)])
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert captured.out == (
+        "Overall score: -1.0\n"
+        "Recurring weakness: pitch_fidelity -> pitch_fidelity\n"
+        "Best take: declined\n"
+        "Stable area: changed (section_stability -> pitch_fidelity)\n"
+    )
+
+
 def _run_practice_session_fixture(tmp_path: Path, capsys, *, history_index: Path | None = None) -> Path:
     reference = tmp_path / "reference.wav"
     take_a = tmp_path / "take_a.wav"
@@ -303,3 +357,42 @@ def _run_practice_session_fixture(tmp_path: Path, capsys, *, history_index: Path
     assert run(args) == 0
     capsys.readouterr()
     return out_dir
+
+
+def _write_manifest(
+    session_dir: Path,
+    *,
+    best_score: float,
+    recurring_weakness: str = "pitch_fidelity",
+    strongest_stable_area: str = "section_stability",
+) -> Path:
+    session_dir.mkdir(parents=True)
+    manifest_path = session_dir / "session_manifest.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "kind": "practice_session_manifest",
+                "best_take": {
+                    "rank": 1,
+                    "take_path": str(session_dir / "take_best.wav"),
+                    "overall_score": best_score,
+                },
+                "weakest_take": {
+                    "rank": 2,
+                    "take_path": str(session_dir / "take_weak.wav"),
+                    "overall_score": 77.0,
+                },
+                "recurring_weakness": recurring_weakness,
+                "strongest_stable_area": strongest_stable_area,
+                "next_recording_target": "Record one new take.",
+                "entrypoints": {
+                    "practice_plan": str(session_dir / "practice_plan.md"),
+                    "batch_markdown": str(session_dir / "batch_report.md"),
+                },
+            },
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+    return manifest_path

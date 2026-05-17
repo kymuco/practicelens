@@ -278,6 +278,28 @@ practicelens sessions show 1 --history-index .practicelens/sessions/index.jsonl
 
 Output includes the best take, weakest take, recurring weakness, next recording target, and paths to `practice_plan.md` and `batch_report.md`.
 
+### Compare two practice sessions
+
+```bash
+practicelens sessions compare old/session new/session
+```
+
+You can also compare manifest files or indexed session ids:
+
+```bash
+practicelens sessions compare old/session/session_manifest.json new/session/session_manifest.json
+practicelens sessions compare 1 2 --history-index .practicelens/sessions/index.jsonl
+```
+
+Example output:
+
+```text
+Overall score: +3.2
+Recurring weakness: rhythm_fidelity -> timing_consistency
+Best take: improved
+Stable area: preserved (section_stability)
+```
+
 ### Shared tuning flags
 
 - `--sample-rate`

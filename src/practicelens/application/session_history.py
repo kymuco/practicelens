@@ -130,6 +130,26 @@ def format_session_show(manifest: dict[str, object], *, manifest_path: Path) -> 
     )
 
 
+def format_session_compare(old_manifest: dict[str, object], new_manifest: dict[str, object]) -> str:
+    """Format a first-pass progress comparison between two session manifests."""
+
+    old_best_score = _take_score(old_manifest.get("best_take"))
+    new_best_score = _take_score(new_manifest.get("best_take"))
+    old_weakness = _string_or_dash(old_manifest.get("recurring_weakness"))
+    new_weakness = _string_or_dash(new_manifest.get("recurring_weakness"))
+    old_stable_area = _string_or_dash(old_manifest.get("strongest_stable_area"))
+    new_stable_area = _string_or_dash(new_manifest.get("strongest_stable_area"))
+
+    return "\n".join(
+        (
+            f"Overall score: {_score_delta(old_best_score, new_best_score)}",
+            f"Recurring weakness: {old_weakness} -> {new_weakness}",
+            f"Best take: {_best_take_change(old_best_score, new_best_score)}",
+            f"Stable area: {_stable_area_change(old_stable_area, new_stable_area)}",
+        )
+    )
+
+
 def format_session_history_entry(entry: dict[str, object]) -> str:
     """Format one compact CLI line for a session history entry."""
 
@@ -159,6 +179,40 @@ def _take_summary(value: Any) -> str:
     if score == "-":
         return take_path
     return f"{take_path} ({score}/100)"
+
+
+def _take_score(value: Any) -> float | None:
+    if not isinstance(value, dict):
+        return None
+    score = value.get("overall_score")
+    if isinstance(score, int | float):
+        return float(score)
+    return None
+
+
+def _score_delta(old_score: float | None, new_score: float | None) -> str:
+    if old_score is None or new_score is None:
+        return "unknown"
+    delta = new_score - old_score
+    return f"{delta:+.1f}"
+
+
+def _best_take_change(old_score: float | None, new_score: float | None) -> str:
+    if old_score is None or new_score is None:
+        return "unknown"
+    if new_score > old_score:
+        return "improved"
+    if new_score < old_score:
+        return "declined"
+    return "unchanged"
+
+
+def _stable_area_change(old_value: str, new_value: str) -> str:
+    if old_value == "-" or new_value == "-":
+        return "unknown"
+    if old_value == new_value:
+        return f"preserved ({new_value})"
+    return f"changed ({old_value} -> {new_value})"
 
 
 def _date_part(value: Any) -> str:
