@@ -82,8 +82,14 @@ def build_parser() -> argparse.ArgumentParser:
         "compare",
         help="Compare two practice sessions for first-pass progress tracking.",
     )
-    sessions_compare.add_argument("old_session", help="Older session directory, manifest path, or indexed session id.")
-    sessions_compare.add_argument("new_session", help="Newer session directory, manifest path, or indexed session id.")
+    sessions_compare.add_argument(
+        "old_session",
+        help="Older session directory, manifest path, or indexed session id.",
+    )
+    sessions_compare.add_argument(
+        "new_session",
+        help="Newer session directory, manifest path, or indexed session id.",
+    )
     sessions_compare.add_argument(
         "--history-index",
         default=str(DEFAULT_SESSION_HISTORY_INDEX),
