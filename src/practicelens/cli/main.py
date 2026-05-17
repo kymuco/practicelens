@@ -61,8 +61,14 @@ def build_parser() -> argparse.ArgumentParser:
         default=str(DEFAULT_SESSION_HISTORY_INDEX),
         help="JSONL session history index path to read.",
     )
-    sessions_show = sessions_subparsers.add_parser("show", help="Show one practice session from a manifest path, session directory, or history id.")
-    sessions_show.add_argument("session", help="Session directory, session_manifest.json path, indexed session id, or indexed session path.")
+    sessions_show = sessions_subparsers.add_parser(
+        "show",
+        help="Show one practice session from a manifest path, session directory, or history id.",
+    )
+    sessions_show.add_argument(
+        "session",
+        help="Session directory, session_manifest.json path, indexed session id, or indexed session path.",
+    )
     sessions_show.add_argument(
         "--history-index",
         default=str(DEFAULT_SESSION_HISTORY_INDEX),
