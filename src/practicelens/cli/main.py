@@ -15,6 +15,7 @@ from practicelens.application.session_history import (
     DEFAULT_SESSION_HISTORY_INDEX,
     append_session_history_entry,
     build_session_history_entry,
+    format_session_compare,
     format_session_history_entry,
     format_session_show,
     read_session_history_entries,
@@ -76,6 +77,17 @@ def build_parser() -> argparse.ArgumentParser:
         "--history-index",
         default=str(DEFAULT_SESSION_HISTORY_INDEX),
         help="JSONL session history index path to use when resolving an indexed session.",
+    )
+    sessions_compare = sessions_subparsers.add_parser(
+        "compare",
+        help="Compare two practice sessions for first-pass progress tracking.",
+    )
+    sessions_compare.add_argument("old_session", help="Older session directory, manifest path, or indexed session id.")
+    sessions_compare.add_argument("new_session", help="Newer session directory, manifest path, or indexed session id.")
+    sessions_compare.add_argument(
+        "--history-index",
+        default=str(DEFAULT_SESSION_HISTORY_INDEX),
+        help="JSONL session history index path to use when resolving indexed sessions.",
     )
 
     return parser
@@ -168,6 +180,8 @@ def _run_sessions(args: argparse.Namespace) -> int:
         return _run_sessions_list(args)
     if args.sessions_command == "show":
         return _run_sessions_show(args)
+    if args.sessions_command == "compare":
+        return _run_sessions_compare(args)
     print("error: missing sessions command", file=sys.stderr)
     return 1
 
@@ -197,6 +211,21 @@ def _run_sessions_show(args: argparse.Namespace) -> int:
         return 1
 
     print(format_session_show(manifest, manifest_path=manifest_path))
+    return 0
+
+
+def _run_sessions_compare(args: argparse.Namespace) -> int:
+    try:
+        history_index_path = Path(args.history_index)
+        old_manifest_path = resolve_session_manifest_path(args.old_session, history_index_path=history_index_path)
+        new_manifest_path = resolve_session_manifest_path(args.new_session, history_index_path=history_index_path)
+        old_manifest = read_session_manifest(old_manifest_path)
+        new_manifest = read_session_manifest(new_manifest_path)
+    except Exception as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+    print(format_session_compare(old_manifest, new_manifest))
     return 0
 
 
