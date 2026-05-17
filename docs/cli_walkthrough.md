@@ -222,7 +222,37 @@ practicelens sessions show 1 \
 
 The output includes the best take, weakest take, recurring weakness, next recording target, `practice_plan.md`, and `batch_report.md` paths.
 
-## 7. Useful tuning flags
+## 7. Compare two practice sessions
+
+```bash
+practicelens sessions compare old/session new/session
+```
+
+You can also compare manifest files directly:
+
+```bash
+practicelens sessions compare \
+  old/session/session_manifest.json \
+  new/session/session_manifest.json
+```
+
+Or compare indexed sessions by 1-based id:
+
+```bash
+practicelens sessions compare 1 2 \
+  --history-index .practicelens/sessions/index.jsonl
+```
+
+Example output:
+
+```text
+Overall score: +3.2
+Recurring weakness: rhythm_fidelity -> timing_consistency
+Best take: improved
+Stable area: preserved (section_stability)
+```
+
+## 8. Useful tuning flags
 
 Shared CLI flags:
 
@@ -244,7 +274,7 @@ practicelens analyze \
   --segment-duration 2.0
 ```
 
-## 8. What “good usage” looks like
+## 9. What “good usage” looks like
 
 A good practical path is:
 
@@ -254,12 +284,13 @@ A good practical path is:
 - use `--history-index` when you want to build a local practice history intentionally;
 - use `sessions list` when you want to see previous indexed practice sessions;
 - use `sessions show` when you want to reopen one session through its manifest;
+- use `sessions compare` when you want a first-pass progress check between two sessions;
 - use practice plans first when you want action;
 - use SVG first when you want a glanceable visual review;
 - use Markdown next for explanation;
 - use JSON/CSV when you want structure or external tooling.
 
-## 9. If you just want to browse example outputs
+## 10. If you just want to browse example outputs
 
 Use the illustrative snapshots already in the repo:
 
