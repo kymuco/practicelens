@@ -131,7 +131,10 @@ def test_resolve_session_manifest_path_accepts_session_directory(tmp_path: Path)
     session_dir = tmp_path / "session-a"
     session_dir.mkdir()
 
-    assert resolve_session_manifest_path(str(session_dir), history_index_path=tmp_path / "missing.jsonl") == session_dir / "session_manifest.json"
+    assert resolve_session_manifest_path(
+        str(session_dir),
+        history_index_path=tmp_path / "missing.jsonl",
+    ) == session_dir / "session_manifest.json"
 
 
 def test_resolve_session_manifest_path_accepts_manifest_file(tmp_path: Path) -> None:
@@ -159,7 +162,10 @@ def test_resolve_session_manifest_path_accepts_history_id(tmp_path: Path) -> Non
 def test_resolve_session_manifest_path_accepts_indexed_session_dir(tmp_path: Path) -> None:
     index_path = tmp_path / "index.jsonl"
     manifest_path = tmp_path / "session-a" / "session_manifest.json"
-    index_path.write_text(json.dumps({"session_dir": str(manifest_path.parent), "manifest_path": str(manifest_path)}) + "\n", encoding="utf-8")
+    index_path.write_text(
+        json.dumps({"session_dir": str(manifest_path.parent), "manifest_path": str(manifest_path)}) + "\n",
+        encoding="utf-8",
+    )
 
     assert resolve_session_manifest_path(str(manifest_path.parent), history_index_path=index_path) == manifest_path
 
