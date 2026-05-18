@@ -62,6 +62,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=str(DEFAULT_SESSION_HISTORY_INDEX),
         help="JSONL session history index path to read.",
     )
+    sessions_list.add_argument(
+        "--limit",
+        type=int,
+        help="Maximum number of most-recent indexed sessions to print.",
+    )
     sessions_show = sessions_subparsers.add_parser(
         "show",
         help="Show one practice session from a manifest path, session directory, or history id.",
@@ -188,11 +193,15 @@ def _run_sessions(args: argparse.Namespace) -> int:
         return _run_sessions_show(args)
     if args.sessions_command == "compare":
         return _run_sessions_compare(args)
-    print("error: missing sessions command", file=sys.stderr)
+    print("error: missing sessions command. Try: practicelens sessions list", file=sys.stderr)
     return 1
 
 
 def _run_sessions_list(args: argparse.Namespace) -> int:
+    if args.limit is not None and args.limit < 1:
+        print("error: --limit must be greater than 0", file=sys.stderr)
+        return 1
+
     try:
         entries = read_session_history_entries(Path(args.history_index))
     except Exception as exc:
@@ -200,11 +209,15 @@ def _run_sessions_list(args: argparse.Namespace) -> int:
         return 1
 
     if not entries:
-        print("No practice sessions found.")
+        print(f"No practice sessions found in {args.history_index}.")
         return 0
 
-    for entry in entries:
-        print(format_session_history_entry(entry))
+    indexed_entries = tuple(enumerate(entries, start=1))
+    if args.limit is not None:
+        indexed_entries = indexed_entries[-args.limit :]
+
+    for index, entry in indexed_entries:
+        print(format_session_history_entry(entry, index=index))
     return 0
 
 

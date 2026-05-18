@@ -132,40 +132,21 @@ def test_cli_sessions_list_reports_empty_history(tmp_path: Path, capsys) -> None
     captured = capsys.readouterr()
 
     assert exit_code == 0
-    assert captured.out == "No practice sessions found.\n"
+    assert captured.out == f"No practice sessions found in {history_index}.\n"
+
+
+def test_cli_sessions_list_rejects_non_positive_limit(capsys) -> None:
+    exit_code = run(["sessions", "list", "--limit", "0"])
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 1
+    assert captured.err == "error: --limit must be greater than 0\n"
 
 
 def test_cli_sessions_list_prints_indexed_sessions(tmp_path: Path, capsys) -> None:
     history_index = tmp_path / ".practicelens" / "sessions" / "index.jsonl"
-    history_index.parent.mkdir(parents=True)
-    history_index.write_text(
-        "\n".join(
-            [
-                json.dumps(
-                    {
-                        "created_at": "2026-05-16T10:00:00+00:00",
-                        "session_dir": "out/session-a",
-                        "best_take": "samples/take_02.wav",
-                        "best_score": 88.4,
-                        "recurring_weakness": "rhythm_fidelity",
-                    },
-                    sort_keys=True,
-                ),
-                json.dumps(
-                    {
-                        "created_at": "2026-05-17T10:00:00+00:00",
-                        "session_dir": "out/session-b",
-                        "best_take": "samples/take_03.wav",
-                        "best_score": 90.1,
-                        "recurring_weakness": "timing_consistency",
-                    },
-                    sort_keys=True,
-                ),
-            ]
-        )
-        + "\n",
-        encoding="utf-8",
-    )
+    _write_history_index(history_index)
 
     exit_code = run(["sessions", "list", "--history-index", str(history_index)])
 
@@ -173,9 +154,21 @@ def test_cli_sessions_list_prints_indexed_sessions(tmp_path: Path, capsys) -> No
 
     assert exit_code == 0
     assert captured.out == (
-        "2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity\n"
-        "2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency\n"
+        "1  2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity\n"
+        "2  2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency\n"
     )
+
+
+def test_cli_sessions_list_can_limit_to_most_recent_sessions(tmp_path: Path, capsys) -> None:
+    history_index = tmp_path / ".practicelens" / "sessions" / "index.jsonl"
+    _write_history_index(history_index)
+
+    exit_code = run(["sessions", "list", "--history-index", str(history_index), "--limit", "1"])
+
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert captured.out == "2  2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency\n"
 
 
 def test_cli_practice_session_history_can_be_listed(tmp_path: Path, capsys) -> None:
@@ -217,6 +210,7 @@ def test_cli_practice_session_history_can_be_listed(tmp_path: Path, capsys) -> N
 
     assert session_exit_code == 0
     assert list_exit_code == 0
+    assert captured.out.startswith("1  ")
     assert str(out_dir) in captured.out
     assert "best=" in captured.out
     assert "score=" in captured.out
@@ -357,6 +351,38 @@ def _run_practice_session_fixture(tmp_path: Path, capsys, *, history_index: Path
     assert run(args) == 0
     capsys.readouterr()
     return out_dir
+
+
+def _write_history_index(history_index: Path) -> None:
+    history_index.parent.mkdir(parents=True)
+    history_index.write_text(
+        "\n".join(
+            [
+                json.dumps(
+                    {
+                        "created_at": "2026-05-16T10:00:00+00:00",
+                        "session_dir": "out/session-a",
+                        "best_take": "samples/take_02.wav",
+                        "best_score": 88.4,
+                        "recurring_weakness": "rhythm_fidelity",
+                    },
+                    sort_keys=True,
+                ),
+                json.dumps(
+                    {
+                        "created_at": "2026-05-17T10:00:00+00:00",
+                        "session_dir": "out/session-b",
+                        "best_take": "samples/take_03.wav",
+                        "best_score": 90.1,
+                        "recurring_weakness": "timing_consistency",
+                    },
+                    sort_keys=True,
+                ),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
 
 def _write_manifest(

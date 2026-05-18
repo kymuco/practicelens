@@ -150,7 +150,7 @@ def format_session_compare(old_manifest: dict[str, object], new_manifest: dict[s
     )
 
 
-def format_session_history_entry(entry: dict[str, object]) -> str:
+def format_session_history_entry(entry: dict[str, object], *, index: int | None = None) -> str:
     """Format one compact CLI line for a session history entry."""
 
     created_at = _date_part(entry.get("created_at"))
@@ -158,7 +158,10 @@ def format_session_history_entry(entry: dict[str, object]) -> str:
     best_take = _path_name(entry.get("best_take"))
     score = _score(entry.get("best_score"))
     focus = _string_or_dash(entry.get("recurring_weakness"))
-    return f"{created_at}  {session_dir}  best={best_take}  score={score}  focus={focus}"
+    line = f"{created_at}  {session_dir}  best={best_take}  score={score}  focus={focus}"
+    if index is None:
+        return line
+    return f"{index}  {line}"
 
 
 def _manifest_path_from_entry(entry: dict[str, object]) -> Path:

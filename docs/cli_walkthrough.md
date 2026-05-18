@@ -187,18 +187,19 @@ By default this reads:
 .practicelens/sessions/index.jsonl
 ```
 
-For a custom index path:
+For a custom index path or a limited recent view:
 
 ```bash
 practicelens sessions list \
-  --history-index .practicelens/sessions/index.jsonl
+  --history-index .practicelens/sessions/index.jsonl \
+  --limit 5
 ```
 
-Example output:
+Example output includes 1-based ids that can be reused by `sessions show` and `sessions compare`:
 
 ```text
-2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity
-2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency
+1  2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity
+2  2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency
 ```
 
 ## 6. Show one practice session
@@ -282,7 +283,7 @@ A good practical path is:
 - use batch comparison when you want to decide which take to keep;
 - use practice-session when you want the next concrete practice action across several takes;
 - use `--history-index` when you want to build a local practice history intentionally;
-- use `sessions list` when you want to see previous indexed practice sessions;
+- use `sessions list` when you want ids for previous indexed practice sessions;
 - use `sessions show` when you want to reopen one session through its manifest;
 - use `sessions compare` when you want a first-pass progress check between two sessions;
 - use practice plans first when you want action;
