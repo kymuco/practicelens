@@ -260,5 +260,20 @@ def test_format_session_history_entry_outputs_compact_cli_line() -> None:
     assert line == "2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity"
 
 
+def test_format_session_history_entry_can_include_index() -> None:
+    line = format_session_history_entry(
+        {
+            "created_at": "2026-05-16T10:00:00+00:00",
+            "session_dir": "out/session-a",
+            "best_take": "samples/take_02.wav",
+            "best_score": 88.4,
+            "recurring_weakness": "rhythm_fidelity",
+        },
+        index=1,
+    )
+
+    assert line == "1  2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity"
+
+
 def test_format_session_history_entry_handles_missing_optional_fields() -> None:
     assert format_session_history_entry({}) == "-  -  best=-  score=-  focus=-"
