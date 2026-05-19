@@ -143,13 +143,14 @@ Use this for human review of multiple takes and session-level practice decisions
 
 Best for:
 
-- quick decision-making;
+- seeing the next concrete practice action before reading tables;
+- understanding why the strongest take won;
 - reviewing which take came out strongest;
 - seeing which take needs review;
 - identifying the recurring weakness and stable area;
 - choosing recommended session loops before recording the next take.
 
-This report includes both a ranking table and a `Session decision` section derived from `session_summary`.
+This report includes musician-facing `What to do next` and `Why this take won` sections, plus the ranking table and the `Session decision` section derived from `session_summary`.
 
 ### `practice_plan.md`
 
