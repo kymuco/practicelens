@@ -73,6 +73,8 @@ def batch_compare_result_to_markdown(result: BatchCompareResult) -> str:
         lines.extend(["", result.summary])
 
     if result.session_summary is not None:
+        lines.extend(_what_to_do_next_lines(result.session_summary))
+        lines.extend(_why_best_take_won_lines(result))
         lines.extend(_session_decision_lines(result.session_summary))
 
     lines.extend(["", "## Ranking", ""])
@@ -139,6 +141,44 @@ def batch_compare_result_to_csv_text(result: BatchCompareResult) -> str:
             ]
         )
     return buffer.getvalue()
+
+
+def _what_to_do_next_lines(summary: BatchSessionSummary) -> list[str]:
+    lines = [
+        "",
+        "## What to do next",
+        "",
+        f"1. Keep `{summary.best_take.take_path.name}` as the current best take.",
+        f"2. Practice {_metric_label(summary.recurring_weakness.value)} first.",
+        f"3. Record next: {summary.next_recording_target}",
+    ]
+    if summary.practice_loops:
+        loop = summary.practice_loops[0]
+        lines.append(
+            f"4. Start with `{loop.take_path.name}` section {loop.section_index} "
+            f"({loop.start_s:.2f}s - {loop.end_s:.2f}s)."
+        )
+    return lines
+
+
+def _why_best_take_won_lines(result: BatchCompareResult) -> list[str]:
+    if not result.entries:
+        return []
+
+    best_entry = result.entries[0]
+    lines = [
+        "",
+        "## Why this take won",
+        "",
+        f"- `{best_entry.take_path.name}` has the highest overall score in this session.",
+    ]
+    if len(result.entries) > 1:
+        runner_up = result.entries[1]
+        margin = best_entry.overall_score - runner_up.overall_score
+        lines.append(f"- It is {margin:.1f} points ahead of `{runner_up.take_path.name}`.")
+    if best_entry.summary:
+        lines.append(f"- Evidence: {best_entry.summary}")
+    return lines
 
 
 def _session_decision_lines(summary: BatchSessionSummary) -> list[str]:
@@ -230,6 +270,7 @@ def _batch_artifact_description(kind: ArtifactKind) -> str | None:
         ArtifactKind.CSV_REPORT: "Take ranking table export.",
         ArtifactKind.SVG_REPORT: "Compact visual batch ranking summary.",
         ArtifactKind.PRACTICE_PLAN: "Session-level practice plan across compared takes.",
+        ArtifactKind.SESSION_MANIFEST: "Practice-session entrypoint for downstream tools.",
     }
     return descriptions.get(kind)
 
