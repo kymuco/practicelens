@@ -15,8 +15,9 @@ from practicelens.api.contracts import (
     ApiErrorPayload,
     ApiHealthPayload,
     BatchCompareResponsePayload,
+    PracticeSessionResponsePayload,
 )
-from practicelens.api.service import analyze_payload, compare_batch_payload
+from practicelens.api.service import analyze_payload, compare_batch_payload, practice_session_payload
 
 
 def create_app() -> Any:
@@ -48,6 +49,13 @@ def create_app() -> Any:
     def compare_batch(payload: dict[str, object]) -> BatchCompareResponsePayload | JSONResponse:
         try:
             return compare_batch_payload(payload)
+        except Exception as exc:
+            return _bad_request_response(exc)
+
+    @app.post("/practice-session")
+    def practice_session(payload: dict[str, object]) -> PracticeSessionResponsePayload | JSONResponse:
+        try:
+            return practice_session_payload(payload)
         except Exception as exc:
             return _bad_request_response(exc)
 
