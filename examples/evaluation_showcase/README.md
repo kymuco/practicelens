@@ -2,7 +2,7 @@
 
 This directory describes a reproducible showcase workflow for PracticeLens.
 
-The showcase generates synthetic evaluation WAV files, analyzes selected cases, runs a batch comparison, and writes human-readable reports that are easy to inspect.
+The showcase generates synthetic evaluation WAV files, analyzes selected cases, runs a batch comparison, and writes human-readable reports that are easy to inspect. It also generates a small session-history workflow so the current `sessions list/show/compare` story can be reviewed without real user recordings.
 
 ## Generate the showcase
 
@@ -54,6 +54,15 @@ examples/evaluation_showcase/generated/
     batch_report.json
     batch_report.csv
     batch_report.svg
+  session_history/
+    index.jsonl
+    sessions/
+      session_a/session_manifest.json
+      session_b/session_manifest.json
+    outputs/
+      sessions_list.txt
+      sessions_show_1.txt
+      sessions_compare_1_2.txt
 ```
 
 ## What to inspect
@@ -65,11 +74,20 @@ examples/evaluation_showcase/generated/README.md
 examples/evaluation_showcase/generated/summary.json
 ```
 
-Then inspect:
+Then inspect the session-level practice review:
 
 ```text
 examples/evaluation_showcase/generated/batch/practice_plan.md
 examples/evaluation_showcase/generated/batch/batch_report.md
+```
+
+Then inspect the generated session-history workflow:
+
+```text
+examples/evaluation_showcase/generated/session_history/index.jsonl
+examples/evaluation_showcase/generated/session_history/outputs/sessions_list.txt
+examples/evaluation_showcase/generated/session_history/outputs/sessions_show_1.txt
+examples/evaluation_showcase/generated/session_history/outputs/sessions_compare_1_2.txt
 ```
 
 For focused feedback examples, compare:
@@ -81,6 +99,20 @@ examples/evaluation_showcase/generated/single/timing_drift_take/practice_plan.md
 examples/evaluation_showcase/generated/single/timing_drift_take/report.md
 examples/evaluation_showcase/generated/single/rhythm_mistake_take/report.md
 ```
+
+## What the session-history block proves
+
+The `session_history/` block demonstrates the local progress workflow on synthetic data:
+
+```text
+practice-session-like batch outputs
+-> explicit JSONL history index
+-> sessions list output
+-> sessions show 1 output
+-> sessions compare 1 2 output
+```
+
+It is intentionally a generated review artifact, not committed user state and not a hidden database.
 
 ## Important caveat
 
