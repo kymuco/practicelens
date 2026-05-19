@@ -9,6 +9,8 @@ from practicelens.api.contracts import (
     AnalyzeResponsePayload,
     BatchCompareRequestPayload,
     BatchCompareResponsePayload,
+    PracticeSessionRequestPayload,
+    PracticeSessionResponsePayload,
 )
 from practicelens.application import (
     AnalyzeRequest,
@@ -16,6 +18,7 @@ from practicelens.application import (
     OfflineBatchComparePipeline,
     OfflineReferenceAnalysisPipeline,
 )
+from practicelens.application.session_history import append_session_history_entry, build_session_history_entry
 from practicelens.domain.models import AnalysisConfig
 from practicelens.reporting import batch_compare_result_to_json_payload, report_to_json_payload
 
@@ -66,6 +69,34 @@ def compare_batch_payload(
     request = build_batch_request_from_payload(payload)
     result = OfflineBatchComparePipeline().compare(request)
     return cast(BatchCompareResponsePayload, batch_compare_result_to_json_payload(result))
+
+
+def practice_session_payload(
+    payload: Mapping[str, object] | PracticeSessionRequestPayload,
+) -> PracticeSessionResponsePayload:
+    """Run one practice-session review request from a JSON-like payload."""
+
+    request = build_batch_request_from_payload(payload)
+    if request.out_dir is None:
+        raise ValueError("out_dir is required for practice-session API requests")
+
+    result = OfflineBatchComparePipeline().compare(request)
+    history_index = _optional_string(payload, "history_index")
+    history_entry_appended = False
+    if history_index is not None:
+        manifest_path = request.out_dir / "session_manifest.json"
+        history_entry = build_session_history_entry(
+            result,
+            session_dir=request.out_dir,
+            manifest_path=manifest_path,
+        )
+        append_session_history_entry(Path(history_index), history_entry)
+        history_entry_appended = True
+
+    response = cast(PracticeSessionResponsePayload, batch_compare_result_to_json_payload(result))
+    response["history_index_path"] = history_index
+    response["history_entry_appended"] = history_entry_appended
+    return response
 
 
 def _build_config(payload: Mapping[str, object]) -> AnalysisConfig:
