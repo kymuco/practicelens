@@ -51,7 +51,7 @@ def test_cli_progress_tracking_golden_path_contract(tmp_path: Path, capsys) -> N
     sessions_list_output = capsys.readouterr()
     assert sessions_list_output.out.startswith("1  ")
     assert f"  {session_a_dir}  " in sessions_list_output.out
-    assert f"\n2  " in sessions_list_output.out
+    assert "\n2  " in sessions_list_output.out
     assert f"  {session_b_dir}  " in sessions_list_output.out
     assert "best=" in sessions_list_output.out
     assert "score=" in sessions_list_output.out
