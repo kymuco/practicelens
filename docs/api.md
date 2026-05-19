@@ -7,6 +7,9 @@ The current API is intentionally simple:
 - `GET /health`
 - `POST /analyze`
 - `POST /compare-batch`
+- `POST /practice-session`
+
+The API keeps local storage explicit. `POST /practice-session` can append to a JSONL history index when `history_index` is provided, but the API does not currently expose `sessions list/show/compare` endpoints.
 
 ## Fastest way to run it locally
 
@@ -54,6 +57,7 @@ Expected response shape:
 
 - `examples/api/analyze_payload.json`
 - `examples/api/compare_batch_payload.json`
+- `examples/api/practice_session_payload.json`
 - `examples/api/curl_examples.sh`
 - `examples/api/practicelens.http`
 
@@ -142,10 +146,13 @@ Top-level response fields:
 - `overview`
 - `reference_path`
 - `summary`
+- `session_summary`
 - `entries`
 - `artifacts`
 
 `overview.kind` is currently `batch_compare_report` and `overview.schema_version` is currently `1`.
+
+`session_summary` includes the session-level best take, weakest take, recurring weakness, strongest stable area, next recording target, and selected practice loops.
 
 Each `entries[]` item includes:
 
@@ -166,6 +173,46 @@ curl -X POST http://127.0.0.1:8000/compare-batch \
   -H "Content-Type: application/json" \
   --data @examples/api/compare_batch_payload.json
 ```
+
+## POST /practice-session
+
+Runs the same analysis engine as `POST /compare-batch`, but treats the request as a practice-session review. It requires `out_dir` because the practice-session workflow is artifact-oriented.
+
+Example payload:
+
+```json
+{
+  "reference_path": "reference.wav",
+  "take_paths": ["take_a.wav", "take_b.wav", "take_c.wav"],
+  "out_dir": "practice-session-out",
+  "history_index": ".practicelens/sessions/index.jsonl",
+  "sample_rate": 16000,
+  "frame_length": 2048,
+  "hop_length": 512,
+  "segment_duration": 8.0
+}
+```
+
+Top-level response fields mirror `POST /compare-batch` and additionally include:
+
+- `history_index_path` — the JSONL history index path when provided, otherwise `null`
+- `history_entry_appended` — whether a compact history entry was appended
+
+When `history_index` is provided, the endpoint appends one JSONL entry to that path after the session artifacts are written. When omitted, no history entry is written.
+
+Runnable `curl` example:
+
+```bash
+curl -X POST http://127.0.0.1:8000/practice-session \
+  -H "Content-Type: application/json" \
+  --data @examples/api/practice_session_payload.json
+```
+
+## Why there are no sessions list/show/compare API endpoints yet
+
+The CLI supports local history inspection with `sessions list`, `sessions show`, and `sessions compare`.
+
+The HTTP API intentionally stops at `POST /practice-session` for now because listing, opening, and comparing stored sessions would expose a broader local storage surface. That should be designed deliberately instead of being added as a thin wrapper by accident.
 
 ## Error shape
 
