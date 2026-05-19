@@ -4,28 +4,84 @@
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
 
-**PracticeLens** is a local-first audio practice analysis tool for singing and instrument takes.
+**PracticeLens** is a local-first audio practice review tool for singing and instrument takes.
 
-It helps musicians turn raw practice recordings into precise, actionable feedback by analyzing pitch, rhythm, timing, alignment, section consistency, and take ranking against a reference.
+It helps you turn raw practice recordings into a concrete loop:
 
-## What it is, in one line
+```text
+record several takes -> find the strongest take -> identify the recurring weakness -> get a practice plan -> compare progress later
+```
 
-PracticeLens answers a more useful question than **"did that sound good?"**:
+PracticeLens is still **pre-alpha**, but it already has a real end-to-end workflow for local practice review and first-pass progress tracking.
 
-**where exactly did this take diverge from the reference, and which of several takes is actually the strongest?**
+## Golden path
 
-## Why this project exists
+Run a practice session with several takes:
 
-Practice recordings usually leave musicians with fuzzy self-judgment.
+```bash
+practicelens practice-session \
+  --reference path/to/reference.wav \
+  --take path/to/take_01.wav \
+  --take path/to/take_02.wav \
+  --take path/to/take_03.wav \
+  --out out/session-a \
+  --history-index .practicelens/sessions/index.jsonl
+```
 
-PracticeLens aims to make that loop sharper by showing:
+PracticeLens writes a session folder with human-readable and machine-readable artifacts, then appends one compact entry to the explicit history index.
 
-- where timing drift starts;
-- where pitch becomes unstable;
-- which phrases are rhythmically weak;
-- which sections need focused repetition;
-- which of several takes is actually the strongest;
-- how a take differs from a reference recording.
+List previous indexed sessions:
+
+```bash
+practicelens sessions list --limit 5
+```
+
+Example output:
+
+```text
+1  2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity
+2  2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency
+```
+
+Open one session:
+
+```bash
+practicelens sessions show 1
+```
+
+Compare two sessions:
+
+```bash
+practicelens sessions compare 1 2
+```
+
+Example comparison:
+
+```text
+Overall score: +3.2
+Recurring weakness: rhythm_fidelity -> timing_consistency
+Best take: improved
+Stable area: preserved (section_stability)
+```
+
+The history index is opt-in. PracticeLens does not create hidden databases or background state unless you explicitly pass `--history-index`.
+
+## What PracticeLens answers
+
+PracticeLens is built around a better practice question than **"did that sound good?"**:
+
+**where did this take diverge from the reference, which take is strongest, and what should I practice before recording again?**
+
+It currently focuses on:
+
+- local WAV analysis;
+- reference-aware alignment;
+- pitch, rhythm, timing, and section-stability signals;
+- explainable scoring instead of opaque judgment;
+- single-take review;
+- multi-take comparison;
+- practice-session summaries;
+- local session history and first-pass progress comparison.
 
 ## What works today
 
@@ -40,124 +96,13 @@ PracticeLens aims to make that loop sharper by showing:
 | Single-take CLI analysis | Working |
 | Multi-take batch comparison | Working |
 | Practice-session CLI review | Working |
+| Session manifest artifact | Working |
+| Opt-in session history index | Working |
+| `sessions list/show/compare` | Working |
 | Optional FastAPI surface | Working |
 | GitHub Actions CI | Working |
 
-This is still **pre-alpha**, but it is already a real bounded vertical slice, not just a project shell.
-
-## Evaluate it quickly
-
-If you want to understand the repo in a few minutes, use this order:
-
-1. [Quickstart](docs/quickstart.md)
-2. Generate the [evaluation showcase](examples/evaluation_showcase/README.md)
-3. Review the generated outputs with the [showcase review checklist](docs/showcase_review.md)
-4. [Architecture overview](docs/architecture.md)
-5. [Repository map](docs/repository-map.md)
-6. [API notes](docs/api.md)
-7. [Examples](examples/api), [sample results](examples/results), and [CLI notes](examples/cli/README.md)
-
-If you want a sharper evaluator path, use [docs/evaluate.md](docs/evaluate.md).
-
-## Evaluation showcase
-
-The fastest way to see PracticeLens behave end-to-end is to generate the synthetic evaluation showcase from the repository root:
-
-```bash
-make generate-evaluation-showcase
-```
-
-On Windows, `make` may not be installed by default. You can run the equivalent Python command instead:
-
-```bash
-python tools/generate_evaluation_showcase.py
-```
-
-This creates deterministic synthetic WAV assets, single-take reports, a batch comparison, and a compact summary under:
-
-```text
-examples/evaluation_showcase/generated/
-```
-
-Generated showcase files are local review artifacts and are intentionally not committed to the repository.
-
-Start with:
-
-- `examples/evaluation_showcase/generated/README.md`
-- `examples/evaluation_showcase/generated/summary.json`
-- `examples/evaluation_showcase/generated/batch/batch_report.md`
-- `examples/evaluation_showcase/generated/single/pitch_drift_take/report.md`
-- `examples/evaluation_showcase/generated/single/timing_drift_take/report.md`
-
-Use [docs/showcase_review.md](docs/showcase_review.md) to judge whether the generated reports behave plausibly.
-
-These examples are synthetic sanity demos, not a scientific benchmark. They exist so a reviewer can inspect the product behavior quickly without third-party audio files.
-
-## Why this repo feels trustworthy
-
-The repo already includes:
-
-- CI for lint and tests;
-- explicit contribution and security docs;
-- typed API payload contracts;
-- deterministic and explainable report outputs;
-- quickstart, architecture, API, and development documentation;
-- copyable CLI and API examples.
-
-That does not make the project finished.
-It does make it reviewable, understandable, and much harder to mistake for a random code dump.
-
-## Start here
-
-- Quickstart: [docs/quickstart.md](docs/quickstart.md)
-- Evaluation showcase: [examples/evaluation_showcase/README.md](examples/evaluation_showcase/README.md)
-- Showcase review checklist: [docs/showcase_review.md](docs/showcase_review.md)
-- CLI walkthrough: [docs/cli_walkthrough.md](docs/cli_walkthrough.md)
-- Evaluate the repo: [docs/evaluate.md](docs/evaluate.md)
-- Architecture overview: [docs/architecture.md](docs/architecture.md)
-- Repository map: [docs/repository-map.md](docs/repository-map.md)
-- Artifact guide: [docs/artifacts.md](docs/artifacts.md)
-- Sample result snapshots: [examples/results](examples/results)
-- API usage and payloads: [docs/api.md](docs/api.md)
-- Development workflow: [docs/development.md](docs/development.md)
-- Roadmap snapshot: [docs/roadmap.md](docs/roadmap.md)
-- Changelog: [CHANGELOG.md](CHANGELOG.md)
-- CLI example notes: [examples/cli/README.md](examples/cli/README.md)
-- Example API payloads: [examples/api](examples/api)
-- Contribution flow: [CONTRIBUTING.md](CONTRIBUTING.md)
-- Security reporting: [SECURITY.md](SECURITY.md)
-
-## Core idea
-
-Given a user take and a reference recording, PracticeLens extracts audio features, aligns comparable sections, computes quality-oriented metrics, and generates feedback that is both machine-readable and human-readable.
-
-The project is designed to become a solid foundation for:
-
-- local CLI workflows;
-- lightweight API service usage;
-- creator-tool integrations;
-- future ML-based quality scoring on top of robust signal-processing features.
-
-## Current scope
-
-PracticeLens v0.1 is intentionally bounded.
-
-### Current expectations
-
-- local-first execution;
-- offline reference-based analysis;
-- monophonic or near-monophonic material first;
-- explainable component scoring instead of one opaque score;
-- single-take and multi-take comparison workflows.
-
-### Current non-goals
-
-- realtime feedback;
-- polyphonic-first analysis;
-- end-to-end learned scoring;
-- artistic judgment or interpretation scoring.
-
-## Installation
+## Install
 
 ```bash
 pip install -e .[dev]
@@ -169,7 +114,7 @@ Optional API extras:
 pip install -e .[dev,api]
 ```
 
-## CLI usage
+## CLI workflows
 
 ### Analyze one take
 
@@ -177,7 +122,7 @@ pip install -e .[dev,api]
 practicelens analyze \
   --reference path/to/reference.wav \
   --take path/to/take.wav \
-  --out out/
+  --out out/single
 ```
 
 Outputs:
@@ -197,7 +142,7 @@ practicelens compare-batch \
   --take path/to/take_01.wav \
   --take path/to/take_02.wav \
   --take path/to/take_03.wav \
-  --out out/
+  --out out/batch
 ```
 
 Batch outputs:
@@ -221,9 +166,15 @@ practicelens practice-session \
   --out out/session
 ```
 
-`practice-session` uses the same analysis engine as `compare-batch`, but prints a session-oriented CLI summary: best take, weakest take, recurring weakness, next recording target, and the generated `practice_plan.md` path.
+`practice-session` uses the same analysis engine as `compare-batch`, but prints a musician-oriented summary:
 
-Optionally append one compact JSONL entry to an explicit session history index:
+- best take;
+- weakest take;
+- recurring weakness;
+- next recording target;
+- generated `practice_plan.md` path.
+
+Add an explicit local history entry:
 
 ```bash
 practicelens practice-session \
@@ -235,70 +186,53 @@ practicelens practice-session \
   --history-index .practicelens/sessions/index.jsonl
 ```
 
-PracticeLens does not write this history index unless `--history-index` is provided.
-
 ### List indexed practice sessions
 
 ```bash
 practicelens sessions list
 ```
 
-By default this reads:
-
-```text
-.practicelens/sessions/index.jsonl
-```
-
-You can point it at a custom index:
+Use a custom index or show only recent entries:
 
 ```bash
 practicelens sessions list \
-  --history-index path/to/index.jsonl
+  --history-index path/to/index.jsonl \
+  --limit 5
 ```
 
-Example output:
-
-```text
-2026-05-16  out/session-a  best=take_02.wav  score=88.4  focus=rhythm_fidelity
-2026-05-17  out/session-b  best=take_03.wav  score=90.1  focus=timing_consistency
-```
+The printed 1-based ids can be reused with `sessions show` and `sessions compare`.
 
 ### Show one practice session
 
 ```bash
 practicelens sessions show out/session
-```
-
-You can also pass a manifest file or an indexed session id:
-
-```bash
 practicelens sessions show out/session/session_manifest.json
 practicelens sessions show 1 --history-index .practicelens/sessions/index.jsonl
 ```
 
-Output includes the best take, weakest take, recurring weakness, next recording target, and paths to `practice_plan.md` and `batch_report.md`.
+Output includes:
+
+- best take;
+- weakest take;
+- recurring weakness;
+- next recording target;
+- `practice_plan.md` path;
+- `batch_report.md` path.
 
 ### Compare two practice sessions
 
 ```bash
 practicelens sessions compare old/session new/session
-```
-
-You can also compare manifest files or indexed session ids:
-
-```bash
 practicelens sessions compare old/session/session_manifest.json new/session/session_manifest.json
 practicelens sessions compare 1 2 --history-index .practicelens/sessions/index.jsonl
 ```
 
-Example output:
+The comparison reports:
 
-```text
-Overall score: +3.2
-Recurring weakness: rhythm_fidelity -> timing_consistency
-Best take: improved
-Stable area: preserved (section_stability)
-```
+- overall best-take score delta;
+- recurring weakness transition;
+- best take improved / declined / unchanged;
+- stable area preserved / changed / unknown.
 
 ### Shared tuning flags
 
@@ -307,49 +241,94 @@ Stable area: preserved (section_stability)
 - `--hop-length`
 - `--segment-duration`
 
+## Which artifact should I open first?
+
+For one take:
+
+1. `practice_plan.md` — shortest path to the next concrete practice action
+2. `report.svg` — fastest visual overview
+3. `report.md` — readable explanation
+4. `report.json` / `report.csv` — structured inspection
+5. `debug_payload.json` — developer diagnostics
+
+For several takes or a practice session:
+
+1. top-level `practice_plan.md`
+2. `batch_report.md`
+3. `session_manifest.json`
+4. `batch_report.svg`
+5. per-take reports under `takes/`
+
+See [docs/artifacts.md](docs/artifacts.md) for the detailed artifact guide.
+
+## Evaluate it quickly
+
+Recommended reading order:
+
+1. [Quickstart](docs/quickstart.md)
+2. [CLI walkthrough](docs/cli_walkthrough.md)
+3. [Evaluation showcase](examples/evaluation_showcase/README.md)
+4. [Showcase review checklist](docs/showcase_review.md)
+5. [Architecture overview](docs/architecture.md)
+6. [API notes](docs/api.md)
+7. [Roadmap snapshot](docs/roadmap.md)
+
+Generate the synthetic evaluation showcase from the repository root:
+
+```bash
+make generate-evaluation-showcase
+```
+
+On Windows, use the equivalent Python command if `make` is not installed:
+
+```bash
+python tools/generate_evaluation_showcase.py
+```
+
+Generated showcase files are local review artifacts and are intentionally not committed to the repository.
+
 ## Optional API usage
 
-PracticeLens also exposes an API-friendly service layer and an optional FastAPI app.
+PracticeLens exposes an optional FastAPI app with:
 
-Example app import:
+- `GET /health`
+- `POST /analyze`
+- `POST /compare-batch`
 
-```python
-from practicelens.api.app import create_app
+Run locally:
 
-app = create_app()
+```bash
+uvicorn practicelens.api.app:app --reload
 ```
 
-### Single analysis payload
+See [docs/api.md](docs/api.md) and [examples/api](examples/api) for payload examples.
 
-```json
-{
-  "reference_path": "reference.wav",
-  "take_path": "take.wav",
-  "out_dir": "out",
-  "sample_rate": 16000,
-  "frame_length": 2048,
-  "hop_length": 512,
-  "segment_duration": 8.0
-}
-```
+## Current scope
 
-### Batch comparison payload
+PracticeLens v0.1 is intentionally bounded.
 
-```json
-{
-  "reference_path": "reference.wav",
-  "take_paths": ["take_a.wav", "take_b.wav", "take_c.wav"],
-  "out_dir": "batch-out",
-  "sample_rate": 16000,
-  "frame_length": 2048,
-  "hop_length": 512,
-  "segment_duration": 8.0
-}
-```
+Current expectations:
+
+- local-first execution;
+- offline reference-based analysis;
+- monophonic or near-monophonic material first;
+- deterministic baseline first;
+- explainable component scoring;
+- single-take, batch, and practice-session review.
+
+Current non-goals:
+
+- realtime feedback;
+- polyphonic-first analysis;
+- cloud-first infrastructure;
+- end-to-end learned scoring;
+- artistic judgment or interpretation scoring;
+- pretending the project is production-complete.
 
 ## Development workflow
 
 ```bash
 ruff check .
 pytest tests
+python -m build
 ```
