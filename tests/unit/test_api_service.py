@@ -184,6 +184,32 @@ def test_practice_session_payload_appends_history_entry(tmp_path: Path) -> None:
     assert history_entry["manifest_path"] == str(out_dir / "session_manifest.json")
 
 
+def test_practice_session_payload_rejects_invalid_history_index_before_side_effects(tmp_path: Path) -> None:
+    reference = tmp_path / "reference.wav"
+    take_a = tmp_path / "take_a.wav"
+    take_b = tmp_path / "take_b.wav"
+    out_dir = tmp_path / "practice-session-api-out"
+
+    _write_wav(reference, 220.0)
+    _write_wav(take_a, 220.0)
+    _write_wav(take_b, 261.63)
+
+    with pytest.raises(ValueError, match="history_index must be a non-empty string"):
+        practice_session_payload(
+            {
+                "reference_path": str(reference),
+                "take_paths": [str(take_a), str(take_b)],
+                "out_dir": str(out_dir),
+                "history_index": "",
+                "frame_length": 1024,
+                "hop_length": 256,
+                "segment_duration": 2.0,
+            }
+        )
+
+    assert not out_dir.exists()
+
+
 def test_practice_session_payload_requires_out_dir() -> None:
     with pytest.raises(ValueError, match="out_dir is required"):
         practice_session_payload(
