@@ -79,9 +79,9 @@ def practice_session_payload(
     request = build_batch_request_from_payload(payload)
     if request.out_dir is None:
         raise ValueError("out_dir is required for practice-session API requests")
+    history_index = _optional_string(payload, "history_index")
 
     result = OfflineBatchComparePipeline().compare(request)
-    history_index = _optional_string(payload, "history_index")
     history_entry_appended = False
     if history_index is not None:
         manifest_path = request.out_dir / "session_manifest.json"
