@@ -26,6 +26,10 @@ class BatchCompareRequestPayload(TypedDict, total=False):
     segment_duration: float
 
 
+class PracticeSessionRequestPayload(BatchCompareRequestPayload, total=False):
+    history_index: str
+
+
 class AnalysisOverviewPayload(TypedDict):
     kind: str
     schema_version: int
@@ -98,6 +102,35 @@ class PracticeLoopPayload(TypedDict):
     instruction: str
 
 
+class SessionTakeSummaryPayload(TypedDict):
+    rank: int
+    take_path: str
+    overall_score: float
+
+
+class SessionPracticeLoopPayload(TypedDict):
+    take_rank: int
+    take_path: str
+    section_index: int
+    start_s: float
+    end_s: float
+    focus: str
+    instruction: str
+
+
+class BatchSessionSummaryPayload(TypedDict):
+    schema_version: int
+    compared_takes: int
+    best_take: SessionTakeSummaryPayload
+    weakest_take: SessionTakeSummaryPayload
+    recurring_weakness: str
+    recurring_weakness_count: int
+    strongest_stable_area: str
+    strongest_stable_area_average_score: float
+    next_recording_target: str
+    practice_loops: list[SessionPracticeLoopPayload]
+
+
 class ArtifactPayload(TypedDict):
     kind: str
     path: str
@@ -136,8 +169,14 @@ class BatchCompareResponsePayload(TypedDict):
     overview: BatchCompareOverviewPayload
     reference_path: str
     summary: str | None
+    session_summary: BatchSessionSummaryPayload | None
     entries: list[BatchEntryPayload]
     artifacts: list[ArtifactPayload]
+
+
+class PracticeSessionResponsePayload(BatchCompareResponsePayload):
+    history_index_path: str | None
+    history_entry_appended: bool
 
 
 class ApiHealthPayload(TypedDict):

@@ -1,0 +1,10 @@
+{
+  "reference_path": "reference.wav",
+  "take_paths": ["take_a.wav", "take_b.wav", "take_c.wav"],
+  "out_dir": "practice-session-out",
+  "history_index": ".practicelens/sessions/index.jsonl",
+  "sample_rate": 16000,
+  "frame_length": 2048,
+  "hop_length": 512,
+  "segment_duration": 8.0
+}

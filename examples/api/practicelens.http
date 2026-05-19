@@ -12,3 +12,9 @@ POST http://127.0.0.1:8000/compare-batch
 Content-Type: application/json
 
 < ./examples/api/compare_batch_payload.json
+
+### PracticeLens practice session
+POST http://127.0.0.1:8000/practice-session
+Content-Type: application/json
+
+< ./examples/api/practice_session_payload.json
