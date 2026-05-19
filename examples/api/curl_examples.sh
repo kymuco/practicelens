@@ -18,3 +18,9 @@ curl -X POST "$BASE_URL/compare-batch" \
   --data @examples/api/compare_batch_payload.json
 
 echo
+echo "--- practice-session ---"
+curl -X POST "$BASE_URL/practice-session" \
+  -H "Content-Type: application/json" \
+  --data @examples/api/practice_session_payload.json
+
+echo
