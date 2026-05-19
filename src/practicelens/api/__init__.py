@@ -7,12 +7,15 @@ from practicelens.api.contracts import (
     ApiHealthPayload,
     BatchCompareRequestPayload,
     BatchCompareResponsePayload,
+    PracticeSessionRequestPayload,
+    PracticeSessionResponsePayload,
 )
 from practicelens.api.service import (
     analyze_payload,
     build_batch_request_from_payload,
     build_request_from_payload,
     compare_batch_payload,
+    practice_session_payload,
 )
 
 __all__ = [
@@ -22,8 +25,11 @@ __all__ = [
     "ApiHealthPayload",
     "BatchCompareRequestPayload",
     "BatchCompareResponsePayload",
+    "PracticeSessionRequestPayload",
+    "PracticeSessionResponsePayload",
     "analyze_payload",
     "build_batch_request_from_payload",
     "build_request_from_payload",
     "compare_batch_payload",
+    "practice_session_payload",
 ]
