@@ -153,6 +153,15 @@ def test_batch_report_renderers_emit_ranking_outputs() -> None:
     assert "## At a glance" in markdown_text
     assert "**Recurring weakness:** Pitch Fidelity" in markdown_text
     assert "**Next target:** Record one new take focused on improving Pitch Fidelity." in markdown_text
+    assert "## What to do next" in markdown_text
+    assert "1. Keep `take_a.wav` as the current best take." in markdown_text
+    assert "2. Practice Pitch Fidelity first." in markdown_text
+    assert "3. Record next: Record one new take focused on improving Pitch Fidelity." in markdown_text
+    assert "4. Start with `take_b.wav` section 0 (0.00s - 8.00s)." in markdown_text
+    assert "## Why this take won" in markdown_text
+    assert "`take_a.wav` has the highest overall score in this session." in markdown_text
+    assert "It is 14.0 points ahead of `take_b.wav`." in markdown_text
+    assert "Evidence: Score 91.0" in markdown_text
     assert "## Session decision" in markdown_text
     assert "**Keep:** `take_a.wav` (91.0/100)." in markdown_text
     assert "**Review weakest take:** `take_b.wav` (77.0/100)." in markdown_text
