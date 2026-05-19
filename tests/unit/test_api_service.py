@@ -1,3 +1,4 @@
+import json
 import math
 import wave
 from pathlib import Path
@@ -9,6 +10,7 @@ from practicelens.api import (
     build_batch_request_from_payload,
     build_request_from_payload,
     compare_batch_payload,
+    practice_session_payload,
 )
 
 
@@ -142,3 +144,51 @@ def test_compare_batch_payload_returns_ranked_contract_report(tmp_path: Path) ->
     assert (out_dir / "batch_report.json").exists()
     assert (out_dir / "batch_report.md").exists()
     assert (out_dir / "batch_report.csv").exists()
+
+
+def test_practice_session_payload_appends_history_entry(tmp_path: Path) -> None:
+    reference = tmp_path / "reference.wav"
+    take_best = tmp_path / "take_best.wav"
+    take_low = tmp_path / "take_low.wav"
+    out_dir = tmp_path / "practice-session-api-out"
+    history_index = tmp_path / ".practicelens" / "sessions" / "index.jsonl"
+
+    _write_wav(reference, 220.0)
+    _write_wav(take_best, 220.0)
+    _write_wav(take_low, 261.63)
+
+    payload = practice_session_payload(
+        {
+            "reference_path": str(reference),
+            "take_paths": [str(take_low), str(take_best)],
+            "out_dir": str(out_dir),
+            "history_index": str(history_index),
+            "frame_length": 1024,
+            "hop_length": 256,
+            "segment_duration": 2.0,
+        }
+    )
+
+    assert payload["summary"] is not None
+    assert payload["session_summary"]["best_take"]["take_path"].endswith("take_best.wav")
+    assert payload["history_index_path"] == str(history_index)
+    assert payload["history_entry_appended"] is True
+    assert (out_dir / "batch_report.json").exists()
+    assert (out_dir / "practice_plan.md").exists()
+    assert (out_dir / "session_manifest.json").exists()
+    assert history_index.exists()
+
+    history_entry = json.loads(history_index.read_text(encoding="utf-8").strip())
+    assert history_entry["kind"] == "practice_session_index_entry"
+    assert history_entry["session_dir"] == str(out_dir)
+    assert history_entry["manifest_path"] == str(out_dir / "session_manifest.json")
+
+
+def test_practice_session_payload_requires_out_dir() -> None:
+    with pytest.raises(ValueError, match="out_dir is required"):
+        practice_session_payload(
+            {
+                "reference_path": "reference.wav",
+                "take_paths": ["take_a.wav", "take_b.wav"],
+            }
+        )
