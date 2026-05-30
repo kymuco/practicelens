@@ -10,6 +10,7 @@ from practicelens.domain.models import (
     ArtifactLink,
     ComponentScore,
     FeatureFlags,
+    InputSuitabilitySummary,
     MetricResult,
     PracticeLoop,
     SectionFinding,
@@ -38,6 +39,20 @@ def _sample_report() -> AnalysisReport:
             level="high",
             reasons=("Alignment coverage is broad enough for a stable reference-aware comparison.",),
             limitations=("PracticeLens v0.1 uses deterministic signal-processing heuristics, not human musical judgment.",),
+        ),
+        input_suitability=InputSuitabilitySummary(
+            status="ok",
+            reference_duration_s=8.0,
+            take_duration_s=8.0,
+            duration_ratio=1.0,
+            alignment_coverage=0.95,
+            voiced_frame_coverage=0.8,
+            reference_voiced_frame_coverage=0.85,
+            take_voiced_frame_coverage=0.8,
+            onset_evidence="present",
+            reference_onset_count=4,
+            take_onset_count=4,
+            reasons=("Take duration is comparable to the reference.",),
         ),
         practice_loops=(
             PracticeLoop(
@@ -70,6 +85,7 @@ def test_report_json_payload_has_stable_top_level_contract() -> None:
         "metrics",
         "sections",
         "analysis_confidence",
+        "input_suitability",
         "practice_loops",
         "top_strengths",
         "top_weaknesses",
@@ -90,6 +106,21 @@ def test_report_json_payload_has_stable_top_level_contract() -> None:
         "level": "high",
         "reasons": ["Alignment coverage is broad enough for a stable reference-aware comparison."],
         "limitations": ["PracticeLens v0.1 uses deterministic signal-processing heuristics, not human musical judgment."],
+    }
+    assert payload["input_suitability"] == {
+        "schema_version": 1,
+        "status": "ok",
+        "reference_duration_s": 8.0,
+        "take_duration_s": 8.0,
+        "duration_ratio": 1.0,
+        "alignment_coverage": 0.95,
+        "voiced_frame_coverage": 0.8,
+        "reference_voiced_frame_coverage": 0.85,
+        "take_voiced_frame_coverage": 0.8,
+        "onset_evidence": "present",
+        "reference_onset_count": 4,
+        "take_onset_count": 4,
+        "reasons": ["Take duration is comparable to the reference."],
     }
     assert payload["practice_loops"] == [
         {

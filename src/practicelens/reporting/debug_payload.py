@@ -4,6 +4,7 @@ import json
 
 from practicelens.domain.enums import MetricName
 from practicelens.domain.models import AnalysisReport, MetricResult
+from practicelens.reporting.input_suitability_payload import input_suitability_to_payload
 
 _SCORE_DIGITS = 6
 
@@ -40,6 +41,7 @@ def report_to_debug_payload(report: AnalysisReport) -> dict[str, object]:
         },
         "evidence_summary": {
             "alignment_coverage": _metric_score(report, MetricName.ALIGNMENT_COVERAGE),
+            "input_suitability": input_suitability_to_payload(report.input_suitability),
             "section_count": len(report.sections),
             "practice_loop_count": len(report.practice_loops),
             "feedback_count": len(report.feedback),

@@ -5,6 +5,7 @@ from pathlib import Path
 from practicelens.alignment import AlignmentPath, align_feature_bundles
 from practicelens.application.contracts import AnalyzeRequest, AnalyzeResult
 from practicelens.application.pipeline import AnalysisPipeline
+from practicelens.diagnostics import summarize_input_suitability
 from practicelens.domain.models import AnalysisConfidence, AnalysisConfig, AnalysisOverview, AnalysisReport, FeatureFlags
 from practicelens.features import FeatureBundle, extract_feature_bundle
 from practicelens.io import ensure_finite_audio, load_wav_audio
@@ -42,6 +43,7 @@ class OfflineReferenceAnalysisPipeline(AnalysisPipeline):
             metrics=scoring.metrics,
             sections=scoring.sections,
             analysis_confidence=_analysis_confidence(reference_features, take_features, alignment, scoring),
+            input_suitability=summarize_input_suitability(reference_features, take_features, alignment),
             practice_loops=scoring.practice_loops,
             top_strengths=scoring.top_strengths,
             top_weaknesses=scoring.top_weaknesses,

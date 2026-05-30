@@ -105,6 +105,10 @@ def test_analyze_payload_returns_contract_shaped_report(tmp_path: Path) -> None:
     assert isinstance(payload["metrics"], list)
     assert isinstance(payload["sections"], list)
     assert isinstance(payload["artifacts"], list)
+    assert payload["input_suitability"]["schema_version"] == 1
+    assert payload["input_suitability"]["status"] in {"ok", "warning", "low_confidence"}
+    assert payload["input_suitability"]["reference_duration_s"] > 0.0
+    assert payload["input_suitability"]["take_duration_s"] > 0.0
     assert (out_dir / "report.json").exists()
     assert (out_dir / "report.md").exists()
 
@@ -139,6 +143,8 @@ def test_compare_batch_payload_returns_ranked_contract_report(tmp_path: Path) ->
     assert payload["entries"]
     assert payload["entries"][0]["rank"] == 1
     assert payload["entries"][0]["take_path"].endswith("take_best.wav")
+    assert payload["entries"][0]["input_suitability"]["schema_version"] == 1
+    assert payload["entries"][0]["input_suitability"]["status"] in {"ok", "warning", "low_confidence"}
     assert isinstance(payload["entries"][0]["artifacts"], list)
     assert isinstance(payload["artifacts"], list)
     assert (out_dir / "batch_report.json").exists()

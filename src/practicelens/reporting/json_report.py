@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 
 from practicelens.domain.models import AnalysisReport
+from practicelens.reporting.input_suitability_payload import input_suitability_to_payload
 
 
 def report_to_json_payload(report: AnalysisReport) -> dict[str, object]:
@@ -78,6 +79,7 @@ def report_to_json_payload(report: AnalysisReport) -> dict[str, object]:
             "reasons": list(report.analysis_confidence.reasons),
             "limitations": list(report.analysis_confidence.limitations),
         },
+        "input_suitability": input_suitability_to_payload(report.input_suitability),
         "practice_loops": [
             {
                 "section_index": loop.section_index,

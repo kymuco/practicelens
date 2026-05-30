@@ -44,6 +44,7 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
     assert result.report.analysis_confidence.level in {"high", "medium", "low"}
     assert result.report.analysis_confidence.reasons
     assert result.report.analysis_confidence.limitations
+    assert result.report.input_suitability.status in {"ok", "warning", "low_confidence"}
     assert isinstance(result.report.practice_loops, tuple)
     assert result.report.top_strengths
     assert result.report.top_weaknesses
@@ -67,6 +68,7 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
     assert debug_payload["schema_version"] == 1
     assert debug_payload["score_summary"]["overall_score"] >= 0.0
     assert debug_payload["evidence_summary"]["section_count"] == len(result.report.sections)
+    assert debug_payload["evidence_summary"]["input_suitability"]["status"] in {"ok", "warning", "low_confidence"}
     assert debug_payload["confidence"]["level"] in {"high", "medium", "low"}
     assert debug_payload["practice_guidance"]["next_practice_step"] == result.report.next_practice_step
 
@@ -80,6 +82,7 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
         "metrics",
         "sections",
         "analysis_confidence",
+        "input_suitability",
         "practice_loops",
         "top_strengths",
         "top_weaknesses",
@@ -98,6 +101,10 @@ def test_offline_pipeline_generates_report_artifacts(tmp_path: Path) -> None:
     assert payload["analysis_confidence"]["level"] in {"high", "medium", "low"}
     assert payload["analysis_confidence"]["reasons"]
     assert payload["analysis_confidence"]["limitations"]
+    assert payload["input_suitability"]["schema_version"] == 1
+    assert payload["input_suitability"]["status"] in {"ok", "warning", "low_confidence"}
+    assert payload["input_suitability"]["reference_duration_s"] > 0.0
+    assert payload["input_suitability"]["take_duration_s"] > 0.0
     assert isinstance(payload["practice_loops"], list)
     assert {artifact["kind"] for artifact in payload["artifacts"]} == {
         "json_report",
