@@ -8,6 +8,7 @@ from practicelens.application.contracts import BatchCompareResult, BatchSessionS
 from practicelens.domain.enums import ArtifactKind
 from practicelens.domain.models import PracticeLoop
 from practicelens.reporting.input_suitability_payload import input_suitability_to_payload
+from practicelens.reporting.markdown_warnings import batch_confidence_warning_lines
 
 
 def batch_compare_result_to_json_payload(result: BatchCompareResult) -> dict[str, object]:
@@ -73,6 +74,8 @@ def batch_compare_result_to_markdown(result: BatchCompareResult) -> str:
         lines.append(f"- **Next target:** {result.session_summary.next_recording_target}")
     if result.summary:
         lines.extend(["", result.summary])
+
+    lines.extend(batch_confidence_warning_lines(result))
 
     if result.session_summary is not None:
         lines.extend(_what_to_do_next_lines(result.session_summary))

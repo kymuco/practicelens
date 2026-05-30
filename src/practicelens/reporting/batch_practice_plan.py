@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from practicelens.application.contracts import BatchCompareResult, BatchSessionSummary, SessionPracticeLoopSummary
+from practicelens.reporting.markdown_warnings import batch_confidence_warning_lines
 
 
 def batch_compare_result_to_practice_plan_markdown(result: BatchCompareResult) -> str:
@@ -24,6 +25,8 @@ def batch_compare_result_to_practice_plan_markdown(result: BatchCompareResult) -
     ]
     if result.best_entry.summary:
         lines.append(f"- **Why:** {result.best_entry.summary}")
+
+    lines.extend(batch_confidence_warning_lines(result))
 
     lines.extend([
         "",

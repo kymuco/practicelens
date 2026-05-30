@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from practicelens.domain.models import AnalysisReport
+from practicelens.reporting.markdown_warnings import report_confidence_warning_lines
 
 
 def report_to_markdown(report: AnalysisReport) -> str:
@@ -26,6 +27,8 @@ def report_to_markdown(report: AnalysisReport) -> str:
         lines.append(f"- **Next practice step:** {step_summary}")
     if report.summary:
         lines.extend(["", report.summary])
+
+    lines.extend(report_confidence_warning_lines(report))
 
     lines.extend(["", "## Inputs", ""])
     lines.append(f"- Reference: `{report.inputs.reference_path}`")
