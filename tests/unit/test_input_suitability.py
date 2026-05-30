@@ -24,6 +24,8 @@ def test_input_suitability_summary_reports_ok_when_evidence_is_strong() -> None:
     assert summary.duration_ratio == 1.0
     assert summary.duration_diagnostic == "duration_ratio_ok"
     assert summary.duration_diagnostic_message is None
+    assert summary.start_diagnostic == "start_region_ok"
+    assert summary.start_diagnostic_message is None
     assert summary.alignment_coverage == 0.9
     assert summary.voiced_frame_coverage == 1.0
     assert summary.onset_evidence == "present"
@@ -120,16 +122,66 @@ def test_input_suitability_duration_diagnostic_reports_acceptable_duration() -> 
     assert summary.duration_diagnostic_message is None
 
 
+def test_input_suitability_start_diagnostic_reports_delayed_take_start() -> None:
+    summary = summarize_input_suitability(
+        _feature_bundle(
+            time_axis_s=(0.0, 0.25, 0.5, 0.75, 1.0),
+            voiced_mask=(True, True, True, True, True),
+            onset_times_s=(0.1, 0.6),
+            energy_curve=(1.0, 1.0, 1.0, 1.0, 1.0),
+        ),
+        _feature_bundle(
+            time_axis_s=(0.0, 0.25, 0.5, 0.75, 1.0),
+            voiced_mask=(False, False, True, True, True),
+            onset_times_s=(0.55, 0.8),
+            energy_curve=(0.0, 0.0, 1.0, 1.0, 1.0),
+        ),
+        AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.9),
+    )
+
+    assert summary.status == "warning"
+    assert summary.reference_activity_start_s == 0.0
+    assert summary.take_activity_start_s == 0.5
+    assert summary.start_offset_s == 0.5
+    assert summary.start_diagnostic == "take_activity_starts_late"
+    assert summary.start_diagnostic_message is not None
+    assert "may indicate" in summary.start_diagnostic_message
+    assert summary.start_diagnostic_message in summary.reasons
+
+
+def test_input_suitability_start_diagnostic_reports_normal_start() -> None:
+    summary = summarize_input_suitability(
+        _feature_bundle(
+            time_axis_s=(0.0, 0.25, 0.5, 0.75, 1.0),
+            voiced_mask=(True, True, True, True, True),
+            onset_times_s=(0.1, 0.6),
+        ),
+        _feature_bundle(
+            time_axis_s=(0.0, 0.25, 0.5, 0.75, 1.0),
+            voiced_mask=(True, True, True, True, True),
+            onset_times_s=(0.1, 0.6),
+        ),
+        AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.9),
+    )
+
+    assert summary.status == "ok"
+    assert summary.start_offset_s == 0.0
+    assert summary.leading_noise_duration_s == 0.0
+    assert summary.start_diagnostic == "start_region_ok"
+    assert summary.start_diagnostic_message is None
+
+
 def _feature_bundle(
     *,
     time_axis_s: tuple[float, ...],
     voiced_mask: tuple[bool, ...],
     onset_times_s: tuple[float, ...],
+    energy_curve: tuple[float, ...] | None = None,
 ) -> FeatureBundle:
     frame_count = len(time_axis_s)
     return FeatureBundle(
         time_axis_s=time_axis_s,
-        energy_curve=(1.0,) * frame_count,
+        energy_curve=energy_curve or (1.0,) * frame_count,
         zero_crossing_rate=(0.1,) * frame_count,
         pitch_contour_hz=tuple(220.0 if voiced else 0.0 for voiced in voiced_mask),
         voiced_mask=voiced_mask,
