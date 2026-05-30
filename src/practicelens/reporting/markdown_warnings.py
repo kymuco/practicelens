@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
+
 from practicelens.application.contracts import BatchCompareResult
 from practicelens.domain.models import AnalysisReport, InputSuitabilitySummary
 
@@ -46,7 +48,7 @@ def batch_confidence_warning_lines(result: BatchCompareResult, *, heading: str =
         first_warning = _report_warning_items(report)[0]
         lines.append(f"- `#{entry.rank} {entry.take_path.name}`: {first_warning}")
 
-    actions = _dedupe_action_items(
+    actions = _dedupe_items(
         action
         for entry in warning_entries
         for action in _report_action_items(entry.result.report.input_suitability)
@@ -78,7 +80,7 @@ def _report_warning_items(report: AnalysisReport) -> list[str]:
     if suitability.onset_evidence != "present":
         warnings.append(f"Onset evidence is {suitability.onset_evidence}.")
 
-    return _dedupe_action_items(warnings)
+    return _dedupe_items(warnings)
 
 
 def _report_action_items(suitability: InputSuitabilitySummary) -> list[str]:
@@ -97,15 +99,13 @@ def _report_action_items(suitability: InputSuitabilitySummary) -> list[str]:
         actions.append("Play the first attacks clearly so onset evidence is easier to detect.")
     if not actions:
         actions.append("Record one cleaner full take before relying on detailed section feedback.")
-    return _dedupe_action_items(actions)
+    return _dedupe_items(actions)
 
 
-def _dedupe_action_items(items: list[str] | object) -> list[str]:
+def _dedupe_items(items: Iterable[str]) -> list[str]:
     seen: set[str] = set()
     deduped: list[str] = []
     for item in items:
-        if not isinstance(item, str):
-            continue
         if item in seen:
             continue
         seen.add(item)
