@@ -162,11 +162,11 @@ def _duration_diagnostic_message(duration_diagnostic: str) -> str | None:
 
 
 def _activity_start_s(bundle: FeatureBundle) -> float | None:
-    starts = [_first_voiced_time_s(bundle), _first_onset_time_s(bundle), _first_energy_activity_time_s(bundle)]
-    available_starts = [start for start in starts if start is not None]
-    if not available_starts:
-        return None
-    return min(available_starts)
+    musical_starts = [_first_voiced_time_s(bundle), _first_onset_time_s(bundle)]
+    available_musical_starts = [start for start in musical_starts if start is not None]
+    if available_musical_starts:
+        return min(available_musical_starts)
+    return _first_energy_activity_time_s(bundle)
 
 
 def _first_voiced_time_s(bundle: FeatureBundle) -> float | None:
