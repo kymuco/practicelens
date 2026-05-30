@@ -9,6 +9,7 @@ from practicelens.domain.models import (
     ArtifactLink,
     ComponentScore,
     FeatureFlags,
+    InputSuitabilitySummary,
     MetricResult,
     PracticeLoop,
     SectionFinding,
@@ -54,6 +55,20 @@ def _sample_report() -> AnalysisReport:
                 findings=(SectionFinding(0.0, 8.0, Severity.NOTICE, "Stable section"),),
             ),
         ),
+        input_suitability=InputSuitabilitySummary(
+            status="ok",
+            reference_duration_s=8.0,
+            take_duration_s=8.0,
+            duration_ratio=1.0,
+            alignment_coverage=0.95,
+            voiced_frame_coverage=0.8,
+            reference_voiced_frame_coverage=0.85,
+            take_voiced_frame_coverage=0.8,
+            onset_evidence="present",
+            reference_onset_count=4,
+            take_onset_count=4,
+            reasons=("Take duration is comparable to the reference.",),
+        ),
         practice_loops=(
             PracticeLoop(
                 section_index=0,
@@ -78,6 +93,7 @@ def test_report_to_json_payload_is_serializable() -> None:
 
     assert payload["overview"]["mode"] == "reference"
     assert payload["scores"][0]["name"] == "pitch_fidelity"
+    assert payload["input_suitability"]["status"] == "ok"
     assert payload["artifacts"][1]["kind"] == "csv_report"
 
 
@@ -127,6 +143,21 @@ def test_report_to_debug_payload_is_serializable() -> None:
             "score": 95.0,
             "severity": "info",
             "detail": "Coverage detail",
+        },
+        "input_suitability": {
+            "schema_version": 1,
+            "status": "ok",
+            "reference_duration_s": 8.0,
+            "take_duration_s": 8.0,
+            "duration_ratio": 1.0,
+            "alignment_coverage": 0.95,
+            "voiced_frame_coverage": 0.8,
+            "reference_voiced_frame_coverage": 0.85,
+            "take_voiced_frame_coverage": 0.8,
+            "onset_evidence": "present",
+            "reference_onset_count": 4,
+            "take_onset_count": 4,
+            "reasons": ["Take duration is comparable to the reference."],
         },
         "section_count": 1,
         "practice_loop_count": 1,
