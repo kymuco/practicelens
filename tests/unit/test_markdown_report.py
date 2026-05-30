@@ -8,6 +8,7 @@ from practicelens.domain.models import (
     AnalysisReport,
     ComponentScore,
     FeatureFlags,
+    InputSuitabilitySummary,
     MetricResult,
     PracticeLoop,
     SectionFinding,
@@ -69,6 +70,51 @@ def _sample_report() -> AnalysisReport:
     )
 
 
+def _low_confidence_report() -> AnalysisReport:
+    return AnalysisReport(
+        overview=AnalysisOverview(mode=AnalysisMode.REFERENCE),
+        inputs=AnalysisInput(Path("reference.wav"), Path("bad-take.wav")),
+        feature_flags=FeatureFlags(),
+        scores=(ComponentScore(MetricName.PITCH_FIDELITY, 55.0, 1.0),),
+        metrics=(MetricResult(MetricName.ALIGNMENT_COVERAGE, 0.4, 40.0, Severity.WARNING, "Limited coverage"),),
+        sections=(),
+        analysis_confidence=AnalysisConfidence(
+            level="low",
+            reasons=("Alignment coverage is limited.",),
+            limitations=("The recording may not support detailed section feedback.",),
+        ),
+        input_suitability=InputSuitabilitySummary(
+            status="low_confidence",
+            reference_duration_s=8.0,
+            take_duration_s=3.0,
+            duration_ratio=0.375,
+            duration_diagnostic="take_much_shorter_than_reference",
+            duration_diagnostic_message=(
+                "Take duration differs substantially from the reference. Possible causes include extra silence, "
+                "a restart, a missing section, or unrelated material."
+            ),
+            reference_activity_start_s=0.0,
+            take_activity_start_s=0.6,
+            start_offset_s=0.6,
+            leading_noise_duration_s=0.0,
+            start_diagnostic="take_activity_starts_late",
+            start_diagnostic_message=(
+                "The take start may be delayed relative to the reference. This may indicate a weak or missing first note, "
+                "late playing, or leading silence before the musical activity."
+            ),
+            alignment_coverage=0.4,
+            voiced_frame_coverage=0.2,
+            reference_voiced_frame_coverage=0.9,
+            take_voiced_frame_coverage=0.2,
+            onset_evidence="absent",
+            reference_onset_count=4,
+            take_onset_count=0,
+            reasons=("Alignment coverage is limited.",),
+        ),
+        summary="Low confidence input.",
+    )
+
+
 def test_markdown_report_surfaces_strengths_weaknesses_next_step_confidence_and_practice_loops() -> None:
     markdown = report_to_markdown(_sample_report())
 
@@ -91,3 +137,19 @@ def test_markdown_report_surfaces_strengths_weaknesses_next_step_confidence_and_
     )
     assert "## Next Practice Step" in markdown
     assert "loop Section 1 (8.00s - 16.00s) and focus on Timing Consistency" in markdown
+
+
+def test_markdown_report_surfaces_low_confidence_recording_warnings() -> None:
+    markdown = report_to_markdown(_low_confidence_report())
+
+    assert "## Recording Confidence Warnings" in markdown
+    assert "review detailed feedback cautiously" in markdown
+    assert "Analysis confidence is low; Alignment coverage is limited." in markdown
+    assert "Input suitability is low confidence." in markdown
+    assert "Take duration differs substantially from the reference." in markdown
+    assert "The take start may be delayed relative to the reference." in markdown
+    assert "How to improve the next recording:" in markdown
+    assert "Record the same musical section as the reference" in markdown
+    assert "Use a short count-in" in markdown
+    assert "Make the main notes clearer" in markdown
+    assert "Play the first attacks clearly" in markdown
