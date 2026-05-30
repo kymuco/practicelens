@@ -136,6 +136,25 @@ class AnalysisConfidence:
 
 
 @dataclass(slots=True, frozen=True)
+class InputSuitabilitySummary:
+    """Compact evidence summary describing whether the input pair is suitable for review."""
+
+    schema_version: SchemaVersion = SchemaVersion(1)
+    status: str = "low_confidence"
+    reference_duration_s: Seconds = Seconds(0.0)
+    take_duration_s: Seconds = Seconds(0.0)
+    duration_ratio: float = 0.0
+    alignment_coverage: float = 0.0
+    voiced_frame_coverage: float = 0.0
+    reference_voiced_frame_coverage: float = 0.0
+    take_voiced_frame_coverage: float = 0.0
+    onset_evidence: str = "absent"
+    reference_onset_count: int = 0
+    take_onset_count: int = 0
+    reasons: tuple[str, ...] = ()
+
+
+@dataclass(slots=True, frozen=True)
 class AnalysisOverview:
     """Compact, stable top-level overview contract for a finished analysis."""
 
@@ -167,6 +186,7 @@ class AnalysisReport:
     metrics: tuple[MetricResult, ...]
     sections: tuple[SectionReport, ...]
     analysis_confidence: AnalysisConfidence = AnalysisConfidence()
+    input_suitability: InputSuitabilitySummary = InputSuitabilitySummary()
     practice_loops: tuple[PracticeLoop, ...] = ()
     top_strengths: tuple[str, ...] = ()
     top_weaknesses: tuple[str, ...] = ()
