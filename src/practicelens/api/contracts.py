@@ -100,6 +100,8 @@ class InputSuitabilitySummaryPayload(TypedDict):
     reference_duration_s: float
     take_duration_s: float
     duration_ratio: float
+    duration_diagnostic: str
+    duration_diagnostic_message: str | None
     alignment_coverage: float
     voiced_frame_coverage: float
     reference_voiced_frame_coverage: float

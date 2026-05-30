@@ -60,6 +60,8 @@ def _sample_report() -> AnalysisReport:
             reference_duration_s=8.0,
             take_duration_s=8.0,
             duration_ratio=1.0,
+            duration_diagnostic="duration_ratio_ok",
+            duration_diagnostic_message=None,
             alignment_coverage=0.95,
             voiced_frame_coverage=0.8,
             reference_voiced_frame_coverage=0.85,
@@ -94,6 +96,7 @@ def test_report_to_json_payload_is_serializable() -> None:
     assert payload["overview"]["mode"] == "reference"
     assert payload["scores"][0]["name"] == "pitch_fidelity"
     assert payload["input_suitability"]["status"] == "ok"
+    assert payload["input_suitability"]["duration_diagnostic"] == "duration_ratio_ok"
     assert payload["artifacts"][1]["kind"] == "csv_report"
 
 
@@ -150,6 +153,8 @@ def test_report_to_debug_payload_is_serializable() -> None:
             "reference_duration_s": 8.0,
             "take_duration_s": 8.0,
             "duration_ratio": 1.0,
+            "duration_diagnostic": "duration_ratio_ok",
+            "duration_diagnostic_message": None,
             "alignment_coverage": 0.95,
             "voiced_frame_coverage": 0.8,
             "reference_voiced_frame_coverage": 0.85,

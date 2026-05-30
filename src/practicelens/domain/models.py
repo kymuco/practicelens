@@ -144,6 +144,8 @@ class InputSuitabilitySummary:
     reference_duration_s: Seconds = Seconds(0.0)
     take_duration_s: Seconds = Seconds(0.0)
     duration_ratio: float = 0.0
+    duration_diagnostic: str = "duration_ratio_unavailable"
+    duration_diagnostic_message: str | None = None
     alignment_coverage: float = 0.0
     voiced_frame_coverage: float = 0.0
     reference_voiced_frame_coverage: float = 0.0

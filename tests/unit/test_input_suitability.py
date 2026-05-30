@@ -22,6 +22,8 @@ def test_input_suitability_summary_reports_ok_when_evidence_is_strong() -> None:
     assert summary.reference_duration_s == 3.0
     assert summary.take_duration_s == 3.0
     assert summary.duration_ratio == 1.0
+    assert summary.duration_diagnostic == "duration_ratio_ok"
+    assert summary.duration_diagnostic_message is None
     assert summary.alignment_coverage == 0.9
     assert summary.voiced_frame_coverage == 1.0
     assert summary.onset_evidence == "present"
@@ -44,7 +46,13 @@ def test_input_suitability_summary_reports_warning_when_duration_differs() -> No
 
     assert summary.status == "warning"
     assert summary.duration_ratio == 0.666667
-    assert "Take duration differs from the reference." in summary.reasons
+    assert summary.duration_diagnostic == "take_much_shorter_than_reference"
+    assert summary.duration_diagnostic_message is not None
+    assert "extra silence" in summary.duration_diagnostic_message
+    assert "restart" in summary.duration_diagnostic_message
+    assert "missing section" in summary.duration_diagnostic_message
+    assert "unrelated material" in summary.duration_diagnostic_message
+    assert summary.duration_diagnostic_message in summary.reasons
 
 
 def test_input_suitability_summary_reports_low_confidence_when_evidence_is_thin() -> None:
@@ -63,9 +71,53 @@ def test_input_suitability_summary_reports_low_confidence_when_evidence_is_thin(
     )
 
     assert summary.status == "low_confidence"
+    assert summary.duration_diagnostic == "take_much_shorter_than_reference"
     assert summary.alignment_coverage == 0.4
     assert summary.voiced_frame_coverage == 0.0
     assert summary.onset_evidence == "absent"
+
+
+def test_input_suitability_duration_diagnostic_reports_much_longer_take() -> None:
+    summary = summarize_input_suitability(
+        _feature_bundle(
+            time_axis_s=(0.0, 1.0, 2.0),
+            voiced_mask=(True, True, True),
+            onset_times_s=(0.5, 1.5),
+        ),
+        _feature_bundle(
+            time_axis_s=(0.0, 1.0, 2.0, 3.0, 4.0),
+            voiced_mask=(True, True, True, True, True),
+            onset_times_s=(0.5, 1.5),
+        ),
+        AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.9),
+    )
+
+    assert summary.status == "warning"
+    assert summary.duration_ratio == 2.0
+    assert summary.duration_diagnostic == "take_much_longer_than_reference"
+    assert summary.duration_diagnostic_message is not None
+    assert "extra silence" in summary.duration_diagnostic_message
+
+
+def test_input_suitability_duration_diagnostic_reports_acceptable_duration() -> None:
+    summary = summarize_input_suitability(
+        _feature_bundle(
+            time_axis_s=(0.0, 1.0, 2.0, 3.0),
+            voiced_mask=(True, True, True, True),
+            onset_times_s=(0.5, 1.5),
+        ),
+        _feature_bundle(
+            time_axis_s=(0.0, 1.0, 2.0, 3.2),
+            voiced_mask=(True, True, True, True),
+            onset_times_s=(0.5, 1.5),
+        ),
+        AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.9),
+    )
+
+    assert summary.status == "ok"
+    assert summary.duration_ratio == 1.066667
+    assert summary.duration_diagnostic == "duration_ratio_ok"
+    assert summary.duration_diagnostic_message is None
 
 
 def _feature_bundle(
