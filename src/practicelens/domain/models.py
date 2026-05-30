@@ -146,6 +146,12 @@ class InputSuitabilitySummary:
     duration_ratio: float = 0.0
     duration_diagnostic: str = "duration_ratio_unavailable"
     duration_diagnostic_message: str | None = None
+    reference_activity_start_s: Seconds | None = None
+    take_activity_start_s: Seconds | None = None
+    start_offset_s: Seconds | None = None
+    leading_noise_duration_s: Seconds = Seconds(0.0)
+    start_diagnostic: str = "start_region_unavailable"
+    start_diagnostic_message: str | None = None
     alignment_coverage: float = 0.0
     voiced_frame_coverage: float = 0.0
     reference_voiced_frame_coverage: float = 0.0
