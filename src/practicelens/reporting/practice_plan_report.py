@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from practicelens.domain.models import AnalysisReport, ComponentScore
+from practicelens.reporting.markdown_warnings import report_confidence_warning_lines
 
 
 def report_to_practice_plan_markdown(report: AnalysisReport) -> str:
@@ -25,6 +26,8 @@ def report_to_practice_plan_markdown(report: AnalysisReport) -> str:
         f"- **Main focus:** {_metric_label(weakest.name.value)} ({weakest.score:.1f}/100)",
         f"- **Keep stable:** {_metric_label(strongest.name.value)} ({strongest.score:.1f}/100)",
     ]
+
+    lines.extend(report_confidence_warning_lines(report))
 
     if report.summary:
         lines.extend(["", "## Summary", "", report.summary])
