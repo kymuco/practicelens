@@ -7,6 +7,7 @@ import json
 from practicelens.application.contracts import BatchCompareResult, BatchSessionSummary, SessionPracticeLoopSummary, SessionTakeSummary
 from practicelens.domain.enums import ArtifactKind
 from practicelens.domain.models import PracticeLoop
+from practicelens.reporting.input_suitability_payload import input_suitability_to_payload
 
 
 def batch_compare_result_to_json_payload(result: BatchCompareResult) -> dict[str, object]:
@@ -16,6 +17,7 @@ def batch_compare_result_to_json_payload(result: BatchCompareResult) -> dict[str
             "take_path": str(entry.take_path),
             "overall_score": entry.overall_score,
             "summary": entry.summary,
+            "input_suitability": input_suitability_to_payload(entry.result.report.input_suitability),
             "output_dir": str(entry.output_dir) if entry.output_dir is not None else None,
             "practice_loops": [_practice_loop_payload(loop) for loop in entry.result.report.practice_loops],
             "artifacts": [
