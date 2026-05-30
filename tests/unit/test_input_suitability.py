@@ -5,16 +5,8 @@ from practicelens.features import FeatureBundle
 
 def test_input_suitability_summary_reports_ok_when_evidence_is_strong() -> None:
     summary = summarize_input_suitability(
-        _feature_bundle(
-            time_axis_s=(0.0, 1.0, 2.0, 3.0),
-            voiced_mask=(True, True, True, True),
-            onset_times_s=(0.5, 1.5),
-        ),
-        _feature_bundle(
-            time_axis_s=(0.0, 1.0, 2.0, 3.0),
-            voiced_mask=(True, True, True, True),
-            onset_times_s=(0.5, 1.5),
-        ),
+        _feature_bundle(time_axis_s=(0.0, 1.0, 2.0, 3.0), voiced_mask=(True, True, True, True), onset_times_s=(0.5, 1.5)),
+        _feature_bundle(time_axis_s=(0.0, 1.0, 2.0, 3.0), voiced_mask=(True, True, True, True), onset_times_s=(0.5, 1.5)),
         AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.9),
     )
 
@@ -33,16 +25,8 @@ def test_input_suitability_summary_reports_ok_when_evidence_is_strong() -> None:
 
 def test_input_suitability_summary_reports_warning_when_duration_differs() -> None:
     summary = summarize_input_suitability(
-        _feature_bundle(
-            time_axis_s=(0.0, 1.0, 2.0, 3.0),
-            voiced_mask=(True, True, True, True),
-            onset_times_s=(0.5, 1.5),
-        ),
-        _feature_bundle(
-            time_axis_s=(0.0, 1.0, 2.0),
-            voiced_mask=(True, True, True),
-            onset_times_s=(0.5, 1.5),
-        ),
+        _feature_bundle(time_axis_s=(0.0, 1.0, 2.0, 3.0), voiced_mask=(True, True, True, True), onset_times_s=(0.5, 1.5)),
+        _feature_bundle(time_axis_s=(0.0, 1.0, 2.0), voiced_mask=(True, True, True), onset_times_s=(0.5, 1.5)),
         AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.9),
     )
 
@@ -59,16 +43,8 @@ def test_input_suitability_summary_reports_warning_when_duration_differs() -> No
 
 def test_input_suitability_summary_reports_low_confidence_when_evidence_is_thin() -> None:
     summary = summarize_input_suitability(
-        _feature_bundle(
-            time_axis_s=(0.0, 1.0, 2.0, 3.0),
-            voiced_mask=(True, False, False, False),
-            onset_times_s=(),
-        ),
-        _feature_bundle(
-            time_axis_s=(0.0, 0.5),
-            voiced_mask=(False, False),
-            onset_times_s=(),
-        ),
+        _feature_bundle(time_axis_s=(0.0, 1.0, 2.0, 3.0), voiced_mask=(True, False, False, False), onset_times_s=()),
+        _feature_bundle(time_axis_s=(0.0, 0.5), voiced_mask=(False, False), onset_times_s=()),
         AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.4),
     )
 
@@ -81,16 +57,8 @@ def test_input_suitability_summary_reports_low_confidence_when_evidence_is_thin(
 
 def test_input_suitability_duration_diagnostic_reports_much_longer_take() -> None:
     summary = summarize_input_suitability(
-        _feature_bundle(
-            time_axis_s=(0.0, 1.0, 2.0),
-            voiced_mask=(True, True, True),
-            onset_times_s=(0.5, 1.5),
-        ),
-        _feature_bundle(
-            time_axis_s=(0.0, 1.0, 2.0, 3.0, 4.0),
-            voiced_mask=(True, True, True, True, True),
-            onset_times_s=(0.5, 1.5),
-        ),
+        _feature_bundle(time_axis_s=(0.0, 1.0, 2.0), voiced_mask=(True, True, True), onset_times_s=(0.5, 1.5)),
+        _feature_bundle(time_axis_s=(0.0, 1.0, 2.0, 3.0, 4.0), voiced_mask=(True, True, True, True, True), onset_times_s=(0.5, 1.5)),
         AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.9),
     )
 
@@ -103,16 +71,8 @@ def test_input_suitability_duration_diagnostic_reports_much_longer_take() -> Non
 
 def test_input_suitability_duration_diagnostic_reports_acceptable_duration() -> None:
     summary = summarize_input_suitability(
-        _feature_bundle(
-            time_axis_s=(0.0, 1.0, 2.0, 3.0),
-            voiced_mask=(True, True, True, True),
-            onset_times_s=(0.5, 1.5),
-        ),
-        _feature_bundle(
-            time_axis_s=(0.0, 1.0, 2.0, 3.2),
-            voiced_mask=(True, True, True, True),
-            onset_times_s=(0.5, 1.5),
-        ),
+        _feature_bundle(time_axis_s=(0.0, 1.0, 2.0, 3.0), voiced_mask=(True, True, True, True), onset_times_s=(0.5, 1.5)),
+        _feature_bundle(time_axis_s=(0.0, 1.0, 2.0, 3.2), voiced_mask=(True, True, True, True), onset_times_s=(0.5, 1.5)),
         AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.9),
     )
 
@@ -149,18 +109,36 @@ def test_input_suitability_start_diagnostic_reports_delayed_take_start() -> None
     assert summary.start_diagnostic_message in summary.reasons
 
 
-def test_input_suitability_start_diagnostic_reports_normal_start() -> None:
+def test_input_suitability_start_diagnostic_reports_noisy_leading_start() -> None:
     summary = summarize_input_suitability(
         _feature_bundle(
             time_axis_s=(0.0, 0.25, 0.5, 0.75, 1.0),
             voiced_mask=(True, True, True, True, True),
             onset_times_s=(0.1, 0.6),
+            energy_curve=(1.0, 1.0, 1.0, 1.0, 1.0),
         ),
         _feature_bundle(
             time_axis_s=(0.0, 0.25, 0.5, 0.75, 1.0),
-            voiced_mask=(True, True, True, True, True),
-            onset_times_s=(0.1, 0.6),
+            voiced_mask=(False, False, True, True, True),
+            onset_times_s=(0.55, 0.8),
+            energy_curve=(0.3, 0.3, 1.0, 1.0, 1.0),
         ),
+        AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.9),
+    )
+
+    assert summary.status == "warning"
+    assert summary.leading_noise_duration_s == 0.5
+    assert summary.start_diagnostic == "take_leading_noise_before_activity"
+    assert summary.start_diagnostic_message is not None
+    assert "may contain leading noise" in summary.start_diagnostic_message
+    assert "Possible causes" in summary.start_diagnostic_message
+    assert summary.start_diagnostic_message in summary.reasons
+
+
+def test_input_suitability_start_diagnostic_reports_normal_start() -> None:
+    summary = summarize_input_suitability(
+        _feature_bundle(time_axis_s=(0.0, 0.25, 0.5, 0.75, 1.0), voiced_mask=(True, True, True, True, True), onset_times_s=(0.1, 0.6)),
+        _feature_bundle(time_axis_s=(0.0, 0.25, 0.5, 0.75, 1.0), voiced_mask=(True, True, True, True, True), onset_times_s=(0.1, 0.6)),
         AlignmentPath(pairs=(), total_cost=0.0, coverage_ratio=0.9),
     )
 
