@@ -94,6 +94,22 @@ class AnalysisConfidencePayload(TypedDict):
     limitations: list[str]
 
 
+class InputSuitabilitySummaryPayload(TypedDict):
+    schema_version: int
+    status: str
+    reference_duration_s: float
+    take_duration_s: float
+    duration_ratio: float
+    alignment_coverage: float
+    voiced_frame_coverage: float
+    reference_voiced_frame_coverage: float
+    take_voiced_frame_coverage: float
+    onset_evidence: str
+    reference_onset_count: int
+    take_onset_count: int
+    reasons: list[str]
+
+
 class PracticeLoopPayload(TypedDict):
     section_index: int
     start_s: float
@@ -146,6 +162,7 @@ class AnalyzeResponsePayload(TypedDict):
     metrics: list[MetricPayload]
     sections: list[SectionPayload]
     analysis_confidence: AnalysisConfidencePayload
+    input_suitability: InputSuitabilitySummaryPayload
     practice_loops: list[PracticeLoopPayload]
     top_strengths: list[str]
     top_weaknesses: list[str]
@@ -160,6 +177,7 @@ class BatchEntryPayload(TypedDict):
     take_path: str
     overall_score: float
     summary: str | None
+    input_suitability: InputSuitabilitySummaryPayload
     output_dir: str | None
     practice_loops: list[PracticeLoopPayload]
     artifacts: list[ArtifactPayload]
