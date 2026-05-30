@@ -221,7 +221,15 @@ def _leading_noise_duration_s(bundle: FeatureBundle, take_activity_start_s: floa
         return 0.0
 
     noise_threshold = max_post_activity_energy * _ENERGY_ACTIVITY_RELATIVE_THRESHOLD
-    noisy_times = [time_s for time_s, energy in zip(bundle.time_axis_s[:activity_index], pre_activity_energy, strict=False) if energy >= noise_threshold]
+    noisy_times = [
+        time_s
+        for time_s, energy in zip(
+            bundle.time_axis_s[:activity_index],
+            pre_activity_energy,
+            strict=False,
+        )
+        if energy >= noise_threshold
+    ]
     if not noisy_times:
         return 0.0
     return _round_ratio(max(0.0, take_activity_start_s - noisy_times[0]))
