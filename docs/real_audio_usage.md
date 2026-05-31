@@ -6,6 +6,8 @@ PracticeLens is currently a private practice-review tool. It works best when you
 
 It is not yet a beginner tutor, full transcription engine, chord/polyphony judge, DAW, or human-level musical reviewer.
 
+For a short copyable smoke workflow with placeholder paths, see [`examples/real_audio/README.md`](../examples/real_audio/README.md).
+
 ## Best current use case
 
 Use PracticeLens when you have:
@@ -176,6 +178,8 @@ More difficult today:
 
 ## Copyable CLI example
 
+For a fuller real-audio smoke workflow with local/private folder layout, placeholder variables, and session-history commands, see [`examples/real_audio/README.md`](../examples/real_audio/README.md).
+
 Folder layout:
 
 ```text
@@ -291,17 +295,24 @@ PracticeLens does not currently promise:
 
 Those are future directions. The current goal is to make private reference-based practice review useful and honest.
 
-## Quick checklist before trusting a result
+## Manual checklist before trusting a result
 
-Before interpreting a report, check:
+Use this checklist before treating a real-audio report as practice guidance.
 
-- the reference and takes contain the same phrase;
-- every take is a complete attempt;
-- there is no restart inside the take;
-- the first note or attack is present and clear;
-- there is no long unrelated intro or outro;
-- tuning and tempo target are consistent;
-- metronome/backing-track conditions are consistent;
-- effects are minimal enough for the current analysis to be meaningful.
+```text
+[ ] Reference and every take contain the same phrase, riff, line, or exercise.
+[ ] Every take is one complete attempt from beginning to end.
+[ ] There is no restart, false start, or second attempt inside the take.
+[ ] There is no long unrelated intro, outro, tuning, talking, or noodling.
+[ ] The first note or attack is present and clear enough to detect.
+[ ] Tuning is the same or close enough across the reference and takes.
+[ ] Tempo target is similar across files.
+[ ] Metronome/backing-track situation is the same across files.
+[ ] The signal is clean enough for the selected instrument profile.
+[ ] Heavy distortion, reverb, delay, chorus, or full-mix backing is minimal enough to trust the comparison.
+[ ] Any confidence or suitability warnings in Markdown reports are understood before acting on detailed feedback.
+```
 
-If several items are false, rerecord a cleaner short phrase before treating the report as practice guidance.
+If several boxes are unchecked, rerecord a cleaner short phrase before trusting the result. PracticeLens is meant to support private practice review for material you can already attempt; it is not a beginner tutor or a replacement for musical judgment.
+
+For a copyable local workflow that keeps audio and generated artifacts out of the repository, use [`examples/real_audio/README.md`](../examples/real_audio/README.md).
