@@ -14,6 +14,20 @@ record several takes -> find the strongest take -> identify the recurring weakne
 
 PracticeLens is still **pre-alpha**, but it already has a real end-to-end workflow for local practice review and first-pass progress tracking.
 
+## Project direction
+
+PracticeLens is a private practice-review tool for musicians who can already attempt a phrase, riff, or take and want objective feedback before asking other people.
+
+It is currently strongest for short clean monophonic or near-monophonic reference-based review. Polyphony, chords, heavy effects, beginner tutoring, and full transcription are future directions, not current promises.
+
+Important docs:
+
+- [Product positioning](docs/product_positioning.md)
+- [Roadmap](docs/roadmap.md)
+- [Known limitations](docs/known_limitations.md)
+- [Real audio usage guide](docs/real_audio_usage.md)
+- [Real audio smoke workflow](examples/real_audio/README.md)
+
 ## Golden path
 
 Run a practice session with several takes:
@@ -77,6 +91,7 @@ It currently focuses on:
 - local WAV analysis;
 - reference-aware alignment;
 - pitch, rhythm, timing, and section-stability signals;
+- input suitability and confidence warnings;
 - explainable scoring instead of opaque judgment;
 - single-take review;
 - multi-take comparison;
@@ -91,6 +106,9 @@ It currently focuses on:
 | Deterministic feature extraction | Working |
 | Reference-aware DTW alignment | Working |
 | Explainable scoring | Working |
+| Input suitability summary | Working |
+| Duration/start-region diagnostics | Working |
+| Low-confidence Markdown warnings | Working |
 | JSON / Markdown / CSV / SVG artifacts | Working |
 | Practice plans and diagnostics artifacts | Working |
 | Single-take CLI analysis | Working |
@@ -267,11 +285,14 @@ Recommended reading order:
 
 1. [Quickstart](docs/quickstart.md)
 2. [CLI walkthrough](docs/cli_walkthrough.md)
-3. [Evaluation showcase](examples/evaluation_showcase/README.md)
-4. [Showcase review checklist](docs/showcase_review.md)
-5. [Architecture overview](docs/architecture.md)
-6. [API notes](docs/api.md)
-7. [Roadmap snapshot](docs/roadmap.md)
+3. [Real audio usage guide](docs/real_audio_usage.md)
+4. [Real audio smoke workflow](examples/real_audio/README.md)
+5. [Known limitations](docs/known_limitations.md)
+6. [Evaluation showcase](examples/evaluation_showcase/README.md)
+7. [Showcase review checklist](docs/showcase_review.md)
+8. [Architecture overview](docs/architecture.md)
+9. [API notes](docs/api.md)
+10. [Roadmap](docs/roadmap.md)
 
 Generate the synthetic evaluation showcase from the repository root:
 
@@ -294,6 +315,7 @@ PracticeLens exposes an optional FastAPI app with:
 - `GET /health`
 - `POST /analyze`
 - `POST /compare-batch`
+- `POST /practice-session`
 
 Run locally:
 
@@ -314,6 +336,7 @@ Current expectations:
 - monophonic or near-monophonic material first;
 - deterministic baseline first;
 - explainable component scoring;
+- input suitability and confidence warnings;
 - single-take, batch, and practice-session review.
 
 Current non-goals:
@@ -322,8 +345,11 @@ Current non-goals:
 - polyphonic-first analysis;
 - cloud-first infrastructure;
 - end-to-end learned scoring;
+- full transcription;
 - artistic judgment or interpretation scoring;
 - pretending the project is production-complete.
+
+See [Known limitations](docs/known_limitations.md) before using PracticeLens on real recordings.
 
 ## Development workflow
 
