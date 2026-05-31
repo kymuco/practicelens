@@ -1,8 +1,20 @@
 # PracticeLens Roadmap
 
-This roadmap separates the north-star direction from the immediate execution plan.
+This roadmap describes the public product and engineering direction for PracticeLens.
 
-PracticeLens should grow from a private practice-review tool into a local-first music practice intelligence platform. The project should not jump directly to a large ML/DL system. Each milestone should add one product capability through small, reviewable PRs.
+It separates current capabilities, near-term execution, and long-term north-star work. It is a direction of travel, not a promise that every future capability will ship in this exact order.
+
+## North star
+
+PracticeLens should grow from a private practice-review tool into a local-first music practice intelligence platform.
+
+The core loop is:
+
+```text
+record several takes -> compare against a reference -> find the strongest take -> understand the recurring weakness -> practice the next target -> compare progress later
+```
+
+PracticeLens should stay private by default, useful on real practice recordings, honest about confidence and limitations, and extensible toward instrument-aware, polyphonic, effect-aware, and ML/DL-assisted review.
 
 ## Product position
 
@@ -10,11 +22,13 @@ Current position:
 
 > PracticeLens is a private practice-review tool for musicians who can already attempt a phrase, riff, or take and want objective feedback before asking other people.
 
-It is currently strongest for monophonic or near-monophonic practice review. Polyphony, chords, heavy effects, beginner tutoring, and full transcription are future directions, not current promises.
+It is currently strongest for short clean monophonic or near-monophonic reference-based review. Polyphony, chords, heavy effects, beginner tutoring, and full transcription are future directions, not current promises.
 
 See also:
 
 - `docs/product_positioning.md`
+- `docs/known_limitations.md`
+- `docs/real_audio_usage.md`
 
 ## Current baseline
 
@@ -28,36 +42,66 @@ Already in place:
 - JSONL session history index;
 - `sessions list` / `sessions show` / `sessions compare` CLI surfaces;
 - generated evaluation showcase;
-- improved batch/session Markdown review UX;
+- real-audio usage documentation;
+- input suitability summary;
+- duration mismatch diagnostics;
+- start/leading-noise diagnostics;
+- low-confidence Markdown warnings;
+- real-audio smoke workflow documentation;
+- manual real-audio trust checklist;
 - optional API workflows for `/health`, `/analyze`, `/compare-batch`, and `/practice-session`;
 - typed API payload contracts;
 - CI and contributor-facing repo hygiene.
 
-## Immediate execution focus
+## Current execution focus
 
-The next milestone should be:
+The current active milestone is:
 
 ```text
-M1 — Real Audio Readiness
+M2 — Practice Review UX v2
 ```
 
-The goal is to answer the first real product question:
+The goal is to answer the next product question:
 
-> What happens when a musician gives PracticeLens real guitar or vocal recordings instead of generated demo data?
+> After a real practice session, does the user clearly understand what to keep, what to fix, and what to record next?
 
-M1 should make real usage honest, documented, and safer. It should add suitability checks and warnings before the project expands into larger ML/DL or polyphonic work.
+M2 should improve musician-facing review clarity without changing core scoring, alignment, or preprocessing behavior.
+
+## Completed milestones
+
+### M0 — Current Foundation
+
+Goal: establish a working local-first practice-review baseline.
+
+Status: complete.
+
+Delivered capabilities:
+
+- single-take analysis;
+- batch comparison;
+- practice-session workflow;
+- session manifests;
+- opt-in local history index;
+- `sessions list/show/compare`;
+- generated showcase;
+- optional API surface;
+- artifact documentation and tests.
 
 ### M1 — Real Audio Readiness
 
-Small PR sequence:
+Goal: make PracticeLens honest and safer to try on real musician recordings, not only synthetic demo data.
 
-- PR1.1 — Real audio usage guide
-- PR1.2 — Input suitability summary
-- PR1.3 — Duration mismatch diagnostic
-- PR1.4 — Leading silence / start offset diagnostic
-- PR1.5 — Low-confidence warnings in Markdown
-- PR1.6 — Real audio smoke workflow docs
-- PR1.7 — Real-audio manual checklist
+Status: complete.
+
+Delivered capabilities:
+
+- real-audio usage guide;
+- input suitability summary;
+- duration mismatch diagnostic;
+- leading silence / start offset diagnostic;
+- low-confidence warnings in Markdown;
+- real-audio smoke workflow docs;
+- real-audio manual checklist.
 
 ## Near-term milestones
 
@@ -65,7 +109,7 @@ Small PR sequence:
 
 Goal: make feedback more useful as practice guidance, not just report text.
 
-Possible small PRs:
+Expected work:
 
 - rewrite `practice_plan.md` around action;
 - add `Before next take` section;
@@ -78,7 +122,7 @@ Possible small PRs:
 
 Goal: make repeated sessions useful over time.
 
-Possible small PRs:
+Possible future work:
 
 - add a progress summary model;
 - improve `sessions compare` output;
@@ -91,7 +135,7 @@ Possible small PRs:
 
 Goal: stop treating every source as the same instrument.
 
-Possible small PRs:
+Possible future work:
 
 - add `instrument_profile` config;
 - support `guitar_clean`, `vocal`, `bass`, `keyboard`, and `generic` profiles;
@@ -106,7 +150,7 @@ Possible small PRs:
 
 Goal: move from frame-only analysis toward musical events.
 
-Possible small PRs:
+Possible future work:
 
 - add `MusicEvent` model;
 - extract event-like attacks/rests/sustains from existing DSP features;
@@ -119,7 +163,7 @@ Possible small PRs:
 
 Goal: prepare the architecture for ML/DL without replacing the deterministic baseline.
 
-Possible small PRs:
+Possible future work:
 
 - define `FeatureExtractor` interface;
 - define `AlignmentEngine` interface;
@@ -132,7 +176,7 @@ Possible small PRs:
 
 Goal: improve single-line pitch/onset/timing review through optional local ML backends.
 
-Possible small PRs:
+Possible future work:
 
 - add optional ML backend contract;
 - add `practicelens doctor --ml`;
@@ -145,7 +189,7 @@ Possible small PRs:
 
 Goal: support first-pass harmonic/chord review without pretending to solve full transcription.
 
-Possible small PRs:
+Possible future work:
 
 - add `analysis_mode = monophonic | polyphonic_v1`;
 - add chroma/pitch-class features;
@@ -159,7 +203,7 @@ Possible small PRs:
 
 Goal: create a stronger event timeline for future transcription-aware review.
 
-Possible small PRs:
+Possible future work:
 
 - add `NoteEvent` model;
 - add `ChordEvent` model;
@@ -172,7 +216,7 @@ Possible small PRs:
 
 Goal: handle guitar recording realities such as distortion, delay, reverb, and compression with explicit caveats.
 
-Possible small PRs:
+Possible future work:
 
 - add `recording_profile` config;
 - add effect suitability warnings;
@@ -187,7 +231,7 @@ Possible small PRs:
 
 Goal: make PracticeLens easier to use as a local product, not only as a library/CLI.
 
-Possible small PRs:
+Possible future work:
 
 - add `practicelens init`;
 - load local project config;
@@ -198,22 +242,24 @@ Possible small PRs:
 
 ### M12 — HDE Skill Signal Export
 
-Goal: let PracticeLens stand beside a Human Development Environment as a focused music-practice signal source.
+Goal: let PracticeLens act as a focused music-practice signal source for a broader local-first personal development environment.
 
-Possible small PRs:
+Possible future work:
 
-- define HDE skill signal contract;
+- define an HDE skill signal contract;
 - write `hde_skill_signal.json`;
 - add `--export-skill-signal`;
 - add skill signal pointers to `session_manifest.json`;
-- document PracticeLens' role inside HDE;
+- document PracticeLens' role as a focused music-practice module;
 - add contract tests.
+
+This should remain a high-level export boundary. PracticeLens should own music-practice analysis; external systems should consume summarized practice signals, not raw private audio by default.
 
 ### M13 — Tutor Mode v0
 
 Goal: cautiously support less confident users without pretending to be a full teacher.
 
-Possible small PRs:
+Possible future work:
 
 - document tutor mode boundaries;
 - add practice breakdown renderer;
@@ -225,7 +271,7 @@ Possible small PRs:
 
 Goal: establish the evaluation and backend contracts needed before larger learned review models.
 
-Possible small PRs:
+Possible future work:
 
 - document dataset/evaluation protocol;
 - define local evaluation dataset format;
@@ -256,7 +302,7 @@ Use GitHub issues for the next executable milestone only, plus maybe one plannin
 Current recommended GitHub issue focus:
 
 ```text
-M1 — Real Audio Readiness
+M2 — Practice Review UX v2
 ```
 
 ## Explicitly not immediate
@@ -269,7 +315,7 @@ The project should not immediately prioritize:
 - full transcription;
 - polyphonic-first redesign;
 - large model dependency by default;
-- HDE integration before real-audio usefulness is proven.
+- deep HDE integration before product-level music practice usefulness is stronger.
 
 ## Practical north star
 
@@ -279,5 +325,7 @@ PracticeLens should become:
 - local-first;
 - useful on real practice recordings;
 - honest about confidence and limitations;
-- extensible toward instrument-aware, polyphonic, and ML/DL-assisted review;
-- eventually able to emit meaningful music-practice signals for HDE.
+- clear about what to practice next;
+- useful for tracking repeated sessions;
+- extensible toward instrument-aware, polyphonic, effect-aware, and ML/DL-assisted review;
+- eventually able to emit meaningful high-level music-practice signals for broader personal-development systems.
