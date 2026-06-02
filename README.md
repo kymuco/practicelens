@@ -29,6 +29,27 @@ Important docs:
 - [Real audio usage guide](docs/real_audio_usage.md)
 - [Real audio smoke workflow](examples/real_audio/README.md)
 
+## Quick demo
+
+PracticeLens compares practice takes against a reference, identifies recurring weaknesses, and generates next-practice guidance.
+
+![PracticeLens demo](docs/assets/demo/report.svg)
+
+Example generated audio:
+
+- [Reference phrase](docs/assets/demo/audio/reference_phrase.ogg)
+- [Exact take](docs/assets/demo/audio/exact_take.ogg)
+- [Pitch drift take](docs/assets/demo/audio/pitch_drift_take.ogg)
+- [Timing drift take](docs/assets/demo/audio/timing_drift_take.ogg)
+
+Example generated artifacts:
+
+- [Practice plan](docs/assets/demo/practice_plan.md)
+- [Batch report](docs/assets/demo/batch_report.md)
+- [Visual report](docs/assets/demo/report.svg)
+
+See the full showcase: [Evaluation showcase](examples/evaluation_showcase/README.md)
+
 ## Golden path
 
 Run a practice session with several takes:
