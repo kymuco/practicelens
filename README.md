@@ -35,33 +35,29 @@ PracticeLens compares practice takes against a reference, identifies recurring w
 
 ![PracticeLens demo](docs/assets/demo/report.svg)
 
-Example generated audio:
+### Example generated audio
 
 **Reference phrase**
+<video src="https://kymuco.github.io/practicelens/assets/demo/audio/reference_phrase.mp3" controls controlslist="nodownload" style="max-height:32px; width:100%; max-width:500px;"></video>
 
-<audio controls preload="none" src="https://raw.githubusercontent.com/kymuco/practicelens/main/docs/assets/demo/audio/reference_phrase.mp3"></audio>
-
-[Reference phrase MP3](docs/assets/demo/audio/reference_phrase.mp3) / [OGG](docs/assets/demo/audio/reference_phrase.ogg)
+[Listen in new tab: MP3](https://kymuco.github.io/practicelens/assets/demo/audio/reference_phrase.mp3) / [OGG](https://kymuco.github.io/practicelens/assets/demo/audio/reference_phrase.ogg)
 
 **Exact take**
+<video src="https://kymuco.github.io/practicelens/assets/demo/audio/exact_take.mp3" controls controlslist="nodownload" style="max-height:32px; width:100%; max-width:500px;"></video>
 
-<audio controls preload="none" src="https://raw.githubusercontent.com/kymuco/practicelens/main/docs/assets/demo/audio/exact_take.mp3"></audio>
-
-[Exact take MP3](docs/assets/demo/audio/exact_take.mp3) / [OGG](docs/assets/demo/audio/exact_take.ogg)
+[Listen in new tab: MP3](https://kymuco.github.io/practicelens/assets/demo/audio/exact_take.mp3) / [OGG](https://kymuco.github.io/practicelens/assets/demo/audio/exact_take.ogg)
 
 **Pitch drift take**
+<video src="https://kymuco.github.io/practicelens/assets/demo/audio/pitch_drift_take.mp3" controls controlslist="nodownload" style="max-height:32px; width:100%; max-width:500px;"></video>
 
-<audio controls preload="none" src="https://raw.githubusercontent.com/kymuco/practicelens/main/docs/assets/demo/audio/pitch_drift_take.mp3"></audio>
-
-[Pitch drift take MP3](docs/assets/demo/audio/pitch_drift_take.mp3) / [OGG](docs/assets/demo/audio/pitch_drift_take.ogg)
+[Listen in new tab: MP3](https://kymuco.github.io/practicelens/assets/demo/audio/pitch_drift_take.mp3) / [OGG](https://kymuco.github.io/practicelens/assets/demo/audio/pitch_drift_take.ogg)
 
 **Timing drift take**
+<video src="https://kymuco.github.io/practicelens/assets/demo/audio/timing_drift_take.mp3" controls controlslist="nodownload" style="max-height:32px; width:100%; max-width:500px;"></video>
 
-<audio controls preload="none" src="https://raw.githubusercontent.com/kymuco/practicelens/main/docs/assets/demo/audio/timing_drift_take.mp3"></audio>
+[Listen in new tab: MP3](https://kymuco.github.io/practicelens/assets/demo/audio/timing_drift_take.mp3) / [OGG](https://kymuco.github.io/practicelens/assets/demo/audio/timing_drift_take.ogg)
 
-[Timing drift take MP3](docs/assets/demo/audio/timing_drift_take.mp3) / [OGG](docs/assets/demo/audio/timing_drift_take.ogg)
-
-Example generated artifacts:
+### Example generated artifacts
 
 - [Practice plan](docs/assets/demo/practice_plan.md)
 - [Batch report](docs/assets/demo/batch_report.md)
