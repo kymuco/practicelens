@@ -37,10 +37,29 @@ PracticeLens compares practice takes against a reference, identifies recurring w
 
 Example generated audio:
 
-- [Reference phrase](docs/assets/demo/audio/reference_phrase.ogg)
-- [Exact take](docs/assets/demo/audio/exact_take.ogg)
-- [Pitch drift take](docs/assets/demo/audio/pitch_drift_take.ogg)
-- [Timing drift take](docs/assets/demo/audio/timing_drift_take.ogg)
+**Reference phrase**
+
+<audio controls preload="none" src="https://raw.githubusercontent.com/kymuco/practicelens/main/docs/assets/demo/audio/reference_phrase.mp3"></audio>
+
+[Reference phrase MP3](docs/assets/demo/audio/reference_phrase.mp3) / [OGG](docs/assets/demo/audio/reference_phrase.ogg)
+
+**Exact take**
+
+<audio controls preload="none" src="https://raw.githubusercontent.com/kymuco/practicelens/main/docs/assets/demo/audio/exact_take.mp3"></audio>
+
+[Exact take MP3](docs/assets/demo/audio/exact_take.mp3) / [OGG](docs/assets/demo/audio/exact_take.ogg)
+
+**Pitch drift take**
+
+<audio controls preload="none" src="https://raw.githubusercontent.com/kymuco/practicelens/main/docs/assets/demo/audio/pitch_drift_take.mp3"></audio>
+
+[Pitch drift take MP3](docs/assets/demo/audio/pitch_drift_take.mp3) / [OGG](docs/assets/demo/audio/pitch_drift_take.ogg)
+
+**Timing drift take**
+
+<audio controls preload="none" src="https://raw.githubusercontent.com/kymuco/practicelens/main/docs/assets/demo/audio/timing_drift_take.mp3"></audio>
+
+[Timing drift take MP3](docs/assets/demo/audio/timing_drift_take.mp3) / [OGG](docs/assets/demo/audio/timing_drift_take.ogg)
 
 Example generated artifacts:
 
