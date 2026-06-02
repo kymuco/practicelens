@@ -24,6 +24,7 @@ Important docs:
 
 - [Product positioning](docs/product_positioning.md)
 - [Roadmap](docs/roadmap.md)
+- [Maintainer AI usage](docs/maintainer_ai_usage.md)
 - [Known limitations](docs/known_limitations.md)
 - [Real audio usage guide](docs/real_audio_usage.md)
 - [Real audio smoke workflow](examples/real_audio/README.md)
@@ -293,6 +294,7 @@ Recommended reading order:
 8. [Architecture overview](docs/architecture.md)
 9. [API notes](docs/api.md)
 10. [Roadmap](docs/roadmap.md)
+11. [Maintainer AI usage](docs/maintainer_ai_usage.md)
 
 Generate the synthetic evaluation showcase from the repository root:
 
