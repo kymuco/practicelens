@@ -1,3 +1,4 @@
+from dataclasses import replace
 from pathlib import Path
 
 from practicelens.domain.enums import AnalysisMode, MetricName, Severity
@@ -51,6 +52,27 @@ def test_practice_plan_starts_with_goal_heading_and_action_guidance() -> None:
     assert "- **Keep:** Pitch Fidelity (90.0/100)" in text
     assert "- **Current take:** `take.wav`" in text
     assert "- **Overall score:** 83.2/100" in text
+
+
+def test_practice_plan_includes_before_next_take_near_top() -> None:
+    text = report_to_practice_plan_markdown(_sample_report())
+
+    assert "## Before next take" in text
+    assert text.index("## Before next take") < text.index("## What to keep")
+    assert "1. Loop Section 0 (0.00s - 8.00s) and focus on Timing Consistency." in text
+    assert "2. Keep attention on Timing Consistency before changing anything else." in text
+    assert "3. Record one clean complete attempt:" in text
+
+
+def test_practice_plan_before_next_take_without_loops_stays_useful() -> None:
+    report = replace(_sample_report(), practice_loops=())
+
+    text = report_to_practice_plan_markdown(report)
+
+    assert "## Before next take" in text
+    assert "1. Run one clean full-take pass before section-level loop work." in text
+    assert "2. Keep attention on Timing Consistency before changing anything else." in text
+    assert "3. Record one clean complete attempt:" in text
 
 
 def test_practice_plan_makes_strength_and_weakness_easy_to_find() -> None:
