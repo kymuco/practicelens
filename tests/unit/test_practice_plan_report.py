@@ -46,7 +46,7 @@ def test_practice_plan_starts_with_next_take_action() -> None:
     text = report_to_practice_plan_markdown(_sample_report())
 
     assert text.startswith("# PracticeLens Practice Plan\n\n## Next take action")
-    assert "Record next: Record one new take focused on improving Timing Consistency while preserving Pitch Fidelity." in text
+    assert "Record one new take focused on improving Timing Consistency while preserving Pitch Fidelity." in text
     assert "- **Fix first:** Timing Consistency (75.0/100)" in text
     assert "- **Keep:** Pitch Fidelity (90.0/100)" in text
     assert "- **Current take:** `take.wav`" in text
