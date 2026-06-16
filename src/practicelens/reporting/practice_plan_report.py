@@ -10,21 +10,20 @@ def report_to_practice_plan_markdown(report: AnalysisReport) -> str:
     overall_score = sum(score.score * score.weight for score in report.scores)
     weakest = min(report.scores, key=lambda score: score.score)
     strongest = max(report.scores, key=lambda score: score.score)
+    next_recording_target = _next_recording_target(report, weakest, strongest)
 
     lines: list[str] = [
         "# PracticeLens Practice Plan",
         "",
         "## Goal for the next take",
         "",
-        _next_take_goal(weakest, strongest),
+        next_recording_target,
         "",
-        "## Current take snapshot",
-        "",
-        f"- **Take:** `{report.inputs.take_path.name}`",
+        f"- **Fix first:** {_metric_label(weakest.name.value)} ({weakest.score:.1f}/100)",
+        f"- **Keep:** {_metric_label(strongest.name.value)} ({strongest.score:.1f}/100)",
+        f"- **Current take:** `{report.inputs.take_path.name}`",
         f"- **Overall score:** {overall_score:.1f}/100",
-        f"- **Analysis confidence:** {report.analysis_confidence.level.title()}",
-        f"- **Main focus:** {_metric_label(weakest.name.value)} ({weakest.score:.1f}/100)",
-        f"- **Keep stable:** {_metric_label(strongest.name.value)} ({strongest.score:.1f}/100)",
+        f"- **Confidence:** {report.analysis_confidence.level.title()}",
     ]
 
     lines.extend(report_confidence_warning_lines(report))
@@ -32,19 +31,21 @@ def report_to_practice_plan_markdown(report: AnalysisReport) -> str:
     if report.summary:
         lines.extend(["", "## Summary", "", report.summary])
 
-    lines.extend(["", "## Keep", ""])
+    lines.extend(["", "## What to keep", ""])
     if report.top_strengths:
         for strength in report.top_strengths:
             lines.append(f"- {strength}")
     else:
         lines.append(f"- Preserve {_metric_label(strongest.name.value)} while working on the main focus area.")
 
-    lines.extend(["", "## Improve", ""])
+    lines.extend(["", "## What to fix first", ""])
     if report.top_weaknesses:
         for weakness in report.top_weaknesses:
             lines.append(f"- {weakness}")
     else:
         lines.append(f"- Focus on {_metric_label(weakest.name.value)} before changing everything else.")
+
+    lines.extend(["", "## Why this matters", "", _why_this_matters(weakest, strongest)])
 
     lines.extend(["", "## Practice loops", ""])
     if report.practice_loops:
@@ -61,11 +62,7 @@ def report_to_practice_plan_markdown(report: AnalysisReport) -> str:
     else:
         lines.append("No focused loops were generated. Run one clean full-take pass and compare again.")
 
-    lines.extend(["", "## Next recording target", ""])
-    if report.next_practice_step:
-        lines.append(report.next_practice_step.removeprefix("Next practice step: "))
-    else:
-        lines.append(_next_take_goal(weakest, strongest))
+    lines.extend(["", "## Next recording target", "", next_recording_target])
 
     lines.extend(["", "## Confidence notes", ""])
     if report.analysis_confidence.reasons:
@@ -81,10 +78,30 @@ def report_to_practice_plan_markdown(report: AnalysisReport) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+def _next_recording_target(report: AnalysisReport, weakest: ComponentScore, strongest: ComponentScore) -> str:
+    if report.next_practice_step:
+        return report.next_practice_step.removeprefix("Next practice step: ")
+    return _next_take_goal(weakest, strongest)
+
+
 def _next_take_goal(weakest: ComponentScore, strongest: ComponentScore) -> str:
     if weakest.name == strongest.name:
         return f"Record one new take focused on improving {_metric_label(weakest.name.value)}."
-    return f"Improve {_metric_label(weakest.name.value)} while preserving {_metric_label(strongest.name.value)}."
+    return (
+        f"Record one new take focused on improving {_metric_label(weakest.name.value)} "
+        f"while preserving {_metric_label(strongest.name.value)}."
+    )
+
+
+def _why_this_matters(weakest: ComponentScore, strongest: ComponentScore) -> str:
+    weakest_label = _metric_label(weakest.name.value)
+    strongest_label = _metric_label(strongest.name.value)
+    if weakest.name == strongest.name:
+        return f"{weakest_label} is the main area to stabilize before broadening the practice target."
+    return (
+        f"{weakest_label} is the lowest-scoring area right now. Work on it first while protecting "
+        f"{strongest_label}, so the next take improves without losing what is already stable."
+    )
 
 
 def _metric_label(raw_name: str) -> str:
