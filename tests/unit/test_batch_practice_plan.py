@@ -68,8 +68,19 @@ def test_batch_practice_plan_includes_before_next_take_near_top() -> None:
     assert "## Before next take" in text
     assert text.index("## Before next take") < text.index("## Keep take")
     assert "1. Loop `take_b.wav` Section 0 (0.00s - 8.00s)." in text
-    assert "2. Focus on the recurring weakness: Pitch Fidelity." in text
+    assert "2. Focus on this loop's target: Pitch Fidelity." in text
     assert "3. Record one clean complete attempt: Record one new take focused on improving Pitch Fidelity." in text
+
+
+def test_batch_practice_plan_uses_selected_loop_focus_when_it_differs_from_recurring_weakness() -> None:
+    summary = replace(_sample_session_summary(), recurring_weakness=MetricName.RHYTHM_FIDELITY)
+
+    text = batch_compare_result_to_practice_plan_markdown(_sample_result(summary))
+
+    assert "1. Loop `take_b.wav` Section 0 (0.00s - 8.00s)." in text
+    assert "2. Focus on this loop's target: Pitch Fidelity." in text
+    assert "2. Focus on the recurring weakness: Rhythm Fidelity." not in text
+    assert "- **Primary recurring weakness:** Rhythm Fidelity" in text
 
 
 def test_batch_practice_plan_before_next_take_without_loops_stays_useful() -> None:
