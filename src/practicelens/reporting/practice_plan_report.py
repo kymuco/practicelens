@@ -17,7 +17,7 @@ def report_to_practice_plan_markdown(report: AnalysisReport) -> str:
         "",
         "## Next take action",
         "",
-        f"Record next: {next_recording_target}",
+        next_recording_target,
         "",
         f"- **Fix first:** {_metric_label(weakest.name.value)} ({weakest.score:.1f}/100)",
         f"- **Keep:** {_metric_label(strongest.name.value)} ({strongest.score:.1f}/100)",
