@@ -6,6 +6,12 @@ from pathlib import Path
 from practicelens.evaluation_showcase import generate_evaluation_showcase
 
 
+def _normalize_path_separators(value: str) -> str:
+    """Normalize platform-native paths when tests assert path identity, not slash style."""
+
+    return value.replace("\\", "/")
+
+
 def test_generate_evaluation_showcase_writes_expected_outputs(tmp_path: Path) -> None:
     result = generate_evaluation_showcase(
         tmp_path / "showcase",
@@ -29,7 +35,7 @@ def test_generate_evaluation_showcase_writes_expected_outputs(tmp_path: Path) ->
     summary = json.loads(result.summary_path.read_text(encoding="utf-8"))
     assert summary["schema_version"] == 1
     assert summary["reference_case"] == "reference_phrase"
-    assert summary["batch_practice_plan_path"].endswith("batch/practice_plan.md")
+    assert _normalize_path_separators(summary["batch_practice_plan_path"]).endswith("batch/practice_plan.md")
     assert summary["batch_session_summary"]["schema_version"] == 1
     assert summary["batch_session_summary"]["compared_takes"] == 3
     assert summary["batch_session_summary"]["best_take"]
@@ -60,11 +66,11 @@ def test_generate_evaluation_showcase_writes_expected_outputs(tmp_path: Path) ->
 
     manifest = json.loads((result.batch_dir / "session_manifest.json").read_text(encoding="utf-8"))
     assert manifest["kind"] == "practice_session_manifest"
-    assert manifest["entrypoints"]["batch_json"].endswith("batch/batch_report.json")
-    assert manifest["entrypoints"]["practice_plan"].endswith("batch/practice_plan.md")
-    assert manifest["entrypoints"]["session_manifest"].endswith("batch/session_manifest.json")
+    assert _normalize_path_separators(manifest["entrypoints"]["batch_json"]).endswith("batch/batch_report.json")
+    assert _normalize_path_separators(manifest["entrypoints"]["practice_plan"]).endswith("batch/practice_plan.md")
+    assert _normalize_path_separators(manifest["entrypoints"]["session_manifest"]).endswith("batch/session_manifest.json")
 
-    generated_readme = result.readme_path.read_text(encoding="utf-8")
+    generated_readme = _normalize_path_separators(result.readme_path.read_text(encoding="utf-8"))
     assert "# Generated Evaluation Showcase" in generated_readme
     assert "pitch_drift_take" in generated_readme
     assert "batch/practice_plan.md" in generated_readme
