@@ -88,7 +88,7 @@ def _before_next_take_lines(report: AnalysisReport, weakest: ComponentScore, nex
             f"and focus on {_metric_label(loop.focus.value)}."
         )
     else:
-        lines.append("1. Run one clean full-take pass before relying on section-level loop work.")
+        lines.append("1. Run one clean full-take pass before section-level loop work.")
 
     lines.extend([
         f"2. Keep attention on {_metric_label(weakest.name.value)} before changing anything else.",
