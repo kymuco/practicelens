@@ -74,18 +74,19 @@ def _before_next_take_lines(summary: BatchSessionSummary) -> list[str]:
     lines = ["", "## Before next take", ""]
     if summary.practice_loops:
         loop = summary.practice_loops[0]
+        focus = loop.focus
         lines.append(
             f"1. Loop `{loop.take_path.name}` Section {loop.section_index} ({loop.start_s:.2f}s - {loop.end_s:.2f}s)."
         )
+        lines.append(f"2. Focus on this loop's target: {_metric_label(focus.value)}.")
     else:
+        focus = summary.recurring_weakness
         lines.append(
             f"1. Review the weakest take `{summary.weakest_take.take_path.name}` before choosing section-level loop work."
         )
+        lines.append(f"2. Focus on the recurring weakness: {_metric_label(focus.value)}.")
 
-    lines.extend([
-        f"2. Focus on the recurring weakness: {_metric_label(summary.recurring_weakness.value)}.",
-        f"3. Record one clean complete attempt: {summary.next_recording_target}",
-    ])
+    lines.append(f"3. Record one clean complete attempt: {summary.next_recording_target}")
     return lines
 
 
