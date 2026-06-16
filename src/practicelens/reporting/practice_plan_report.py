@@ -15,7 +15,7 @@ def report_to_practice_plan_markdown(report: AnalysisReport) -> str:
     lines: list[str] = [
         "# PracticeLens Practice Plan",
         "",
-        "## Next take action",
+        "## Goal for the next take",
         "",
         next_recording_target,
         "",
