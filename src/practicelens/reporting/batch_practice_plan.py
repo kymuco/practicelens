@@ -17,12 +17,15 @@ def batch_compare_result_to_practice_plan_markdown(result: BatchCompareResult) -
         "## Session goal",
         "",
         summary.next_recording_target,
+    ]
+    lines.extend(_before_next_take_lines(summary))
+    lines.extend([
         "",
         "## Keep take",
         "",
         f"- **Best take:** `{summary.best_take.take_path.name}`",
         f"- **Best score:** {summary.best_take.overall_score:.1f}/100",
-    ]
+    ])
     if result.best_entry.summary:
         lines.append(f"- **Why:** {result.best_entry.summary}")
 
@@ -65,6 +68,25 @@ def batch_compare_result_to_practice_plan_markdown(result: BatchCompareResult) -
         lines.append(f"| {entry.rank} | `{entry.take_path.name}` | {entry.overall_score:.1f} |")
 
     return "\n".join(lines).rstrip() + "\n"
+
+
+def _before_next_take_lines(summary: BatchSessionSummary) -> list[str]:
+    lines = ["", "## Before next take", ""]
+    if summary.practice_loops:
+        loop = summary.practice_loops[0]
+        lines.append(
+            f"1. Loop `{loop.take_path.name}` Section {loop.section_index} ({loop.start_s:.2f}s - {loop.end_s:.2f}s)."
+        )
+    else:
+        lines.append(
+            f"1. Review the weakest take `{summary.weakest_take.take_path.name}` before choosing section-level loop work."
+        )
+
+    lines.extend([
+        f"2. Focus on the recurring weakness: {_metric_label(summary.recurring_weakness.value)}.",
+        f"3. Record one clean complete attempt: {summary.next_recording_target}",
+    ])
+    return lines
 
 
 def _weakness_support_line(summary: BatchSessionSummary) -> str:
