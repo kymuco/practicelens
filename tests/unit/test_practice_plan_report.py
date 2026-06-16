@@ -42,10 +42,10 @@ def _sample_report() -> AnalysisReport:
     )
 
 
-def test_practice_plan_starts_with_next_take_action() -> None:
+def test_practice_plan_starts_with_goal_heading_and_action_guidance() -> None:
     text = report_to_practice_plan_markdown(_sample_report())
 
-    assert text.startswith("# PracticeLens Practice Plan\n\n## Next take action")
+    assert text.startswith("# PracticeLens Practice Plan\n\n## Goal for the next take")
     assert "Record one new take focused on improving Timing Consistency while preserving Pitch Fidelity." in text
     assert "- **Fix first:** Timing Consistency (75.0/100)" in text
     assert "- **Keep:** Pitch Fidelity (90.0/100)" in text
