@@ -26,6 +26,7 @@ def report_to_practice_plan_markdown(report: AnalysisReport) -> str:
         f"- **Confidence:** {report.analysis_confidence.level.title()}",
     ]
 
+    lines.extend(_before_next_take_lines(report, weakest, next_recording_target))
     lines.extend(report_confidence_warning_lines(report))
 
     if report.summary:
@@ -76,6 +77,24 @@ def report_to_practice_plan_markdown(report: AnalysisReport) -> str:
             lines.append(f"- {limitation}")
 
     return "\n".join(lines).rstrip() + "\n"
+
+
+def _before_next_take_lines(report: AnalysisReport, weakest: ComponentScore, next_recording_target: str) -> list[str]:
+    lines = ["", "## Before next take", ""]
+    if report.practice_loops:
+        loop = report.practice_loops[0]
+        lines.append(
+            f"1. Loop Section {loop.section_index} ({loop.start_s:.2f}s - {loop.end_s:.2f}s) "
+            f"and focus on {_metric_label(loop.focus.value)}."
+        )
+    else:
+        lines.append("1. Run one clean full-take pass before section-level loop work.")
+
+    lines.extend([
+        f"2. Keep attention on {_metric_label(weakest.name.value)} before changing anything else.",
+        f"3. Record one clean complete attempt: {next_recording_target}",
+    ])
+    return lines
 
 
 def _next_recording_target(report: AnalysisReport, weakest: ComponentScore, strongest: ComponentScore) -> str:
