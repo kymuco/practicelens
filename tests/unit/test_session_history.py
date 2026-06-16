@@ -25,6 +25,20 @@ from practicelens.domain.enums import AnalysisMode, MetricName
 from practicelens.domain.models import AnalysisInput, AnalysisOverview, AnalysisReport, ComponentScore, FeatureFlags
 
 
+def _normalize_path_separators(value: object) -> object:
+    """Normalize platform-native paths when tests assert path identity, not slash style."""
+
+    if isinstance(value, str):
+        return value.replace("\\", "/")
+    if isinstance(value, dict):
+        return {key: _normalize_path_separators(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_normalize_path_separators(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(_normalize_path_separators(item) for item in value)
+    return value
+
+
 def _sample_report(path: str, score: float) -> AnalysisReport:
     return AnalysisReport(
         overview=AnalysisOverview(mode=AnalysisMode.REFERENCE),
@@ -87,7 +101,7 @@ def test_build_session_history_entry_has_stable_shape() -> None:
         created_at=datetime(2026, 5, 16, 10, 0, tzinfo=UTC),
     )
 
-    assert entry == {
+    assert _normalize_path_separators(entry) == {
         "schema_version": 1,
         "kind": "practice_session_index_entry",
         "created_at": "2026-05-16T10:00:00+00:00",
@@ -193,7 +207,7 @@ def test_read_session_manifest_validates_kind(tmp_path: Path) -> None:
 def test_format_session_show_outputs_human_summary() -> None:
     text = format_session_show(_sample_manifest(), manifest_path=Path("out/session/session_manifest.json"))
 
-    assert text == (
+    assert _normalize_path_separators(text) == (
         "Session manifest: out/session/session_manifest.json\n"
         "Best take: samples/take_a.wav (91.0/100)\n"
         "Weakest take: samples/take_b.wav (77.0/100)\n"
