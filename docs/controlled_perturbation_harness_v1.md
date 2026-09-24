@@ -76,10 +76,10 @@ Role: target.
 Strengths:
 
 ```text
-0, 20, 40, 80 ms maximum local shift
+0, 20, 40, 80 ms internal boundary shift
 ```
 
-The warp is confined to a fixed middle window. A sine-shaped source-position displacement returns to zero at both window boundaries, preserving total file duration and frame count.
+One internal note boundary is shifted later by the intervention strength. The preceding event is lengthened and the following event is shortened by the same amount, so total duration and the configured note frequencies remain unchanged. This avoids the pitch modulation that time-domain resampling would introduce.
 
 Scientific question for R0.4:
 
