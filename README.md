@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
 
-**PracticeLens** is a local-first audio practice review tool for singing and instrument takes.
+**PracticeLens** is a local-first music-practice observation and measurement system with an existing practice-review workflow for singing and instrument takes.
 
 It helps you turn raw practice recordings into a concrete loop:
 
