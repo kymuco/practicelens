@@ -294,7 +294,10 @@ def synthetic_equivalence_floor_payload(
         "tested_equivalence_floor_source": floor_source,
         "limitations": [
             "This is a deterministic synthetic equivalence floor, not a human repeatability estimate.",
-            "The tested transformations preserve intended performance semantics but do not cover room, microphone, performer, or day-to-day variation.",
+            (
+                "The tested transformations preserve intended performance semantics but do not "
+                "cover room, microphone, performer, or day-to-day variation."
+            ),
             "R0.5b remains necessary before longitudinal human-development thresholds are admitted.",
         ],
     }
