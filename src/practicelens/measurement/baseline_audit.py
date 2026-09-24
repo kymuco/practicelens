@@ -430,7 +430,7 @@ def _directional_sensitivity_verdict(values: list[float]) -> AuditVerdict:
 def _nonincreasing_monotonicity_verdict(values: list[float]) -> AuditVerdict:
     has_decrease = False
     has_increase = False
-    for left, right in zip(values, values[1:], strict=True):
+    for left, right in zip(values, values[1:]):
         delta = right - left
         if delta < -STRICT_DELTA_EPSILON:
             has_decrease = True
