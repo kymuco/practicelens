@@ -16,12 +16,13 @@ PracticeLens is still **pre-alpha**, but it already has a real end-to-end workfl
 
 ## Project direction
 
-PracticeLens is a private practice-review tool for musicians who can already attempt a phrase, riff, or take and want objective feedback before asking other people.
+PracticeLens remains useful as a private practice-review tool, but its active research direction is now stricter: validate what the current instrument actually measures before expanding the feature set. Existing score dimensions are treated as candidate measurements until controlled sensitivity, specificity, nuisance robustness, and repeatability evidence justify stronger claims.
 
-It is currently strongest for short clean monophonic or near-monophonic reference-based review. Polyphony, chords, heavy effects, beginner tutoring, and full transcription are future directions, not current promises.
+The long-term goal is to make PracticeLens a laboratory-grade music-domain sensor for human skill development. "Laboratory-grade" is a target, not a claim about the current implementation. It is currently strongest for short clean monophonic or near-monophonic reference-based review.
 
 Important docs:
 
+- [Measurement Rebaseline v1](docs/measurement_rebaseline_v1.md)
 - [Product positioning](docs/product_positioning.md)
 - [Roadmap](docs/roadmap.md)
 - [Maintainer AI usage](docs/maintainer_ai_usage.md)
@@ -374,6 +375,7 @@ Current expectations:
 - monophonic or near-monophonic material first;
 - deterministic baseline first;
 - explainable component scoring;
+- current score dimensions treated as candidate measurements under the R0 validation track;
 - input suitability and confidence warnings;
 - single-take, batch, and practice-session review.
 
