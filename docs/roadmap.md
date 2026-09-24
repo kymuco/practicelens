@@ -56,7 +56,7 @@ M2 — Practice Review UX v2 was partially completed through PR2.1 and PR2.2 bef
 
 ### R0.1 — Measurement Rebaseline v1
 
-Status: active / documentation baseline.
+Status: complete.
 
 Goal:
 
@@ -69,6 +69,8 @@ Goal:
 No scoring or runtime behavior changes.
 
 ### R0.2 — Measurement Contract v1
+
+Status: complete.
 
 Goal: make experiments reproducible and machine-readable.
 
@@ -84,23 +86,22 @@ No scoring changes.
 
 ### R0.3 — Controlled Perturbation Harness v1
 
+Status: complete.
+
 Goal: turn the current synthetic showcase foundation into a controlled measurement harness.
 
-Initial intervention families:
+Delivered intervention families:
 
-- amplitude/gain nuisance;
-- leading/trailing silence nuisance;
-- small deterministic noise nuisance;
-- pitch offset and pitch drift;
-- onset shift;
-- local timing warp;
-- global tempo change;
-- missing/attenuated event;
-- articulation/envelope change.
+- `amplitude_gain` nuisance;
+- `deterministic_additive_noise` nuisance;
+- `pitch_drift` target;
+- `local_timing_warp` target.
 
-Each family should contain a zero-change control and ordered strengths.
+Each family contains a family-local zero control and ordered strengths. Additional intervention families remain evidence-driven extensions rather than assumed roadmap work.
 
 ### R0.4 — Baseline Measurement Validity Audit v1
+
+Status: complete / baseline recorded.
 
 Goal: evaluate the unchanged baseline.
 
@@ -124,7 +125,23 @@ UNRESOLVED
 
 Do not repair metrics during the audit.
 
+Recorded strict-screening result:
+
+```text
+amplitude_gain                PASS
+deterministic_additive_noise  FAIL
+local_timing_warp             PARTIAL
+pitch_drift                   PARTIAL
+```
+
+See:
+
+- `docs/measurement_validity_baseline_v1.json`;
+- `docs/baseline_measurement_validity_results_v1.md`.
+
 ### R0.5 — Repeatability and Noise Floor v1
+
+Status: active next milestone.
 
 Goal: determine how much variation exists without an intended underlying skill change.
 
@@ -203,10 +220,10 @@ The first export boundary should eventually prefer compact evidence, uncertainty
 
 ## Immediate next step
 
-After R0.1 merges, the next executable task is:
+The next executable task is:
 
 ```text
-R0.2 — Measurement Contract v1
+R0.5 — Repeatability and Noise Floor v1
 ```
 
-The goal is not to improve any score. It is to make the coming controlled experiments reproducible enough that a failing measurement can fail cleanly.
+R0.4 established that the current instrument contains both strong signal and measurable cross-talk. R0.5 must now establish the practical baseline variation of equivalent/unchanged conditions before small nonzero deltas are treated as meaningful development evidence or used to justify a new representation.
