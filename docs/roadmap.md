@@ -141,11 +141,60 @@ See:
 
 ### R0.5 — Repeatability and Noise Floor v1
 
-Status: active next milestone.
+Status: active.
 
 Goal: determine how much variation exists without an intended underlying skill change.
 
 This is required before longitudinal score differences can be interpreted as development evidence.
+
+#### R0.5a — Synthetic Equivalence Floor v1
+
+Status: complete / baseline recorded.
+
+Results:
+
+```text
+exact rerun floor:
+pitch_fidelity       0.000000
+rhythm_fidelity      0.000000
+timing_consistency   0.000000
+section_stability    0.000000
+
+tested equivalence envelope:
+pitch_fidelity       2.016078
+rhythm_fidelity      1.419644
+timing_consistency   7.009045
+section_stability    3.837666
+```
+
+The envelope is dominated by leading recording silence. A 16 ms or 64 ms leading pad produces the same downstream deltas, including a 7.01-point timing shift.
+
+This is a systematic recording-window equivalence defect, not stochastic repeatability noise.
+
+See:
+
+- `docs/synthetic_equivalence_baseline_v1.json`;
+- `docs/synthetic_equivalence_results_v1.md`.
+
+#### R0.5a follow-up — Recording-Start Equivalence Repair v1
+
+Status: active next step.
+
+Goal:
+
+- repair the demonstrated leading-recording-silence sensitivity at the preprocessing/frame-origin boundary;
+- re-run the frozen R0.5a equivalence experiment;
+- require the repair to improve equivalence behavior without tuning against R0.4 target interventions.
+
+Do not change score semantics in this repair.
+
+#### R0.5b — Local Session Repeatability v1
+
+Status: blocked on the R0.5a follow-up.
+
+Goal: estimate within-session variation from repeated real takes collected with no intended skill-development interval.
+
+Private audio remains local; only compact measurement evidence should be exportable.
 
 ### R0.6 — Representation Admission Decision v1
 
@@ -223,7 +272,9 @@ The first export boundary should eventually prefer compact evidence, uncertainty
 The next executable task is:
 
 ```text
-R0.5 — Repeatability and Noise Floor v1
+R0.5a follow-up — Recording-Start Equivalence Repair v1
 ```
 
-R0.4 established that the current instrument contains both strong signal and measurable cross-talk. R0.5 must now establish the practical baseline variation of equivalent/unchanged conditions before small nonzero deltas are treated as meaningful development evidence or used to justify a new representation.
+R0.5a established exact deterministic repeatability but exposed a larger upstream nuisance: equivalent leading recording silence can move `timing_consistency` by 7.01 points, more than the 4.35-point maximum response to the R0.4 local timing target.
+
+Repair and re-audit this boundary before collecting the R0.5b human/session repeatability baseline.
