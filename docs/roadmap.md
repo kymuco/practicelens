@@ -1,34 +1,29 @@
 # PracticeLens Roadmap
 
-This roadmap describes the public product and engineering direction for PracticeLens.
+This roadmap was rebaselined on 2026-09-24.
 
-It separates current capabilities, near-term execution, and long-term north-star work. It is a direction of travel, not a promise that every future capability will ship in this exact order.
+The previous product-first M2-M15 sequence is no longer treated as a linear execution plan. PracticeLens now follows a research-first rule: new capability is added only when the current measurement layer exposes a concrete, experimentally demonstrated limitation.
+
+See [Measurement Rebaseline v1](measurement_rebaseline_v1.md).
 
 ## North star
 
-PracticeLens should grow from a private practice-review tool into a local-first music practice intelligence platform.
+PracticeLens should become a local-first, laboratory-grade domain sensor for musical skill development.
 
-The core loop is:
+"Laboratory-grade" is a target, not a claim about the current implementation.
+
+The desired long-term chain is:
 
 ```text
-record several takes -> compare against a reference -> find the strongest take -> understand the recurring weakness -> practice the next target -> compare progress later
+practice activity
+  -> bounded music-domain observations
+  -> validated measurements
+  -> uncertainty + provenance
+  -> longitudinal evidence
+  -> optional external development systems
 ```
 
-PracticeLens should stay private by default, useful on real practice recordings, honest about confidence and limitations, and extensible toward instrument-aware, polyphonic, effect-aware, and ML/DL-assisted review.
-
-## Product position
-
-Current position:
-
-> PracticeLens is a private practice-review tool for musicians who can already attempt a phrase, riff, or take and want objective feedback before asking other people.
-
-It is currently strongest for short clean monophonic or near-monophonic reference-based review. Polyphony, chords, heavy effects, beginner tutoring, and full transcription are future directions, not current promises.
-
-See also:
-
-- `docs/product_positioning.md`
-- `docs/known_limitations.md`
-- `docs/real_audio_usage.md`
+The project should remain useful as a private practice-review tool while becoming substantially stricter about what its scores are allowed to mean.
 
 ## Current baseline
 
@@ -36,296 +31,182 @@ Already in place:
 
 - offline single-take analysis;
 - multi-take batch comparison;
+- deterministic feature extraction;
+- reference-aware DTW alignment;
+- pitch, rhythm, timing, and section-stability score dimensions;
 - JSON / Markdown / CSV / SVG outputs;
 - practice-session workflow;
-- `session_manifest.json`;
-- JSONL session history index;
-- `sessions list` / `sessions show` / `sessions compare` CLI surfaces;
+- session manifests and opt-in local history;
+- `sessions list/show/compare`;
+- deterministic synthetic evaluation assets;
 - generated evaluation showcase;
-- real-audio usage documentation;
-- input suitability summary;
-- duration mismatch diagnostics;
-- start/leading-noise diagnostics;
-- low-confidence Markdown warnings;
-- real-audio smoke workflow documentation;
-- manual real-audio trust checklist;
-- optional API workflows for `/health`, `/analyze`, `/compare-batch`, and `/practice-session`;
-- typed API payload contracts;
+- input suitability and confidence warnings;
+- real-audio usage and trust documentation;
+- optional FastAPI surface;
 - CI and contributor-facing repo hygiene.
 
-## Current execution focus
+Completed historical milestones:
 
-The current active milestone is:
+- M0 — Current Foundation;
+- M1 — Real Audio Readiness.
+
+M2 — Practice Review UX v2 was partially completed through PR2.1 and PR2.2 before the research rebaseline. Remaining M2 issues are paused rather than assumed to be the next priority.
+
+## Active research track — R0 Measurement Foundations
+
+### R0.1 — Measurement Rebaseline v1
+
+Status: active / documentation baseline.
+
+Goal:
+
+- define the scientific mission;
+- separate observation, derivation, measurement, and inference;
+- classify existing scores as candidate measurements;
+- define nuisance variables and target interventions;
+- establish the rule that future architecture must be justified by measurement evidence.
+
+No scoring or runtime behavior changes.
+
+### R0.2 — Measurement Contract v1
+
+Goal: make experiments reproducible and machine-readable.
+
+Candidate work:
+
+- controlled experiment metadata;
+- provenance schema;
+- explicit intervention identity and strength;
+- explicit candidate-measurement outputs;
+- stable audit artifact format.
+
+No scoring changes.
+
+### R0.3 — Controlled Perturbation Harness v1
+
+Goal: turn the current synthetic showcase foundation into a controlled measurement harness.
+
+Initial intervention families:
+
+- amplitude/gain nuisance;
+- leading/trailing silence nuisance;
+- small deterministic noise nuisance;
+- pitch offset and pitch drift;
+- onset shift;
+- local timing warp;
+- global tempo change;
+- missing/attenuated event;
+- articulation/envelope change.
+
+Each family should contain a zero-change control and ordered strengths.
+
+### R0.4 — Baseline Measurement Validity Audit v1
+
+Goal: evaluate the unchanged baseline.
+
+For each candidate measurement, test:
+
+- sensitivity;
+- monotonic response;
+- specificity;
+- cross-talk;
+- nuisance invariance;
+- explicit failure boundaries.
+
+Expected verdict vocabulary:
 
 ```text
-M2 — Practice Review UX v2
+PASS
+PARTIAL
+FAIL
+UNRESOLVED
 ```
 
-The goal is to answer the next product question:
+Do not repair metrics during the audit.
 
-> After a real practice session, does the user clearly understand what to keep, what to fix, and what to record next?
+### R0.5 — Repeatability and Noise Floor v1
 
-M2 should improve musician-facing review clarity without changing core scoring, alignment, or preprocessing behavior.
+Goal: determine how much variation exists without an intended underlying skill change.
 
-## Completed milestones
+This is required before longitudinal score differences can be interpreted as development evidence.
 
-### M0 — Current Foundation
+### R0.6 — Representation Admission Decision v1
 
-Goal: establish a working local-first practice-review baseline.
+Goal: decide whether the existing frame-level representation is sufficient.
 
-Status: complete.
-
-Delivered capabilities:
-
-- single-take analysis;
-- batch comparison;
-- practice-session workflow;
-- session manifests;
-- opt-in local history index;
-- `sessions list/show/compare`;
-- generated showcase;
-- optional API surface;
-- artifact documentation and tests.
-
-### M1 — Real Audio Readiness
-
-Goal: make PracticeLens honest and safer to try on real musician recordings, not only synthetic demo data.
-
-Status: complete.
-
-Delivered capabilities:
-
-- real-audio usage guide;
-- input suitability summary;
-- duration mismatch diagnostic;
-- leading silence / start offset diagnostic;
-- low-confidence warnings in Markdown;
-- real-audio smoke workflow docs;
-- real-audio manual checklist.
-
-## Near-term milestones
-
-### M2 — Practice Review UX v2
-
-Goal: make feedback more useful as practice guidance, not just report text.
-
-Expected work:
-
-- rewrite `practice_plan.md` around action;
-- add `Before next take` section;
-- explain why a recurring weakness matters;
-- add per-take `Keep / Fix / Retry` summaries;
-- clarify that the best take is only best among submitted takes;
-- add Markdown snapshot tests for UX sections.
-
-### M3 — Progress Tracking v2
-
-Goal: make repeated sessions useful over time.
-
-Possible future work:
-
-- add a progress summary model;
-- improve `sessions compare` output;
-- add progress Markdown rendering;
-- add `sessions compare --out`;
-- add a simple `sessions trend` command;
-- add progress contract tests.
-
-### M4 — Instrument Profiles v1
-
-Goal: stop treating every source as the same instrument.
-
-Possible future work:
-
-- add `instrument_profile` config;
-- support `guitar_clean`, `vocal`, `bass`, `keyboard`, and `generic` profiles;
-- add profile-specific feedback wording;
-- add profile-specific suitability warnings;
-- document supported profiles;
-- test profile selection through CLI/API/reports.
-
-## Capability milestones
-
-### M5 — Music Event Layer v1
-
-Goal: move from frame-only analysis toward musical events.
-
-Possible future work:
-
-- add `MusicEvent` model;
-- extract event-like attacks/rests/sustains from existing DSP features;
-- write `events.json` artifact;
-- summarize events in Markdown;
-- prototype event alignment;
-- use events for missing-first-note diagnostics.
-
-### M6 — Pluggable Analysis Backends
-
-Goal: prepare the architecture for ML/DL without replacing the deterministic baseline.
-
-Possible future work:
-
-- define `FeatureExtractor` interface;
-- define `AlignmentEngine` interface;
-- define `ScoringEngine` interface;
-- add backend registry/config;
-- add backend metadata to reports;
-- prove default output remains unchanged.
-
-### M7 — ML-Assisted Monophonic Review
-
-Goal: improve single-line pitch/onset/timing review through optional local ML backends.
-
-Possible future work:
-
-- add optional ML backend contract;
-- add `practicelens doctor --ml`;
-- add explicit unavailable-backend behavior;
-- document local-first ML backend policy;
-- add one real optional pitch backend;
-- add DSP-vs-ML comparison artifacts.
-
-### M8 — Chords / Polyphony v1
-
-Goal: support first-pass harmonic/chord review without pretending to solve full transcription.
-
-Possible future work:
-
-- add `analysis_mode = monophonic | polyphonic_v1`;
-- add chroma/pitch-class features;
-- add `harmonic_match` metric;
-- add chord-friendly report wording;
-- add synthetic chord fixtures;
-- add polyphonic batch tests;
-- document what `polyphonic_v1` can and cannot judge.
-
-### M9 — Note / Chord Event Representation v2
-
-Goal: create a stronger event timeline for future transcription-aware review.
-
-Possible future work:
-
-- add `NoteEvent` model;
-- add `ChordEvent` model;
-- write `music_timeline.json`;
-- add timeline Markdown summary;
-- add timeline alignment;
-- test event-level comparison on generated fixtures.
-
-### M10 — Effect-Aware Recording Profiles
-
-Goal: handle guitar recording realities such as distortion, delay, reverb, and compression with explicit caveats.
-
-Possible future work:
-
-- add `recording_profile` config;
-- add effect suitability warnings;
-- add noise/spectral diagnostics;
-- document recording profiles;
-- add `Recording caveats` report section;
-- test warnings with generated noisy/effected fixtures.
-
-## Product and ecosystem milestones
-
-### M11 — Product Surface v1
-
-Goal: make PracticeLens easier to use as a local product, not only as a library/CLI.
-
-Possible future work:
-
-- add `practicelens init`;
-- load local project config;
-- add simpler CLI aliases if they do not break existing commands;
-- add local HTML report export;
-- add `practicelens open` helper;
-- add install/quickstart docs.
-
-### M12 — HDE Skill Signal Export
-
-Goal: let PracticeLens act as a focused music-practice signal source for a broader local-first personal development environment.
-
-Possible future work:
-
-- define an HDE skill signal contract;
-- write `hde_skill_signal.json`;
-- add `--export-skill-signal`;
-- add skill signal pointers to `session_manifest.json`;
-- document PracticeLens' role as a focused music-practice module;
-- add contract tests.
-
-This should remain a high-level export boundary. PracticeLens should own music-practice analysis; external systems should consume summarized practice signals, not raw private audio by default.
-
-### M13 — Tutor Mode v0
-
-Goal: cautiously support less confident users without pretending to be a full teacher.
-
-Possible future work:
-
-- document tutor mode boundaries;
-- add practice breakdown renderer;
-- add beginner-friendly feedback wording;
-- add slow-practice recommendations;
-- test tutor-mode Markdown.
-
-### M14 — Advanced ML/DL Practice Intelligence
-
-Goal: establish the evaluation and backend contracts needed before larger learned review models.
-
-Possible future work:
-
-- document dataset/evaluation protocol;
-- define local evaluation dataset format;
-- add evaluator runner;
-- add model backend benchmark contract;
-- add learned reviewer interface;
-- document local-first model policy.
-
-### M15 — Full Music Practice Platform
-
-Goal: long-term product direction.
-
-Possible future capabilities:
-
-- multi-instrument sessions;
-- backing-track-aware mode;
-- arrangement-aware comparison;
-- personal progress model;
-- HDE companion handoff;
-- packaged desktop/local app.
-
-## Execution rule
-
-Do not create issues for the whole north-star roadmap at once.
-
-Use GitHub issues for the next executable milestone only, plus maybe one planning issue for the next milestone. Keep future milestones in this document until their prerequisites are real.
-
-Current recommended GitHub issue focus:
+Possible next representation:
 
 ```text
-M2 — Practice Review UX v2
+Event
+Attack
+Sustain
+Transition
+Rest
 ```
 
-## Explicitly not immediate
+An event/perceptual primitive layer is added only if it wins against a falsifiable hypothesis derived from R0.4/R0.5 failures.
 
-The project should not immediately prioritize:
+## After R0
 
-- cloud-first infrastructure;
-- social features;
-- beginner tutor mode;
-- full transcription;
-- polyphonic-first redesign;
-- large model dependency by default;
-- deep HDE integration before product-level music practice usefulness is stronger.
+The next track is intentionally not frozen yet.
 
-## Practical north star
+Candidate directions include:
 
-PracticeLens should become:
+- real-musician repeatability validation;
+- longitudinal development evidence;
+- controlled tempo-condition experiments;
+- event/perceptual primitive representation;
+- instrument-specific measurement boundaries;
+- small learned components for demonstrated observability gaps;
+- high-level evidence export to HDE or another development system.
 
-- private by default;
-- local-first;
-- useful on real practice recordings;
-- honest about confidence and limitations;
-- clear about what to practice next;
-- useful for tracking repeated sessions;
-- extensible toward instrument-aware, polyphonic, effect-aware, and ML/DL-assisted review;
-- eventually able to emit meaningful high-level music-practice signals for broader personal-development systems.
+The R0 evidence determines their order.
+
+## Paused legacy directions
+
+The following ideas remain possible, but they are not active milestones merely because they appeared in the old roadmap:
+
+- remaining Practice Review UX v2 work;
+- Progress Tracking v2 product surfaces;
+- instrument profiles;
+- generic pluggable analysis backends;
+- ML-assisted monophonic review;
+- chords/polyphony;
+- note/chord transcription representations;
+- effect-aware profiles;
+- larger standalone product surfaces;
+- tutor mode;
+- advanced learned reviewers;
+- full music-practice platform expansion.
+
+Any of these may return if a validated measurement need justifies them.
+
+## Relationship to HDE
+
+PracticeLens owns music-domain observation and measurement.
+
+A broader development environment may consume summarized evidence later, but HDE integration is not a prerequisite for validating PracticeLens and should not distort the measurement model.
+
+The first export boundary should eventually prefer compact evidence, uncertainty, conditions, and provenance over raw private audio.
+
+## Execution rules
+
+1. Do not add a new capability only because it is plausible or attractive.
+2. Every research PR should state the hypothesis or measurement boundary it addresses.
+3. Prefer experiments that eliminate architecture families over experiments that merely add options.
+4. Freeze the instrument before a baseline audit; do not tune against the same audit used to claim validity.
+5. Treat synthetic validation as controlled evidence, not proof of real-world ecological validity.
+6. Record failures explicitly.
+7. Introduce ML only after a concrete deterministic measurement deficiency is demonstrated.
+8. Keep raw user recordings local by default.
+9. Keep domain observation separate from general personal-development interpretation.
+
+## Immediate next step
+
+After R0.1 merges, the next executable task is:
+
+```text
+R0.2 — Measurement Contract v1
+```
+
+The goal is not to improve any score. It is to make the coming controlled experiments reproducible enough that a failing measurement can fail cleanly.
