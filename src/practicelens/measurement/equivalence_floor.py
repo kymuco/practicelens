@@ -9,7 +9,6 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from practicelens.application import AnalyzeRequest, OfflineReferenceAnalysisPipeline
-from practicelens.domain.enums import MetricName
 from practicelens.domain.models import AnalysisConfig
 from practicelens.io import load_wav_audio
 from practicelens.measurement.baseline_audit import AUDITED_MEASUREMENTS
@@ -72,6 +71,15 @@ def generate_equivalent_recording_cases(
             cases_dir / "exact_byte_copy.wav",
             case_id="exact_byte_copy",
             family="exact_copy",
+        )
+    )
+    cases.append(
+        _write_case(
+            samples,
+            cases_dir / "pcm_roundtrip.wav",
+            sample_rate=sample_rate,
+            case_id="pcm_roundtrip",
+            family="pcm_roundtrip",
         )
     )
     cases.append(
@@ -367,7 +375,7 @@ def _write_case(
 
 def _write_wav(path: Path, samples: list[float], *, sample_rate: int) -> None:
     ints = [
-        max(-32767, min(32767, int(_clamp(sample) * 32767)))
+        max(-32768, min(32767, int(round(_clamp(sample) * 32768))))
         for sample in samples
     ]
     frames = bytearray()
