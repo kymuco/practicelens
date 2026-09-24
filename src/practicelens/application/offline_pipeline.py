@@ -10,7 +10,11 @@ from practicelens.domain.models import AnalysisConfidence, AnalysisConfig, Analy
 from practicelens.features import FeatureBundle, extract_feature_bundle
 from practicelens.io import ensure_finite_audio, load_wav_audio
 from practicelens.io.models import LoadedAudio
-from practicelens.preprocessing import peak_normalize, resample_linear, trim_silence
+from practicelens.preprocessing import (
+    peak_normalize,
+    resample_linear,
+    trim_silence_fixed_padding,
+)
 from practicelens.reporting.artifacts import write_report_artifacts
 from practicelens.scoring import score_aligned_features
 from practicelens.scoring.models import ScoringBundle
@@ -76,7 +80,11 @@ class OfflineReferenceAnalysisPipeline(AnalysisPipeline):
         if audio.sample_rate != target_rate:
             samples = resample_linear(samples, audio.sample_rate, target_rate)
         samples = peak_normalize(samples)
-        trimmed = trim_silence(samples, threshold=0.01, pad_samples=max(1, config.hop_length // 4))
+        trimmed = trim_silence_fixed_padding(
+            samples,
+            threshold=0.01,
+            pad_samples=max(1, config.hop_length // 4),
+        )
         if trimmed:
             samples = trimmed
         return LoadedAudio(
