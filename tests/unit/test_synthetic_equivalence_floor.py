@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from practicelens.domain.models import AnalysisConfig
 from practicelens.measurement.baseline_audit import AUDITED_MEASUREMENTS
 from practicelens.measurement.equivalence_floor import (
     EquivalentRecordingCase,
@@ -16,9 +17,10 @@ def test_equivalence_generator_covers_only_semantics_preserving_families(
     reference_path, cases = generate_equivalent_recording_cases(tmp_path / "eq")
 
     assert reference_path.is_file()
-    assert len(cases) == 9
+    assert len(cases) == 11
     assert {case.family for case in cases} == {
         "exact_copy",
+        "pcm_roundtrip",
         "polarity",
         "gain",
         "dc_offset",
@@ -90,10 +92,7 @@ def test_floor_payload_uses_max_absolute_equivalence_delta() -> None:
         case_values=case_values,
         case_deltas=case_deltas,
         code_revision="test",
-        config=__import__(
-            "practicelens.domain.models",
-            fromlist=["AnalysisConfig"],
-        ).AnalysisConfig(),
+        config=AnalysisConfig(),
     )
 
     assert payload["exact_repeat_floor"]["pitch_fidelity"] == 0.1
