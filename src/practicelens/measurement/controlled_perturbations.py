@@ -199,7 +199,7 @@ def _generate_noise_family(
         cases.append(
             _write_case(
                 cases_dir=cases_dir,
-                family="broadband_noise",
+                family="deterministic_additive_noise",
                 strength=amount,
                 unit="full_scale_fraction",
                 role=role,
