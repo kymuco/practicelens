@@ -26,7 +26,7 @@ def test_controlled_harness_generates_four_ordered_families(tmp_path: Path) -> N
 
     assert set(by_family) == {
         "amplitude_gain",
-        "broadband_noise",
+        "deterministic_additive_noise",
         "pitch_drift",
         "local_timing_warp",
     }
