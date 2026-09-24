@@ -1,6 +1,6 @@
 # R0.5a — Synthetic Equivalence Floor v1
 
-Status: active experiment
+Status: complete / baseline recorded
 
 ## Why R0.5 is split
 
@@ -124,6 +124,33 @@ A prior R0.4 cross-delta smaller than the tested equivalence floor cannot yet be
 A prior delta larger than the floor is evidence that the effect exceeds this synthetic equivalence envelope.
 
 Neither statement establishes human longitudinal significance.
+
+## Recorded baseline
+
+Canonical evidence:
+
+- `docs/synthetic_equivalence_baseline_v1.json`;
+- `docs/synthetic_equivalence_results_v1.md`.
+
+Recorded exact-repeat floor:
+
+```text
+pitch_fidelity       0.000000
+rhythm_fidelity      0.000000
+timing_consistency   0.000000
+section_stability    0.000000
+```
+
+Recorded tested equivalence envelope:
+
+```text
+pitch_fidelity       2.016078
+rhythm_fidelity      1.419644
+timing_consistency   7.009045
+section_stability    3.837666
+```
+
+All maxima are caused by leading recording silence. This is interpreted as systematic recording-window sensitivity, not irreducible random noise.
 
 ## R0.5b boundary
 
