@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from practicelens.domain.models import AnalysisConfig
 from practicelens.measurement.baseline_audit import AUDITED_MEASUREMENTS
 from practicelens.measurement.equivalence_floor import (
@@ -95,7 +97,7 @@ def test_floor_payload_uses_max_absolute_equivalence_delta() -> None:
         config=AnalysisConfig(),
     )
 
-    assert payload["exact_repeat_floor"]["pitch_fidelity"] == 0.1
+    assert payload["exact_repeat_floor"]["pitch_fidelity"] == pytest.approx(0.1)
     assert payload["tested_equivalence_floor"] == {
         "pitch_fidelity": 0.5,
         "rhythm_fidelity": 0.3,
