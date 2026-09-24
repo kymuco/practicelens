@@ -33,5 +33,11 @@ jobs:
       - name: Run tests
         run: pytest tests --durations=15
 
+      - name: R0.4 measurement audit probe
+        if: github.event_name == 'pull_request' && github.head_ref == 'r0-4-baseline-measurement-validity-audit-v1'
+        env:
+          PRACTICELENS_INSTRUMENT_REVISION: 1cb1a6d92ada295b989cf41c26c32a434f82a510
+        run: python tools/run_measurement_validity_audit.py
+
       - name: Build package
         run: python -m build
