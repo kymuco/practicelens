@@ -37,7 +37,7 @@ Scientific question for R0.4:
 
 > Do candidate pitch/rhythm/timing/stability measurements remain sufficiently invariant when only overall signal gain changes?
 
-### broadband_noise
+### deterministic_additive_noise
 
 Role: nuisance.
 
@@ -47,7 +47,7 @@ Strengths:
 0.00, 0.01, 0.03, 0.06 full-scale fraction
 ```
 
-Noise is deterministic rather than random so identical harness generation produces identical bytes.
+The additive disturbance is deterministic rather than random so identical harness generation produces identical bytes. R0.3 does not claim a particular spectral distribution for this disturbance.
 
 Scientific question for R0.4:
 
@@ -101,7 +101,7 @@ The harness writes:
 reference.wav
 cases/
   amplitude_gain/
-  broadband_noise/
+  deterministic_additive_noise/
   pitch_drift/
   local_timing_warp/
 manifest.json
