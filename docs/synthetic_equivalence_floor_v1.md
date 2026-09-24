@@ -45,6 +45,12 @@ Same WAV bytes at a different path.
 
 Tests path/cache independence.
 
+### PCM roundtrip
+
+Decode the canonical int16 WAV to normalized samples and encode it back to int16 without changing sample values.
+
+This isolates audio-I/O representation stability from the transformations below.
+
 ### polarity inversion
 
 ```text
