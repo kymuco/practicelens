@@ -98,12 +98,14 @@ def test_floor_payload_uses_max_absolute_equivalence_delta() -> None:
     )
 
     assert payload["exact_repeat_floor"]["pitch_fidelity"] == pytest.approx(0.1)
-    assert payload["tested_equivalence_floor"] == {
-        "pitch_fidelity": 0.5,
-        "rhythm_fidelity": 0.3,
-        "timing_consistency": 1.0,
-        "section_stability": 0.5,
-    }
+    assert payload["tested_equivalence_floor"] == pytest.approx(
+        {
+            "pitch_fidelity": 0.5,
+            "rhythm_fidelity": 0.3,
+            "timing_consistency": 1.0,
+            "section_stability": 0.5,
+        }
+    )
     assert payload["tested_equivalence_floor_source"] == {
         "pitch_fidelity": "a",
         "rhythm_fidelity": "b",
