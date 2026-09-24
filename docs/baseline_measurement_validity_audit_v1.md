@@ -1,6 +1,6 @@
 # Baseline Measurement Validity Audit v1
 
-Status: R0.4
+Status: R0.4 recorded baseline\n\nFrozen instrument revision: `1cb1a6d92ada295b989cf41c26c32a434f82a510`
 
 ## Purpose
 
@@ -178,6 +178,24 @@ The executable entry point is:
 ```bash
 python tools/run_measurement_validity_audit.py
 ```
+
+## Recorded baseline
+
+The canonical R0.4 result is committed as:
+
+- `docs/measurement_validity_baseline_v1.json` — machine-readable exact audit snapshot;
+- `docs/baseline_measurement_validity_results_v1.md` — human-readable interpretation and architectural implications.
+
+The recorded family verdicts are:
+
+```text
+amplitude_gain                PASS
+deterministic_additive_noise  FAIL
+local_timing_warp             PARTIAL
+pitch_drift                   PARTIAL
+```
+
+These verdicts belong to the frozen revision and strict screening protocol above. They must not be silently updated after later scoring changes.
 
 ## Interpretation boundary
 
