@@ -247,35 +247,32 @@ def _generate_local_timing_warp_family(
     sample_rate: int,
 ) -> list[ControlledPerturbationCase]:
     cases: list[ControlledPerturbationCase] = []
-    window_start_s = 1.20
-    window_end_s = 2.80
+    shifted_boundary_after_note_index = 3
     for max_shift_ms in _LOCAL_TIMING_WARP_MS:
         role = InterventionRole.CONTROL if max_shift_ms == 0.0 else InterventionRole.TARGET
-        samples = (
-            list(reference)
-            if max_shift_ms == 0.0
-            else _with_local_timing_warp(
-                reference,
-                sample_rate=sample_rate,
-                window_start_s=window_start_s,
-                window_end_s=window_end_s,
-                max_shift_ms=max_shift_ms,
-            )
+        samples = _canonical_phrase_samples(
+            sample_rate=sample_rate,
+            local_timing_boundary_shift_ms=max_shift_ms,
         )
         cases.append(
             _write_case(
                 cases_dir=cases_dir,
                 family="local_timing_warp",
                 strength=max_shift_ms,
-                unit="ms_max_shift",
+                unit="ms_boundary_shift",
                 role=role,
                 samples=samples,
                 sample_rate=sample_rate,
                 reference_sha256=reference_sha256,
                 parameters=(
-                    InterventionParameter(name="window_start_s", value=window_start_s, unit="s"),
-                    InterventionParameter(name="window_end_s", value=window_end_s, unit="s"),
-                    InterventionParameter(name="curve", value="sine"),
+                    InterventionParameter(
+                        name="shifted_boundary_after_note_index",
+                        value=shifted_boundary_after_note_index,
+                    ),
+                    InterventionParameter(
+                        name="compensated_following_note_index",
+                        value=shifted_boundary_after_note_index + 1,
+                    ),
                 ),
             )
         )
@@ -331,13 +328,24 @@ def _canonical_phrase_samples(
     *,
     sample_rate: int,
     pitch_drift_fraction: float = 0.0,
+    local_timing_boundary_shift_ms: float = 0.0,
 ) -> list[float]:
     samples: list[float] = []
-    total_duration = sum(duration for _, duration in _NOTE_PLAN)
+    durations = [duration for _, duration in _NOTE_PLAN]
+    if local_timing_boundary_shift_ms:
+        shift_s = local_timing_boundary_shift_ms / 1_000.0
+        shifted_index = 3
+        compensated_index = shifted_index + 1
+        if durations[compensated_index] <= shift_s:
+            raise ValueError("local timing boundary shift is too large")
+        durations[shifted_index] += shift_s
+        durations[compensated_index] -= shift_s
+
+    total_duration = sum(durations)
     elapsed_s = 0.0
     phase = 0.0
 
-    for note_index, (base_frequency, duration_s) in enumerate(_NOTE_PLAN):
+    for note_index, ((base_frequency, _), duration_s) in enumerate(zip(_NOTE_PLAN, durations, strict=True)):
         frame_count = max(1, int(round(duration_s * sample_rate)))
         for index in range(frame_count):
             local_t = index / sample_rate
@@ -370,39 +378,6 @@ def _with_deterministic_noise(samples: list[float], *, amount: float) -> list[fl
         noise = math.sin(index * 12.9898) * math.sin(index * 78.233)
         noisy.append(_clamp_sample(sample + noise * amount))
     return noisy
-
-
-def _with_local_timing_warp(
-    samples: list[float],
-    *,
-    sample_rate: int,
-    window_start_s: float,
-    window_end_s: float,
-    max_shift_ms: float,
-) -> list[float]:
-    start = max(0, int(round(window_start_s * sample_rate)))
-    end = min(len(samples) - 1, int(round(window_end_s * sample_rate)))
-    if end <= start:
-        raise ValueError("timing warp window must contain at least two samples")
-
-    max_shift_samples = max_shift_ms * sample_rate / 1_000.0
-    warped: list[float] = []
-    for output_index in range(len(samples)):
-        if output_index <= start or output_index >= end:
-            source_position = float(output_index)
-        else:
-            progress = (output_index - start) / (end - start)
-            shift = max_shift_samples * math.sin(math.pi * progress)
-            source_position = min(float(end), max(float(start), output_index + shift))
-        warped.append(_sample_linear(samples, source_position))
-    return warped
-
-
-def _sample_linear(samples: list[float], position: float) -> float:
-    left = int(math.floor(position))
-    right = min(len(samples) - 1, left + 1)
-    fraction = position - left
-    return samples[left] * (1.0 - fraction) + samples[right] * fraction
 
 
 def _write_wav(path: Path, samples: list[float], *, sample_rate: int) -> None:
