@@ -1,0 +1,29 @@
+name: r0-4-post-repair-probe
+
+on:
+  pull_request:
+
+jobs:
+  validity:
+    if: github.head_ref == 'r0-5a-recording-start-equivalence-repair-v1'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Re-run frozen R0.4 validity audit
+        env:
+          PRACTICELENS_INSTRUMENT_REVISION: 9bb22f1213439143446578ec4fe5cd7c148b1bc0
+        run: |
+          python tools/run_measurement_validity_audit.py
+          cat out/measurement_validity_audit_v1/summary.json
