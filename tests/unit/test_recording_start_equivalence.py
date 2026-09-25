@@ -23,9 +23,17 @@ def test_fixed_padding_is_independent_of_available_leading_silence() -> None:
     )
 
     assert base == shifted
-    assert base[:3] == (0.0, 0.0, 0.0)
-    assert base[-3:] == (0.0, 0.0, 0.0)
-    assert base[3:-3] == (0.012, 0.2, 0.1)
+    assert base == (
+        0.0,
+        0.0,
+        0.004,
+        0.012,
+        0.2,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+    )
 
 
 def test_fixed_padding_is_independent_of_available_trailing_silence() -> None:
