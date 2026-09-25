@@ -1,0 +1,133 @@
+name: trim-origin-strategy-probe
+
+on:
+  pull_request:
+
+jobs:
+  probe:
+    if: github.head_ref == 'r0-5a-recording-start-equivalence-repair-v1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e .
+      - name: Compare trim-origin strategies
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from tempfile import TemporaryDirectory
+          from types import MethodType
+
+          from practicelens.application import AnalyzeRequest, OfflineReferenceAnalysisPipeline
+          from practicelens.domain.models import AnalysisConfig
+          from practicelens.io import ensure_finite_audio, load_wav_audio
+          from practicelens.io.models import LoadedAudio
+          from practicelens.measurement.controlled_perturbations import generate_controlled_perturbation_harness
+          from practicelens.measurement.equivalence_floor import generate_equivalent_recording_cases
+          from practicelens.preprocessing import peak_normalize, remove_dc_offset, resample_linear, trim_silence
+          from practicelens.preprocessing.trim import trim_silence_fixed_padding
+
+          config = AnalysisConfig(
+              target_sample_rate=16000,
+              frame_length=1024,
+              hop_length=256,
+              segment_duration_s=1.0,
+          )
+
+          def common(audio, config):
+              audio = ensure_finite_audio(audio)
+              samples = audio.samples
+              if audio.sample_rate != config.target_sample_rate:
+                  samples = resample_linear(samples, audio.sample_rate, config.target_sample_rate)
+              samples = remove_dc_offset(samples)
+              return peak_normalize(samples), audio
+
+          def wrap(samples, audio, config):
+              return LoadedAudio(
+                  samples=tuple(samples),
+                  sample_rate=config.target_sample_rate,
+                  source_channels=audio.source_channels,
+                  sample_width_bytes=audio.sample_width_bytes,
+              )
+
+          def old_prepare(self, audio, config):
+              samples, audio = common(audio, config)
+              trimmed = trim_silence(samples, threshold=0.01, pad_samples=max(1, config.hop_length // 4))
+              return wrap(trimmed or samples, audio, config)
+
+          def no_pad_prepare(self, audio, config):
+              samples, audio = common(audio, config)
+              trimmed = trim_silence(samples, threshold=0.01, pad_samples=0)
+              return wrap(trimmed or samples, audio, config)
+
+          def fixed9_prepare(self, audio, config):
+              samples, audio = common(audio, config)
+              trimmed = trim_silence_fixed_padding(samples, threshold=0.01, pad_samples=9)
+              return wrap(trimmed or samples, audio, config)
+
+          def weak_prepare(low):
+              def prepare(self, audio, config):
+                  samples, audio = common(audio, config)
+                  values = tuple(samples)
+                  start = 0
+                  end = len(values)
+                  while start < end and abs(values[start]) < low:
+                      start += 1
+                  while end > start and abs(values[end - 1]) < low:
+                      end -= 1
+                  trimmed = values[start:end]
+                  return wrap(trimmed or values, audio, config)
+              return prepare
+
+          strategies = {
+              "old_clip64": old_prepare,
+              "exact_no_pad": no_pad_prepare,
+              "fixed_context9": fixed9_prepare,
+              "weak_1e-3": weak_prepare(0.001),
+              "weak_1e-4": weak_prepare(0.0001),
+          }
+
+          with TemporaryDirectory() as td:
+              root = Path(td)
+              harness = generate_controlled_perturbation_harness(root / "r04", sample_rate=16000)
+              gain = next(c for c in harness.cases if c.condition.condition_id == "amplitude_gain__12")
+              eq_ref, eq_cases = generate_equivalent_recording_cases(root / "r05", sample_rate=16000)
+              leading = next(c for c in eq_cases if c.case_id == "leading_silence_16ms")
+
+              for name, prepare in strategies.items():
+                  pipe = OfflineReferenceAnalysisPipeline()
+                  pipe._prepare_audio = MethodType(prepare, pipe)
+
+                  control = pipe.analyze(AnalyzeRequest(
+                      reference_path=harness.reference_path,
+                      take_path=harness.reference_path,
+                      config=config,
+                  )).report.score_map()
+                  gain_report = pipe.analyze(AnalyzeRequest(
+                      reference_path=harness.reference_path,
+                      take_path=gain.path,
+                      config=config,
+                  )).report.score_map()
+
+                  eq_pipe = OfflineReferenceAnalysisPipeline()
+                  eq_pipe._prepare_audio = MethodType(prepare, eq_pipe)
+                  eq_control = eq_pipe.analyze(AnalyzeRequest(
+                      reference_path=eq_ref,
+                      take_path=eq_ref,
+                      config=config,
+                  )).report.score_map()
+                  lead_report = eq_pipe.analyze(AnalyzeRequest(
+                      reference_path=eq_ref,
+                      take_path=leading.path,
+                      config=config,
+                  )).report.score_map()
+
+                  metrics = ("pitch_fidelity", "rhythm_fidelity", "timing_consistency", "section_stability")
+                  gain_delta = {m: gain_report[m].score - control[m].score for m in metrics}
+                  lead_delta = {m: lead_report[m].score - eq_control[m].score for m in metrics}
+                  print(name)
+                  print("  gain12:", gain_delta)
+                  print("  lead16:", lead_delta)
+          PY
