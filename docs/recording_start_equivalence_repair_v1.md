@@ -41,17 +41,44 @@ For the R0.5a canonical phrase this produced a 55-sample / 3.4375 ms origin diff
 
 The downstream frame grid therefore changed even though the intended performance did not.
 
-## Repair
+## Candidate A — fixed zero padding
 
-The new preprocessing path is:
+The first repair candidate changed the path to:
 
 ```text
 normalize
+  -> trim exactly to detected activity
+  -> add fixed zero pre-roll/post-roll
+  -> feature extraction
+```
+
+It eliminated recording-window sensitivity completely, but the unchanged R0.5a probe exposed a new regression:
+
+```text
+dc-offset timing delta
+before candidate A: 0.246074
+after candidate A:  4.340076
+```
+
+Candidate A therefore failed the admission rule and is not accepted as the final repair.
+
+The reason is that zero padding next to a DC-biased waveform creates an artificial acquisition-boundary step.
+
+## Candidate B — DC centering plus fixed zero padding
+
+The revised preprocessing path is:
+
+```text
+resample if needed
+  -> remove constant DC component
+  -> peak normalize
   -> trim exactly to detected activity
   -> add fixed zero pre-roll
   -> add fixed zero post-roll
   -> feature extraction
 ```
+
+The DC-removal step subtracts the sample mean. A constant sensor/acquisition bias is a zero-frequency component and is outside the intended music-performance construct.
 
 The fixed padding remains:
 
