@@ -63,7 +63,9 @@ def test_pipeline_preparation_has_canonical_recording_start_origin() -> None:
     pipeline = OfflineReferenceAnalysisPipeline()
 
     phrase = tuple(
-        0.0 if index < 9 else 0.2
+        0.0
+        if index < 9 or index == 1_999
+        else 0.2 * (-1.0 if (index - 9) % 2 else 1.0)
         for index in range(2_000)
     )
     base = LoadedAudio(samples=phrase, sample_rate=16_000)
