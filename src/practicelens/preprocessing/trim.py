@@ -34,17 +34,36 @@ def trim_silence_fixed_padding(
     threshold: float = 0.01,
     pad_samples: int = 0,
 ) -> tuple[float, ...]:
-    """Trim to activity, then add deterministic zero padding independent of file boundaries."""
+    """Return activity with fixed edge context independent of source-file boundaries."""
 
     if pad_samples < 0:
         raise ValueError("pad_samples must be non-negative")
 
-    trimmed = trim_silence(samples, threshold=threshold, pad_samples=0)
-    if not trimmed:
+    values = tuple(samples)
+    if not values:
         return ()
 
-    if pad_samples == 0:
-        return trimmed
+    start = 0
+    end = len(values)
 
-    padding = (0.0,) * pad_samples
-    return (*padding, *trimmed, *padding)
+    while start < end and abs(values[start]) < threshold:
+        start += 1
+    while end > start and abs(values[end - 1]) < threshold:
+        end -= 1
+
+    if start == end:
+        return ()
+
+    context_start = max(0, start - pad_samples)
+    context_end = min(len(values), end + pad_samples)
+
+    available_before = start - context_start
+    available_after = context_end - end
+    missing_before = pad_samples - available_before
+    missing_after = pad_samples - available_after
+
+    return (
+        *((0.0,) * missing_before),
+        *values[context_start:context_end],
+        *((0.0,) * missing_after),
+    )
