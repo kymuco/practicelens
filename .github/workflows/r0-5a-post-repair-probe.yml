@@ -23,7 +23,7 @@ jobs:
 
       - name: Run unchanged R0.5a equivalence experiment
         env:
-          PRACTICELENS_INSTRUMENT_REVISION: b543b064da04af97d46d9efdf10731ffab262bbe
+          PRACTICELENS_INSTRUMENT_REVISION: 9bb22f1213439143446578ec4fe5cd7c148b1bc0
         run: |
           python tools/run_synthetic_equivalence_floor.py
           cat out/synthetic_equivalence_floor_v1/summary.json
