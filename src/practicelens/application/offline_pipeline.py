@@ -12,6 +12,7 @@ from practicelens.io import ensure_finite_audio, load_wav_audio
 from practicelens.io.models import LoadedAudio
 from practicelens.preprocessing import (
     peak_normalize,
+    remove_dc_offset,
     resample_linear,
     trim_silence_fixed_padding,
 )
@@ -79,6 +80,7 @@ class OfflineReferenceAnalysisPipeline(AnalysisPipeline):
         target_rate = config.target_sample_rate
         if audio.sample_rate != target_rate:
             samples = resample_linear(samples, audio.sample_rate, target_rate)
+        samples = remove_dc_offset(samples)
         samples = peak_normalize(samples)
         trimmed = trim_silence_fixed_padding(
             samples,
