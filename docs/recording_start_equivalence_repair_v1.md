@@ -91,15 +91,26 @@ Candidate B2 is therefore also rejected.
 
 ## Candidate C — material DC centering plus fixed edge context
 
-The final candidate path is:
+A fixed 64-sample edge-context budget eliminated the recording-window floor, but the unchanged R0.4 audit still produced:
+
+```text
+amplitude_gain -12 dB
+rhythm_fidelity delta = -0.961538
+```
+
+A diagnostic strategy sweep showed that both exact activity trim and a 9-sample context remove this regression while preserving leading-silence equivalence. The 9-sample value is specific to the synthetic phrase's threshold crossing and would introduce an unjustified tuned parameter.
+
+Candidate C is therefore rejected.
+
+## Candidate D — material DC centering plus exact activity trim
+
+The final candidate removes edge padding entirely:
 
 ```text
 resample if needed
   -> remove material constant DC component
   -> peak normalize
-  -> detect activity bounds
-  -> retain exactly pad_samples of surrounding source context
-  -> synthesize zeros only for context missing at a file boundary
+  -> trim exactly to detected activity
   -> feature extraction
 ```
 
@@ -109,15 +120,9 @@ This deadband separates a material acquisition bias from negligible finite-windo
 
 A constant sensor/acquisition bias is a zero-frequency component and is outside the intended music-performance construct.
 
-The fixed context remains:
+Exact activity trim introduces no new context-length parameter and makes analysis origin depend only on the detected activity itself, not on how much source-file silence happens to surround it.
 
-```text
-max(1, hop_length // 4)
-```
-
-For each side, real sub-threshold source samples are preserved up to that exact context budget. If the file boundary provides fewer samples, only the missing portion is synthesized as zeros.
-
-This keeps attack/release context stable while making the prepared representation independent of how much extra recording silence exists outside the fixed context window.
+The strategy probe produced zero score deltas for both `amplitude_gain__12` and `leading_silence_16ms` under this rule.
 
 ## Scope
 
