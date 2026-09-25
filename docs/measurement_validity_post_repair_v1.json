@@ -1,0 +1,490 @@
+{
+  "analysis_config": {
+    "frame_length": 1024,
+    "hop_length": 256,
+    "pitch_weight": 0.35,
+    "rhythm_weight": 0.3,
+    "schema_version": 1,
+    "segment_duration_s": 1,
+    "stability_weight": 0.15,
+    "target_sample_rate": 16000,
+    "timing_weight": 0.2
+  },
+  "audited_measurements": [
+    "pitch_fidelity",
+    "rhythm_fidelity",
+    "timing_consistency",
+    "section_stability"
+  ],
+  "code_revision": "a771a8d8e69740ba95f628cc5fe28eb5947c512f",
+  "experiment_id": "r0.4-baseline-measurement-validity-v1",
+  "family_verdict_counts": {
+    "FAIL": 1,
+    "PARTIAL": 2,
+    "PASS": 1,
+    "UNRESOLVED": 0
+  },
+  "kind": "baseline_measurement_validity_audit",
+  "limitations": [
+    "These are strict deterministic synthetic screening verdicts, not final construct-validity claims.",
+    "R0.5 is still required to establish practical repeatability and a measurement noise floor.",
+    "Real-musician ecological validation is not established by this audit."
+  ],
+  "schema_version": 1,
+  "screening_semantics": {
+    "FAIL": "The tested strict property did not hold.",
+    "PARTIAL": "The target moved in the expected endpoint direction but another tested property did not hold.",
+    "PASS": "The tested strict property held for this deterministic controlled series.",
+    "UNRESOLVED": "The series did not produce enough directional response to resolve the tested property."
+  },
+  "series": [
+    {
+      "alignment_coverage": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "condition_ids": [
+        "amplitude_gain__0",
+        "amplitude_gain__3",
+        "amplitude_gain__6",
+        "amplitude_gain__12"
+      ],
+      "confidence_levels": [
+        "high",
+        "high",
+        "high",
+        "high"
+      ],
+      "deltas_from_control": {
+        "pitch_fidelity": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rhythm_fidelity": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "section_stability": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "timing_consistency": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "endpoint_deltas": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "amplitude_gain",
+      "family_verdict": "PASS",
+      "max_abs_deltas": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "primary_measurement": null,
+      "property_verdicts": {
+        "strict_invariance:pitch_fidelity": "PASS",
+        "strict_invariance:rhythm_fidelity": "PASS",
+        "strict_invariance:section_stability": "PASS",
+        "strict_invariance:timing_consistency": "PASS",
+        "strict_nuisance_invariance": "PASS"
+      },
+      "protected_measurements": [
+        "pitch_fidelity",
+        "rhythm_fidelity",
+        "timing_consistency",
+        "section_stability"
+      ],
+      "role": "nuisance",
+      "strength_unit": "db_magnitude",
+      "strengths": [
+        0,
+        3,
+        6,
+        12
+      ],
+      "suitability_statuses": [
+        "ok",
+        "ok",
+        "ok",
+        "ok"
+      ],
+      "values": {
+        "pitch_fidelity": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "rhythm_fidelity": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "section_stability": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "timing_consistency": [
+          100,
+          100,
+          100,
+          100
+        ]
+      }
+    },
+    {
+      "alignment_coverage": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "condition_ids": [
+        "deterministic_additive_noise__0",
+        "deterministic_additive_noise__0p01",
+        "deterministic_additive_noise__0p03",
+        "deterministic_additive_noise__0p06"
+      ],
+      "confidence_levels": [
+        "high",
+        "high",
+        "high",
+        "high"
+      ],
+      "deltas_from_control": {
+        "pitch_fidelity": [
+          0,
+          -0.7199598871885655,
+          -1.4250835318482586,
+          -3.5609362695095257
+        ],
+        "rhythm_fidelity": [
+          0,
+          -0.09345419005819622,
+          -0.09790288535363345,
+          -1.184859407092759
+        ],
+        "section_stability": [
+          0,
+          -3.2734501359716717,
+          -1.9757538571753628,
+          -3.2283886292474477
+        ],
+        "timing_consistency": [
+          0,
+          -4.509642677136114,
+          -3.629221020525364,
+          -2.304449921969578
+        ]
+      },
+      "endpoint_deltas": {
+        "pitch_fidelity": -3.5609362695095257,
+        "rhythm_fidelity": -1.184859407092759,
+        "section_stability": -3.2283886292474477,
+        "timing_consistency": -2.304449921969578
+      },
+      "family": "deterministic_additive_noise",
+      "family_verdict": "FAIL",
+      "max_abs_deltas": {
+        "pitch_fidelity": 3.5609362695095257,
+        "rhythm_fidelity": 1.184859407092759,
+        "section_stability": 3.2734501359716717,
+        "timing_consistency": 4.509642677136114
+      },
+      "primary_measurement": null,
+      "property_verdicts": {
+        "strict_invariance:pitch_fidelity": "FAIL",
+        "strict_invariance:rhythm_fidelity": "FAIL",
+        "strict_invariance:section_stability": "FAIL",
+        "strict_invariance:timing_consistency": "FAIL",
+        "strict_nuisance_invariance": "FAIL"
+      },
+      "protected_measurements": [
+        "pitch_fidelity",
+        "rhythm_fidelity",
+        "timing_consistency",
+        "section_stability"
+      ],
+      "role": "nuisance",
+      "strength_unit": "full_scale_fraction",
+      "strengths": [
+        0,
+        0.01,
+        0.03,
+        0.06
+      ],
+      "suitability_statuses": [
+        "ok",
+        "ok",
+        "ok",
+        "ok"
+      ],
+      "values": {
+        "pitch_fidelity": [
+          100,
+          99.28004011281143,
+          98.57491646815174,
+          96.43906373049047
+        ],
+        "rhythm_fidelity": [
+          100,
+          99.9065458099418,
+          99.90209711464637,
+          98.81514059290724
+        ],
+        "section_stability": [
+          100,
+          96.72654986402833,
+          98.02424614282464,
+          96.77161137075255
+        ],
+        "timing_consistency": [
+          100,
+          95.49035732286389,
+          96.37077897947464,
+          97.69555007803042
+        ]
+      }
+    },
+    {
+      "alignment_coverage": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "condition_ids": [
+        "local_timing_warp__0",
+        "local_timing_warp__20",
+        "local_timing_warp__40",
+        "local_timing_warp__80"
+      ],
+      "confidence_levels": [
+        "high",
+        "high",
+        "high",
+        "high"
+      ],
+      "deltas_from_control": {
+        "pitch_fidelity": [
+          0,
+          -0.36479430434422966,
+          -0.5010385378102171,
+          -0.7636837712820466
+        ],
+        "rhythm_fidelity": [
+          0,
+          -0.1692774641930015,
+          -1.416624341507429,
+          -0.8776707310899212
+        ],
+        "section_stability": [
+          0,
+          -2.9156158942810606,
+          -1.7602668721501118,
+          -3.731108737516081
+        ],
+        "timing_consistency": [
+          0,
+          -4.490712390283733,
+          -2.117796320694879,
+          -4.388514299000235
+        ]
+      },
+      "endpoint_deltas": {
+        "pitch_fidelity": -0.7636837712820466,
+        "rhythm_fidelity": -0.8776707310899212,
+        "section_stability": -3.731108737516081,
+        "timing_consistency": -4.388514299000235
+      },
+      "family": "local_timing_warp",
+      "family_verdict": "PARTIAL",
+      "max_abs_deltas": {
+        "pitch_fidelity": 0.7636837712820466,
+        "rhythm_fidelity": 1.416624341507429,
+        "section_stability": 3.731108737516081,
+        "timing_consistency": 4.490712390283733
+      },
+      "primary_measurement": "timing_consistency",
+      "property_verdicts": {
+        "directional_sensitivity": "PASS",
+        "nonincreasing_monotonicity": "PARTIAL",
+        "strict_protected_specificity": "FAIL"
+      },
+      "protected_measurements": [
+        "pitch_fidelity"
+      ],
+      "role": "target",
+      "strength_unit": "ms_boundary_shift",
+      "strengths": [
+        0,
+        20,
+        40,
+        80
+      ],
+      "suitability_statuses": [
+        "ok",
+        "ok",
+        "ok",
+        "ok"
+      ],
+      "values": {
+        "pitch_fidelity": [
+          100,
+          99.63520569565577,
+          99.49896146218978,
+          99.23631622871795
+        ],
+        "rhythm_fidelity": [
+          100,
+          99.830722535807,
+          98.58337565849257,
+          99.12232926891008
+        ],
+        "section_stability": [
+          100,
+          97.08438410571894,
+          98.23973312784989,
+          96.26889126248392
+        ],
+        "timing_consistency": [
+          100,
+          95.50928760971627,
+          97.88220367930512,
+          95.61148570099976
+        ]
+      }
+    },
+    {
+      "alignment_coverage": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "condition_ids": [
+        "pitch_drift__0",
+        "pitch_drift__0p01",
+        "pitch_drift__0p03",
+        "pitch_drift__0p06"
+      ],
+      "confidence_levels": [
+        "high",
+        "high",
+        "high",
+        "high"
+      ],
+      "deltas_from_control": {
+        "pitch_fidelity": [
+          0,
+          -3.2822363468768287,
+          -11.039814884467177,
+          -25.34847623879071
+        ],
+        "rhythm_fidelity": [
+          0,
+          0,
+          -0.004451704289465397,
+          -0.013355523409686043
+        ],
+        "section_stability": [
+          0,
+          -2.581250733278722,
+          -7.684373948752324,
+          -13.65696541819753
+        ],
+        "timing_consistency": [
+          0,
+          -2.2757216433105754,
+          -1.619355611450473,
+          -0.15500271254747133
+        ]
+      },
+      "endpoint_deltas": {
+        "pitch_fidelity": -25.34847623879071,
+        "rhythm_fidelity": -0.013355523409686043,
+        "section_stability": -13.65696541819753,
+        "timing_consistency": -0.15500271254747133
+      },
+      "family": "pitch_drift",
+      "family_verdict": "PARTIAL",
+      "max_abs_deltas": {
+        "pitch_fidelity": 25.34847623879071,
+        "rhythm_fidelity": 0.013355523409686043,
+        "section_stability": 13.65696541819753,
+        "timing_consistency": 2.2757216433105754
+      },
+      "primary_measurement": "pitch_fidelity",
+      "property_verdicts": {
+        "directional_sensitivity": "PASS",
+        "nonincreasing_monotonicity": "PASS",
+        "strict_protected_specificity": "FAIL"
+      },
+      "protected_measurements": [
+        "rhythm_fidelity",
+        "timing_consistency"
+      ],
+      "role": "target",
+      "strength_unit": "terminal_fraction",
+      "strengths": [
+        0,
+        0.01,
+        0.03,
+        0.06
+      ],
+      "suitability_statuses": [
+        "ok",
+        "ok",
+        "ok",
+        "ok"
+      ],
+      "values": {
+        "pitch_fidelity": [
+          100,
+          96.71776365312317,
+          88.96018511553282,
+          74.65152376120929
+        ],
+        "rhythm_fidelity": [
+          100,
+          100,
+          99.99554829571053,
+          99.98664447659031
+        ],
+        "section_stability": [
+          100,
+          97.41874926672128,
+          92.31562605124768,
+          86.34303458180247
+        ],
+        "timing_consistency": [
+          100,
+          97.72427835668942,
+          98.38064438854953,
+          99.84499728745253
+        ]
+      }
+    }
+  ],
+  "strict_delta_epsilon": 1e-9
+}
