@@ -1,0 +1,346 @@
+{
+  "analysis_config": {
+    "frame_length": 1024,
+    "hop_length": 256,
+    "schema_version": 1,
+    "segment_duration_s": 1,
+    "target_sample_rate": 16000
+  },
+  "audited_measurements": [
+    "pitch_fidelity",
+    "rhythm_fidelity",
+    "timing_consistency",
+    "section_stability"
+  ],
+  "baseline_values": {
+    "pitch_fidelity": 100,
+    "rhythm_fidelity": 100,
+    "section_stability": 100,
+    "timing_consistency": 100
+  },
+  "cases": [
+    {
+      "case_id": "exact_byte_copy",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "exact_copy",
+      "parameters": [],
+      "sha256": "50db0b125f1167736a7a9ab1466fb5813d73fa1ce5b6f873ee976f89da30bc63",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    },
+    {
+      "case_id": "pcm_roundtrip",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "pcm_roundtrip",
+      "parameters": [],
+      "sha256": "50db0b125f1167736a7a9ab1466fb5813d73fa1ce5b6f873ee976f89da30bc63",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    },
+    {
+      "case_id": "polarity_inverted",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "polarity",
+      "parameters": [],
+      "sha256": "00cd094248ec3954781d80009ddf471d525d8d0998824abdc5b92d224b695bde",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    },
+    {
+      "case_id": "gain_minus_6db",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "gain",
+      "parameters": [
+        {
+          "name": "gain_db",
+          "value": "-6.0"
+        }
+      ],
+      "sha256": "bd4ba2d34ca62166ddb26a51c236cc3c8340d8b3fe2e6ec73e25886121eb7e07",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    },
+    {
+      "case_id": "gain_minus_12db",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "gain",
+      "parameters": [
+        {
+          "name": "gain_db",
+          "value": "-12.0"
+        }
+      ],
+      "sha256": "76de5bebb116dcea38ed1d8603f5aa4b615d8dbdb85aacc08f5ec590541f0683",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    },
+    {
+      "case_id": "dc_offset_minus_0p01",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "dc_offset",
+      "parameters": [
+        {
+          "name": "offset_full_scale",
+          "value": "-0.01"
+        }
+      ],
+      "sha256": "3fc93daa8a4cf24b5eb388c45c02d4326de87f0d018e2dabfd1e30e50078ea5d",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    },
+    {
+      "case_id": "dc_offset_plus_0p01",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "dc_offset",
+      "parameters": [
+        {
+          "name": "offset_full_scale",
+          "value": "0.01"
+        }
+      ],
+      "sha256": "8bac8a028e97de96764f683c54437d223f97f0484652c69d3c403bbf9bc7f56b",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    },
+    {
+      "case_id": "leading_silence_16ms",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "recording_window",
+      "parameters": [
+        {
+          "name": "leading_silence_ms",
+          "value": "16"
+        }
+      ],
+      "sha256": "857be3b8abd6b24c0851f120e6aeff5c65be69bf577f5d27d1cab00ac591d425",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    },
+    {
+      "case_id": "trailing_silence_16ms",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "recording_window",
+      "parameters": [
+        {
+          "name": "trailing_silence_ms",
+          "value": "16"
+        }
+      ],
+      "sha256": "319ddb26e84edef5f6b7efdbc1f2d7e6d62a6f701992eb580fe2fda0421ba5f3",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    },
+    {
+      "case_id": "leading_silence_64ms",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "recording_window",
+      "parameters": [
+        {
+          "name": "leading_silence_ms",
+          "value": "64"
+        }
+      ],
+      "sha256": "1d6694a7c997650a67d6b19a77cd33c5c3aec7bd3ae43ef975e4514b7ec89c3e",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    },
+    {
+      "case_id": "trailing_silence_64ms",
+      "deltas_from_baseline": {
+        "pitch_fidelity": 0,
+        "rhythm_fidelity": 0,
+        "section_stability": 0,
+        "timing_consistency": 0
+      },
+      "family": "recording_window",
+      "parameters": [
+        {
+          "name": "trailing_silence_ms",
+          "value": "64"
+        }
+      ],
+      "sha256": "d14d052f9f803acca2a4fafd59842e9c8ed3e9b6857f16340239162ac404efa4",
+      "values": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      }
+    }
+  ],
+  "code_revision": "a771a8d8e69740ba95f628cc5fe28eb5947c512f",
+  "exact_repeat_floor": {
+    "pitch_fidelity": 0,
+    "rhythm_fidelity": 0,
+    "section_stability": 0,
+    "timing_consistency": 0
+  },
+  "experiment_id": "r0.5a-synthetic-equivalence-floor-v1",
+  "family_max_abs_deltas": {
+    "dc_offset": {
+      "pitch_fidelity": 0,
+      "rhythm_fidelity": 0,
+      "section_stability": 0,
+      "timing_consistency": 0
+    },
+    "exact_copy": {
+      "pitch_fidelity": 0,
+      "rhythm_fidelity": 0,
+      "section_stability": 0,
+      "timing_consistency": 0
+    },
+    "gain": {
+      "pitch_fidelity": 0,
+      "rhythm_fidelity": 0,
+      "section_stability": 0,
+      "timing_consistency": 0
+    },
+    "pcm_roundtrip": {
+      "pitch_fidelity": 0,
+      "rhythm_fidelity": 0,
+      "section_stability": 0,
+      "timing_consistency": 0
+    },
+    "polarity": {
+      "pitch_fidelity": 0,
+      "rhythm_fidelity": 0,
+      "section_stability": 0,
+      "timing_consistency": 0
+    },
+    "recording_window": {
+      "pitch_fidelity": 0,
+      "rhythm_fidelity": 0,
+      "section_stability": 0,
+      "timing_consistency": 0
+    }
+  },
+  "kind": "synthetic_equivalence_floor",
+  "limitations": [
+    "This is a deterministic synthetic equivalence floor, not a human repeatability estimate.",
+    "The tested transformations preserve intended performance semantics but do not cover room, microphone, performer, or day-to-day variation.",
+    "R0.5b remains necessary before longitudinal human-development thresholds are admitted."
+  ],
+  "repeat_values": [
+    {
+      "pitch_fidelity": 100,
+      "rhythm_fidelity": 100,
+      "section_stability": 100,
+      "timing_consistency": 100
+    },
+    {
+      "pitch_fidelity": 100,
+      "rhythm_fidelity": 100,
+      "section_stability": 100,
+      "timing_consistency": 100
+    },
+    {
+      "pitch_fidelity": 100,
+      "rhythm_fidelity": 100,
+      "section_stability": 100,
+      "timing_consistency": 100
+    }
+  ],
+  "schema_version": 1,
+  "tested_equivalence_floor": {
+    "pitch_fidelity": 0,
+    "rhythm_fidelity": 0,
+    "section_stability": 0,
+    "timing_consistency": 0
+  },
+  "tested_equivalence_floor_source": {
+    "pitch_fidelity": "exact_byte_copy",
+    "rhythm_fidelity": "exact_byte_copy",
+    "section_stability": "exact_byte_copy",
+    "timing_consistency": "exact_byte_copy"
+  }
+}
