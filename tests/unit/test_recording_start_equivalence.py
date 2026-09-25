@@ -120,3 +120,11 @@ def test_pipeline_preparation_is_invariant_to_small_dc_sensor_bias() -> None:
         prepared_base.samples,
         abs=1e-12,
     )
+
+
+def test_dc_offset_removal_preserves_sub_floor_finite_window_mean() -> None:
+    samples = (0.10005, -0.09995, 0.10005, -0.09995)
+
+    centered = remove_dc_offset(samples)
+
+    assert centered == samples
