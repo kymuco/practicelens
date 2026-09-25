@@ -15,8 +15,8 @@ def peak_normalize(samples: Iterable[float], *, floor: float = 1e-9) -> tuple[fl
     return tuple(sample / peak for sample in values)
 
 
-def remove_dc_offset(samples: Iterable[float], *, floor: float = 1e-12) -> tuple[float, ...]:
-    """Remove the constant (zero-frequency) component from an audio sample sequence."""
+def remove_dc_offset(samples: Iterable[float], *, floor: float = 1e-4) -> tuple[float, ...]:
+    """Remove material constant acquisition bias while preserving negligible finite-window mean."""
 
     values = tuple(samples)
     if not values:
