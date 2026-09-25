@@ -178,19 +178,36 @@ See:
 
 #### R0.5a follow-up — Recording-Start Equivalence Repair v1
 
-Status: active next step.
+Status: complete / admitted.
 
-Goal:
+The final repair uses:
 
-- repair the demonstrated leading-recording-silence sensitivity at the preprocessing/frame-origin boundary;
-- re-run the frozen R0.5a equivalence experiment;
-- require the repair to improve equivalence behavior without tuning against R0.4 target interventions.
+```text
+material DC centering (|mean| > 1e-4)
+-> peak normalization
+-> exact activity trim
+```
 
-Do not change score semantics in this repair.
+Post-repair R0.5a result:
+
+```text
+pitch_fidelity       0.000000
+rhythm_fidelity      0.000000
+timing_consistency   0.000000
+section_stability    0.000000
+```
+
+The unchanged R0.4 preservation audit restores `amplitude_gain = PASS` and preserves target sensitivity.
+
+See:
+
+- `docs/recording_start_equivalence_repair_results_v1.md`;
+- `docs/synthetic_equivalence_post_repair_v1.json`;
+- `docs/measurement_validity_post_repair_v1.json`.
 
 #### R0.5b — Local Session Repeatability v1
 
-Status: blocked on the R0.5a follow-up.
+Status: active next milestone.
 
 Goal: estimate within-session variation from repeated real takes collected with no intended skill-development interval.
 
@@ -272,9 +289,9 @@ The first export boundary should eventually prefer compact evidence, uncertainty
 The next executable task is:
 
 ```text
-R0.5a follow-up — Recording-Start Equivalence Repair v1
+R0.5b — Local Session Repeatability v1
 ```
 
-R0.5a established exact deterministic repeatability but exposed a larger upstream nuisance: equivalent leading recording silence can move `timing_consistency` by 7.01 points, more than the 4.35-point maximum response to the R0.4 local timing target.
+The tested deterministic equivalence floor is now zero after the admitted preprocessing repair.
 
-Repair and re-audit this boundary before collecting the R0.5b human/session repeatability baseline.
+The remaining question is no longer software/container repeatability. It is human/session repeatability: how much the candidate measurements move across real repeated takes when no skill-development interval is intended.
