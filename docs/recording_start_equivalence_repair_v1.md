@@ -76,17 +76,30 @@ The canonical finite-window mean is only on the order of 10^-6 full scale, so tr
 
 Candidate B1 is therefore rejected.
 
-## Candidate B2 — material DC centering plus fixed zero padding
+## Candidate B2 — material DC centering plus zero-only edge padding
 
-The revised preprocessing path is:
+Adding a `1e-4` deadband prevented finite-window residual mean from being treated as DC bias, but the post-repair R0.4 audit still found:
+
+```text
+amplitude_gain -12 dB
+rhythm_fidelity delta = -0.961538
+```
+
+The remaining cause is edge-context ownership: trimming exactly to the first/last above-threshold sample discards natural sub-threshold attack/release samples that the old clipped-padding path preserved.
+
+Candidate B2 is therefore also rejected.
+
+## Candidate C — material DC centering plus fixed edge context
+
+The final candidate path is:
 
 ```text
 resample if needed
-  -> remove constant DC component
+  -> remove material constant DC component
   -> peak normalize
-  -> trim exactly to detected activity
-  -> add fixed zero pre-roll
-  -> add fixed zero post-roll
+  -> detect activity bounds
+  -> retain exactly pad_samples of surrounding source context
+  -> synthesize zeros only for context missing at a file boundary
   -> feature extraction
 ```
 
@@ -96,15 +109,15 @@ This deadband separates a material acquisition bias from negligible finite-windo
 
 A constant sensor/acquisition bias is a zero-frequency component and is outside the intended music-performance construct.
 
-The fixed padding remains:
+The fixed context remains:
 
 ```text
 max(1, hop_length // 4)
 ```
 
-but it is now synthesized after trimming instead of borrowed from the source file.
+For each side, real sub-threshold source samples are preserved up to that exact context budget. If the file boundary provides fewer samples, only the missing portion is synthesized as zeros.
 
-This makes the prepared audio invariant to how much silence was physically available before or after the phrase.
+This keeps attack/release context stable while making the prepared representation independent of how much extra recording silence exists outside the fixed context window.
 
 ## Scope
 
