@@ -1,6 +1,6 @@
 # Recording-Start Equivalence Repair v1
 
-Status: R0.5a repair candidate
+Status: accepted / R0.5a follow-up complete
 
 ## Trigger
 
@@ -137,10 +137,24 @@ It does not change:
 - confidence/suitability logic;
 - R0.5a equivalence criteria.
 
-## Admission criterion
+## Admission result
 
-After this repair, rerun the unchanged R0.5a experiment.
+Candidate D is admitted.
 
-The repair is useful only if the recording-window equivalence floor materially decreases without introducing broader regressions.
+The unchanged R0.5a experiment reports a tested equivalence floor of exactly zero for all four candidate measurements across the admitted equivalence families.
 
-The previously recorded R0.5a baseline remains immutable evidence and must not be overwritten.
+The unchanged R0.4 preservation audit also returns `amplitude_gain = PASS` while retaining:
+
+- `pitch_drift`: directional sensitivity PASS, monotonicity PASS;
+- `local_timing_warp`: directional sensitivity PASS, monotonicity PARTIAL;
+- `deterministic_additive_noise`: nuisance invariance FAIL.
+
+The repair therefore removes the demonstrated recording-window/DC acquisition defect without erasing the target signals or hiding the remaining nuisance boundary.
+
+Canonical evidence:
+
+- `docs/synthetic_equivalence_post_repair_v1.json`;
+- `docs/measurement_validity_post_repair_v1.json`;
+- `docs/recording_start_equivalence_repair_results_v1.md`.
+
+The previously recorded pre-repair baselines remain immutable evidence and are not overwritten.
