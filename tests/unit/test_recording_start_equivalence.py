@@ -5,52 +5,7 @@ import pytest
 from practicelens.application import OfflineReferenceAnalysisPipeline
 from practicelens.domain.models import AnalysisConfig
 from practicelens.io.models import LoadedAudio
-from practicelens.preprocessing import remove_dc_offset, trim_silence_fixed_padding
-
-
-def test_fixed_padding_is_independent_of_available_leading_silence() -> None:
-    phrase = (0.0, 0.004, 0.012, 0.2, 0.1, 0.0)
-
-    base = trim_silence_fixed_padding(
-        phrase,
-        threshold=0.01,
-        pad_samples=3,
-    )
-    shifted = trim_silence_fixed_padding(
-        (0.0,) * 12 + phrase,
-        threshold=0.01,
-        pad_samples=3,
-    )
-
-    assert base == shifted
-    assert base == (
-        0.0,
-        0.0,
-        0.004,
-        0.012,
-        0.2,
-        0.1,
-        0.0,
-        0.0,
-        0.0,
-    )
-
-
-def test_fixed_padding_is_independent_of_available_trailing_silence() -> None:
-    phrase = (0.0, 0.02, 0.3, 0.015, 0.0)
-
-    base = trim_silence_fixed_padding(
-        phrase,
-        threshold=0.01,
-        pad_samples=4,
-    )
-    shifted = trim_silence_fixed_padding(
-        phrase + (0.0,) * 20,
-        threshold=0.01,
-        pad_samples=4,
-    )
-
-    assert base == shifted
+from practicelens.preprocessing import remove_dc_offset
 
 
 def test_pipeline_preparation_has_canonical_recording_start_origin() -> None:
@@ -78,20 +33,8 @@ def test_pipeline_preparation_has_canonical_recording_start_origin() -> None:
     prepared_shifted = pipeline._prepare_audio(shifted, config)
 
     assert prepared_base.samples == prepared_shifted.samples
-    assert prepared_base.samples[:64] == (0.0,) * 64
-
-
-def test_fixed_padding_rejects_negative_padding() -> None:
-    try:
-        trim_silence_fixed_padding(
-            (0.0, 0.1, 0.0),
-            threshold=0.01,
-            pad_samples=-1,
-        )
-    except ValueError as exc:
-        assert str(exc) == "pad_samples must be non-negative"
-    else:
-        raise AssertionError("expected negative pad_samples to fail")
+    assert prepared_base.samples
+    assert abs(prepared_base.samples[0]) >= 0.01
 
 
 def test_dc_offset_removal_is_constant_shift_invariant() -> None:
