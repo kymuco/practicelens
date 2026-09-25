@@ -14,7 +14,7 @@ from practicelens.preprocessing import (
     peak_normalize,
     remove_dc_offset,
     resample_linear,
-    trim_silence_fixed_padding,
+    trim_silence,
 )
 from practicelens.reporting.artifacts import write_report_artifacts
 from practicelens.scoring import score_aligned_features
@@ -82,10 +82,10 @@ class OfflineReferenceAnalysisPipeline(AnalysisPipeline):
             samples = resample_linear(samples, audio.sample_rate, target_rate)
         samples = remove_dc_offset(samples)
         samples = peak_normalize(samples)
-        trimmed = trim_silence_fixed_padding(
+        trimmed = trim_silence(
             samples,
             threshold=0.01,
-            pad_samples=max(1, config.hop_length // 4),
+            pad_samples=0,
         )
         if trimmed:
             samples = trimmed
