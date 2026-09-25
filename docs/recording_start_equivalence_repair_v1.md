@@ -64,7 +64,19 @@ Candidate A therefore failed the admission rule and is not accepted as the final
 
 The reason is that zero padding next to a DC-biased waveform creates an artificial acquisition-boundary step.
 
-## Candidate B — DC centering plus fixed zero padding
+## Candidate B1 — unconditional DC centering
+
+Unconditional mean subtraction eliminated the R0.5a DC-offset regression, but the post-repair R0.4 audit exposed a new strict nuisance regression at -12 dB gain:
+
+```text
+rhythm_fidelity delta = -0.961538
+```
+
+The canonical finite-window mean is only on the order of 10^-6 full scale, so treating that residual as a material sensor DC bias was unnecessary.
+
+Candidate B1 is therefore rejected.
+
+## Candidate B2 — material DC centering plus fixed zero padding
 
 The revised preprocessing path is:
 
@@ -78,7 +90,11 @@ resample if needed
   -> feature extraction
 ```
 
-The DC-removal step subtracts the sample mean. A constant sensor/acquisition bias is a zero-frequency component and is outside the intended music-performance construct.
+The DC-removal step subtracts the sample mean only when its magnitude exceeds `1e-4` full scale.
+
+This deadband separates a material acquisition bias from negligible finite-window residual mean. The R0.5a ±0.01 DC cases remain two orders of magnitude above the admission threshold, while ordinary canonical/gain cases remain untouched.
+
+A constant sensor/acquisition bias is a zero-frequency component and is outside the intended music-performance construct.
 
 The fixed padding remains:
 
