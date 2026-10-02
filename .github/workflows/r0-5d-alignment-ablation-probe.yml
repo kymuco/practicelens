@@ -1,0 +1,29 @@
+name: r0-5d-alignment-ablation-probe
+
+on:
+  pull_request:
+
+jobs:
+  ablation:
+    if: github.head_ref == 'r0-5d-alignment-substrate-ablation-v1'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Run R0.5d alignment ablation
+        env:
+          PRACTICELENS_INSTRUMENT_REVISION: 86a2714527facb2835856a8f0b54e1214b055525
+        run: |
+          python tools/run_alignment_substrate_ablation.py
+          cat out/alignment_substrate_ablation_v1/summary.json
