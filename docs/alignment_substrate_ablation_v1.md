@@ -1,6 +1,6 @@
 # R0.5d — Alignment Substrate Ablation v1
 
-Status: active experiment
+Status: complete / ablation baseline recorded
 
 ## Trigger
 
@@ -166,6 +166,26 @@ Then at least the main timing defect is demonstrably solvable inside alignment-s
 R0.6 should not cite that defect as evidence for replacing the frame-level representation.
 
 A separate validation step would still be required before changing production DTW.
+
+## Recorded result
+
+Canonical evidence:
+
+- `docs/alignment_substrate_ablation_baseline_v1.json`;
+- `docs/alignment_substrate_ablation_results_v1.md`.
+
+Two preregistered profiles meet the strict narrow hypothesis:
+
+```text
+current_positional_0p10
+pitch_half_positional_0p10
+```
+
+Pitch reduction alone and pitch removal do not.
+
+The simplest successful profile is `current_positional_0p10`: it preserves the current feature cost and adds only a weak normalized-position penalty.
+
+This demonstrates alignment-space solvability for the main timing defect, but does not admit a production change because timing response magnitude is compressed and timing->pitch residual increases.
 
 ## Non-goals
 
