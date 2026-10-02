@@ -1,6 +1,6 @@
 # R0.5f — Metric-Specific Alignment Readout Ablation v1
 
-Status: active experiment
+Status: complete / strict synthetic hypothesis supported
 
 ## Trigger
 
@@ -96,6 +96,32 @@ That would weaken the case for an event/transition representation as the next re
 Then separating alignment ownership is insufficient.
 
 The remaining failure would identify which construct still needs a deeper representation or feature boundary investigation.
+
+## Recorded result
+
+Canonical evidence:
+
+- `docs/metric_specific_alignment_readout_baseline_v1.json`;
+- `docs/metric_specific_alignment_readout_results_v1.md`.
+
+Every preregistered R0.5f check passes.
+
+The result supports shared-alignment coupling as the narrower architecture defect for the tested pitch/timing failures:
+
+```text
+pitch_fidelity
+    -> production flexible alignment
+
+timing_consistency
+    -> positional alignment
+
+rhythm_fidelity
+    -> onset/time path
+```
+
+The underlying frame-level features are unchanged.
+
+Strict additive-noise invariance itself remains unresolved for pitch and rhythm.
 
 ## Important non-claim
 
