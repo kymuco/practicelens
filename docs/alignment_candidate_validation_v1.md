@@ -1,6 +1,6 @@
 # R0.5e — Alignment Candidate Validation v1
 
-Status: active experiment
+Status: complete / broader synthetic validation recorded
 
 ## Trigger
 
@@ -119,6 +119,31 @@ The magnitude trade-off therefore remains explicit evidence, not a synthetic PAS
 It does not admit production behavior.
 
 A failed check is equally useful: it identifies the exact boundary that blocks candidate admission.
+
+## Recorded result
+
+Canonical evidence:
+
+- `docs/alignment_candidate_validation_baseline_v1.json`;
+- `docs/alignment_candidate_validation_results_v1.md`.
+
+The frozen candidate does **not** pass all preregistered checks.
+
+Passed:
+
+- amplitude-gain strict invariance;
+- pitch-drift sensitivity and monotonicity;
+- pitch-drift protected cross-talk no worse;
+- local-timing sensitivity;
+- local-timing monotonicity improved to PASS;
+- alignment coverage preserved.
+
+Failed:
+
+- additive-noise per-measurement no-regression;
+- local-timing protected pitch cross-talk no worse.
+
+The candidate therefore remains diagnostic rather than production-admissible.
 
 ## Non-goals
 
