@@ -294,26 +294,61 @@ No production DTW change is admitted.
 
 #### R0.5f — Metric-Specific Alignment Readout Ablation v1
 
-Status: active next machine-side experiment.
+Status: complete / strict synthetic hypothesis supported.
 
-Goal: test whether the remaining trade-off is caused by forcing pitch and timing measurements to share one alignment path.
+Result:
 
-Diagnostic hypothesis:
+```text
+passes_all_preregistered_checks = true
+```
+
+Metric-specific ownership recovers the desired trade-off:
 
 ```text
 pitch_fidelity
-    -> current flexible feature-driven alignment
+    -> production flexible alignment
 
 timing_consistency
-    -> current_positional_0p10 geometry-regularized alignment
+    -> current_positional_0p10 alignment
 
 rhythm_fidelity
     -> unchanged onset/time path
 ```
 
-This should be evaluated counterfactually against all existing target and nuisance families without changing production behavior.
+Key effects:
 
-If metric-specific readouts recover both pitch robustness and timing monotonicity, shared-alignment coupling is the narrower architectural defect.
+- additive-noise pitch movement returns to production: 3.561;
+- additive-noise timing movement drops: 4.510 -> 0.641;
+- pitch-drift timing cross-talk drops: 2.276 -> 0.537;
+- local-timing pitch cross-talk remains at production: 0.764;
+- local-timing monotonicity becomes PASS;
+- both alignment paths retain full coverage.
+
+See:
+
+- `docs/metric_specific_alignment_readout_baseline_v1.json`;
+- `docs/metric_specific_alignment_readout_results_v1.md`.
+
+This supports shared-alignment coupling, not frame-level insufficiency, as the current timing architecture defect.
+
+#### R0.5g — Additive Noise Attribution Audit v1
+
+Status: active next machine-side experiment.
+
+Goal: localize the remaining additive-noise movement before attempting any robustness repair.
+
+The unresolved synthetic nuisance is now concentrated in:
+
+```text
+pitch_fidelity max delta   3.560936
+rhythm_fidelity max delta  1.184859
+```
+
+Timing noise movement can already be reduced inside alignment-space.
+
+R0.5g should determine whether the remaining pitch/rhythm nuisance first appears in feature extraction, alignment correspondence, or score construction.
+
+Do not change pitch/onset estimators during the attribution audit.
 
 ### R0.6 — Representation Admission Decision v1
 
@@ -394,10 +429,10 @@ Two evidence tracks are now intentionally separate:
 human evidence
     R0.5b — collect first local-session repeatability sample when convenient
 
-machine-side validation
-    R0.5f — Metric-Specific Alignment Readout Ablation v1
+machine-side attribution
+    R0.5g — Additive Noise Attribution Audit v1
 ```
 
-R0.5e showed that a single positional alignment path trades timing cleanliness for pitch robustness. The next machine-side step tests the narrower shared-alignment-coupling hypothesis instead of tuning another global weight or jumping to a representation rewrite.
+R0.5f supports shared-alignment coupling as the timing architecture defect without changing the frame-level representation. The remaining independent machine-side failure is additive-noise sensitivity in pitch and rhythm, so the next step is attribution rather than another alignment search or a representation rewrite.
 
 R0.5b remains necessary before assigning practical human significance to the residual protected-score movements.
