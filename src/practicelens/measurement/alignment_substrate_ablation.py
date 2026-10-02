@@ -12,11 +12,11 @@ from practicelens.domain.errors import AlignmentError
 from practicelens.domain.models import AnalysisConfig, ComponentScore
 from practicelens.features import FeatureBundle, extract_feature_bundle
 from practicelens.io import load_wav_audio
-from practicelens.measurement.cross_talk_attribution import alignment_diagnostics
 from practicelens.measurement.controlled_perturbations import (
     ControlledPerturbationCase,
     generate_controlled_perturbation_harness,
 )
+from practicelens.measurement.cross_talk_attribution import alignment_diagnostics
 from practicelens.scoring import score_aligned_features
 
 ALIGNMENT_SUBSTRATE_ABLATION_SCHEMA_VERSION = 1
