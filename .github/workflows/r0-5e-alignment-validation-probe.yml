@@ -1,0 +1,29 @@
+name: r0-5e-alignment-validation-probe
+
+on:
+  pull_request:
+
+jobs:
+  validation:
+    if: github.head_ref == 'r0-5e-alignment-candidate-validation-v1'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Run R0.5e candidate validation
+        env:
+          PRACTICELENS_INSTRUMENT_REVISION: 45384707dde57c874e76ba6e77501f12181623d9
+        run: |
+          python tools/run_alignment_candidate_validation.py
+          cat out/alignment_candidate_validation_v1/summary.json
