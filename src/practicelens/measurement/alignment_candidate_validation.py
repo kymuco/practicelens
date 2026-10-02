@@ -7,7 +7,7 @@ from pathlib import Path
 from practicelens.application import AnalyzeRequest, OfflineReferenceAnalysisPipeline
 from practicelens.domain.enums import MetricName
 from practicelens.domain.models import AnalysisConfig
-from practicelens.features import FeatureBundle, extract_feature_bundle
+from practicelens.features import extract_feature_bundle
 from practicelens.io import load_wav_audio
 from practicelens.measurement.alignment_substrate_ablation import (
     ALIGNMENT_SUBSTRATE_ABLATION_EPSILON,
