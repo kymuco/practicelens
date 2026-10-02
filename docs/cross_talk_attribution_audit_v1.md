@@ -1,6 +1,6 @@
 # R0.5c — Cross-Talk Attribution Audit v1
 
-Status: active experiment
+Status: complete / attribution baseline recorded
 
 ## Trigger
 
@@ -181,3 +181,26 @@ Then frame-level pitch representation around event boundaries is a stronger susp
 Then the onset extractor has a cross-domain sensitivity that should be addressed separately from DTW.
 
 This is why R0.5c comes before a broad representation rewrite.
+
+## Recorded result
+
+Canonical evidence:
+
+- `docs/cross_talk_attribution_baseline_v1.json`;
+- `docs/cross_talk_attribution_results_v1.md`.
+
+Recorded attribution:
+
+```text
+pitch drift -> rhythm_fidelity
+    pre-alignment onset/time path
+
+pitch drift -> timing_consistency
+    alignment_path
+
+local timing warp -> pitch_fidelity
+    mixed pre-alignment + alignment
+    with the dominant pre-alignment effect reduced by DTW
+```
+
+The local-timing monotonicity failure is also localized to DTW path geometry rather than the final timing score mapping.
