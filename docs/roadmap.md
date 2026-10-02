@@ -207,11 +207,53 @@ See:
 
 #### R0.5b — Local Session Repeatability v1
 
-Status: active next milestone.
+Status: protocol/runner complete; first real session evidence pending.
 
 Goal: estimate within-session variation from repeated real takes collected with no intended skill-development interval.
 
 Private audio remains local; only compact measurement evidence should be exportable.
+
+#### R0.5c — Cross-Talk Attribution Audit v1
+
+Status: complete / baseline recorded.
+
+Result:
+
+```text
+pitch drift -> rhythm
+    pre-alignment onset/time micro-movement
+
+pitch drift -> timing
+    DTW alignment path
+
+local timing warp -> pitch
+    mixed, with frame-level boundary effect before DTW
+    and DTW mostly compensating it
+```
+
+The previous timing-monotonicity failure is explained by non-monotonic DTW path geometry, not by the final timing score mapping.
+
+See:
+
+- `docs/cross_talk_attribution_baseline_v1.json`;
+- `docs/cross_talk_attribution_results_v1.md`.
+
+#### R0.5d — Alignment Substrate Ablation v1
+
+Status: active next machine-side experiment.
+
+Goal: test whether the timing defects attributed to DTW can be reduced with a narrower alignment substrate before admitting a new representation.
+
+Candidate diagnostic alignment costs:
+
+- current pitch + energy + ZCR + voiced cost;
+- pitch-free structural cost;
+- reduced-pitch cost;
+- positional regularization.
+
+The experiment must compare pitch-drift timing cross-talk, local-timing monotonicity, coverage/path geometry, and preservation of useful target sensitivity.
+
+No production alignment change should be admitted merely because one ablation looks promising.
 
 ### R0.6 — Representation Admission Decision v1
 
@@ -284,14 +326,18 @@ The first export boundary should eventually prefer compact evidence, uncertainty
 8. Keep raw user recordings local by default.
 9. Keep domain observation separate from general personal-development interpretation.
 
-## Immediate next step
+## Immediate next steps
 
-The next executable task is:
+Two evidence tracks are now intentionally separate:
 
 ```text
-R0.5b — Local Session Repeatability v1
+human evidence
+    R0.5b — collect first local-session repeatability sample when convenient
+
+machine-side attribution
+    R0.5d — Alignment Substrate Ablation v1
 ```
 
-The tested deterministic equivalence floor is now zero after the admitted preprocessing repair.
+R0.5c showed that the main timing cross-talk and timing monotonicity defect are alignment-path problems. That makes alignment ablation the narrowest machine-side experiment available without requiring a guitar recording.
 
-The remaining question is no longer software/container repeatability. It is human/session repeatability: how much the candidate measurements move across real repeated takes when no skill-development interval is intended.
+R0.5b remains necessary before assigning practical human significance to the residual protected-score movements.
