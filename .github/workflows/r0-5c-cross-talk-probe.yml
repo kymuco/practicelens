@@ -1,0 +1,29 @@
+name: r0-5c-cross-talk-probe
+
+on:
+  pull_request:
+
+jobs:
+  attribution:
+    if: github.head_ref == 'r0-5c-cross-talk-attribution-audit-v1'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Run R0.5c attribution audit
+        env:
+          PRACTICELENS_INSTRUMENT_REVISION: 03edfe96046b1ccb86b58dc4275634b9caf62396
+        run: |
+          python tools/run_cross_talk_attribution_audit.py
+          cat out/cross_talk_attribution_v1/summary.json
