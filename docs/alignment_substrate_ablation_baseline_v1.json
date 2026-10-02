@@ -1,0 +1,1206 @@
+{
+  "analysis_config": {
+    "frame_length": 1024,
+    "hop_length": 256,
+    "schema_version": 1,
+    "segment_duration_s": 1,
+    "target_sample_rate": 16000
+  },
+  "code_revision": "86a2714527facb2835856a8f0b54e1214b055525",
+  "epsilon": 1e-9,
+  "experiment_id": "r0.5d-alignment-substrate-ablation-v1",
+  "interpretation_boundary": [
+    "Ablation profiles are diagnostic counterfactuals, not production candidates.",
+    "The experiment does not tune weights after observing results.",
+    "A profile meeting the narrow hypothesis shows that the timing defect is solvable within alignment-space.",
+    "Production admission requires a separate validation step and broader failure-boundary checks."
+  ],
+  "kind": "alignment_substrate_ablation",
+  "profiles": {
+    "current": {
+      "conditions": [
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "pitch_drift__0",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.031620553359683834,
+            "mean_local_cost": 0.0015606641683187405,
+            "mean_normalized_position_error": 0.003413582464965864,
+            "pair_count": 286,
+            "total_cost": 0.4463499521391597,
+            "warp_step_fraction": 0.22456140350877193
+          },
+          "condition_id": "pitch_drift__0p01",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 96.71776365312317,
+            "rhythm_fidelity": 100,
+            "section_stability": 97.41874926672128,
+            "timing_consistency": 97.72427835668942
+          },
+          "strength": 0.01
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.015810276679841917,
+            "mean_local_cost": 0.004353370511162076,
+            "mean_normalized_position_error": 0.0024290334171757104,
+            "pair_count": 275,
+            "total_cost": 1.19717689056957,
+            "warp_step_fraction": 0.15328467153284672
+          },
+          "condition_id": "pitch_drift__0p03",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 88.96018511553282,
+            "rhythm_fidelity": 99.99554829571053,
+            "section_stability": 92.31562605124768,
+            "timing_consistency": 98.38064438854953
+          },
+          "strength": 0.03
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.003952569169960507,
+            "mean_local_cost": 0.00979932691503695,
+            "mean_normalized_position_error": 0.00023250406882120435,
+            "pair_count": 255,
+            "total_cost": 2.4988283633344217,
+            "warp_step_fraction": 0.007874015748031496
+          },
+          "condition_id": "pitch_drift__0p06",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 74.65152376120929,
+            "rhythm_fidelity": 99.98664447659031,
+            "section_stability": 86.34303458180247,
+            "timing_consistency": 99.84499728745253
+          },
+          "strength": 0.06
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "local_timing_warp__0",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.0434782608695653,
+            "mean_local_cost": 0.0006572146027708324,
+            "mean_normalized_position_error": 0.006736068585425599,
+            "pair_count": 284,
+            "total_cost": 0.1866489471869166,
+            "warp_step_fraction": 0.21201413427561838
+          },
+          "condition_id": "local_timing_warp__20",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 99.63520569565577,
+            "rhythm_fidelity": 99.830722535807,
+            "section_stability": 97.08438410571894,
+            "timing_consistency": 95.50928760971627
+          },
+          "strength": 20
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.011857707509881465,
+            "mean_local_cost": 0.0007214998902724595,
+            "mean_normalized_position_error": 0.003176694481042307,
+            "pair_count": 270,
+            "total_cost": 0.1948049703735642,
+            "warp_step_fraction": 0.11895910780669144
+          },
+          "condition_id": "local_timing_warp__40",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 99.49896146218978,
+            "rhythm_fidelity": 98.58337565849257,
+            "section_stability": 98.23973312784989,
+            "timing_consistency": 97.88220367930512
+          },
+          "strength": 40
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.02371541501976293,
+            "mean_local_cost": 0.0010288564375788064,
+            "mean_normalized_position_error": 0.00658277144850035,
+            "pair_count": 272,
+            "total_cost": 0.2798489510214355,
+            "warp_step_fraction": 0.13284132841328414
+          },
+          "condition_id": "local_timing_warp__80",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 99.23631622871795,
+            "rhythm_fidelity": 99.12232926891008,
+            "section_stability": 96.26889126248392,
+            "timing_consistency": 95.61148570099976
+          },
+          "strength": 80
+        }
+      ],
+      "local_timing_warp": {
+        "pitch_cross_talk_max_abs_delta": 0.7636837712820466,
+        "pitch_scores": [
+          100,
+          99.63520569565577,
+          99.49896146218978,
+          99.23631622871795
+        ],
+        "strengths": [
+          0,
+          20,
+          40,
+          80
+        ],
+        "timing_directional_sensitivity": "PASS",
+        "timing_endpoint_delta": -4.388514299000235,
+        "timing_monotonicity": "PARTIAL",
+        "timing_scores": [
+          100,
+          95.50928760971627,
+          97.88220367930512,
+          95.61148570099976
+        ]
+      },
+      "path_geometry": {
+        "max_mean_normalized_position_error": 0.006736068585425599,
+        "max_warp_step_fraction": 0.22456140350877193,
+        "min_coverage_ratio": 1
+      },
+      "pitch_drift": {
+        "pitch_directional_sensitivity": "PASS",
+        "pitch_monotonicity": "PASS",
+        "pitch_scores": [
+          100,
+          96.71776365312317,
+          88.96018511553282,
+          74.65152376120929
+        ],
+        "strengths": [
+          0,
+          0.01,
+          0.03,
+          0.06
+        ],
+        "timing_cross_talk_max_abs_delta": 2.2757216433105754,
+        "timing_scores": [
+          100,
+          97.72427835668942,
+          98.38064438854953,
+          99.84499728745253
+        ]
+      },
+      "profile": {
+        "energy_weight": 0.25,
+        "pitch_weight": 0.55,
+        "position_penalty_weight": 0,
+        "voiced_mismatch_penalty": 0.4,
+        "zcr_weight": 0.2
+      },
+      "strict_narrow_hypothesis": {
+        "checks": {
+          "local_timing_directional_sensitivity_pass": true,
+          "local_timing_monotonicity_pass": false,
+          "minimum_coverage_preserved": true,
+          "non_current_profile": false,
+          "pitch_directional_sensitivity_pass": true,
+          "pitch_monotonicity_pass": true,
+          "strictly_lower_pitch_to_timing_cross_talk": false
+        },
+        "meets": false
+      }
+    },
+    "current_positional_0p10": {
+      "conditions": [
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "pitch_drift__0",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.0039525691699605625,
+            "mean_local_cost": 0.001836676522431366,
+            "mean_normalized_position_error": 0.0008054291893504368,
+            "pair_count": 265,
+            "total_cost": 0.486719278444312,
+            "warp_step_fraction": 0.08333333333333333
+          },
+          "condition_id": "pitch_drift__0p01",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 96.45766190488008,
+            "rhythm_fidelity": 100,
+            "section_stability": 97.41971172160862,
+            "timing_consistency": 99.4630472070997
+          },
+          "strength": 0.01
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.011857707509881427,
+            "mean_local_cost": 0.004681789454469701,
+            "mean_normalized_position_error": 0.00031924597141988465,
+            "pair_count": 260,
+            "total_cost": 1.2172652581621217,
+            "warp_step_fraction": 0.04633204633204633
+          },
+          "condition_id": "pitch_drift__0p03",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 88.32327271835202,
+            "rhythm_fidelity": 99.99554829571053,
+            "section_stability": 92.26761254003544,
+            "timing_consistency": 99.78716935238674
+          },
+          "strength": 0.03
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0.009849299462164153,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 2.5017220633896944,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "pitch_drift__0p06",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 74.61542829790761,
+            "rhythm_fidelity": 99.98664447659031,
+            "section_stability": 86.34265989772672,
+            "timing_consistency": 100
+          },
+          "strength": 0.06
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "local_timing_warp__0",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.0039525691699605625,
+            "mean_local_cost": 0.0010746177300757875,
+            "mean_normalized_position_error": 0.0009766966288705418,
+            "pair_count": 259,
+            "total_cost": 0.27832599208962927,
+            "warp_step_fraction": 0.03875968992248062
+          },
+          "condition_id": "local_timing_warp__20",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 98.97788879528314,
+            "rhythm_fidelity": 99.830722535807,
+            "section_stability": 98.88344304081826,
+            "timing_consistency": 99.34886891408631
+          },
+          "strength": 20
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.011857707509881465,
+            "mean_local_cost": 0.0009203249040288096,
+            "mean_normalized_position_error": 0.0012683617485694041,
+            "pair_count": 268,
+            "total_cost": 0.24664707427972127,
+            "warp_step_fraction": 0.10486891385767791
+          },
+          "condition_id": "local_timing_warp__40",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 99.49522236862404,
+            "rhythm_fidelity": 98.58337565849257,
+            "section_stability": 98.42169913694404,
+            "timing_consistency": 99.15442550095374
+          },
+          "strength": 40
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.02371541501976282,
+            "mean_local_cost": 0.001384785127992126,
+            "mean_normalized_position_error": 0.0024146604383758516,
+            "pair_count": 275,
+            "total_cost": 0.38081591019783434,
+            "warp_step_fraction": 0.15328467153284672
+          },
+          "condition_id": "local_timing_warp__80",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 99.24464732440465,
+            "rhythm_fidelity": 99.12232926891008,
+            "section_stability": 96.89651919526708,
+            "timing_consistency": 98.3902263744161
+          },
+          "strength": 80
+        }
+      ],
+      "local_timing_warp": {
+        "pitch_cross_talk_max_abs_delta": 1.0221112047168646,
+        "pitch_scores": [
+          100,
+          98.97788879528314,
+          99.49522236862404,
+          99.24464732440465
+        ],
+        "strengths": [
+          0,
+          20,
+          40,
+          80
+        ],
+        "timing_directional_sensitivity": "PASS",
+        "timing_endpoint_delta": -1.6097736255838981,
+        "timing_monotonicity": "PASS",
+        "timing_scores": [
+          100,
+          99.34886891408631,
+          99.15442550095374,
+          98.3902263744161
+        ]
+      },
+      "path_geometry": {
+        "max_mean_normalized_position_error": 0.0024146604383758516,
+        "max_warp_step_fraction": 0.15328467153284672,
+        "min_coverage_ratio": 1
+      },
+      "pitch_drift": {
+        "pitch_directional_sensitivity": "PASS",
+        "pitch_monotonicity": "PASS",
+        "pitch_scores": [
+          100,
+          96.45766190488008,
+          88.32327271835202,
+          74.61542829790761
+        ],
+        "strengths": [
+          0,
+          0.01,
+          0.03,
+          0.06
+        ],
+        "timing_cross_talk_max_abs_delta": 0.5369527929002942,
+        "timing_scores": [
+          100,
+          99.4630472070997,
+          99.78716935238674,
+          100
+        ]
+      },
+      "profile": {
+        "energy_weight": 0.25,
+        "pitch_weight": 0.55,
+        "position_penalty_weight": 0.1,
+        "voiced_mismatch_penalty": 0.4,
+        "zcr_weight": 0.2
+      },
+      "strict_narrow_hypothesis": {
+        "checks": {
+          "local_timing_directional_sensitivity_pass": true,
+          "local_timing_monotonicity_pass": true,
+          "minimum_coverage_preserved": true,
+          "non_current_profile": true,
+          "pitch_directional_sensitivity_pass": true,
+          "pitch_monotonicity_pass": true,
+          "strictly_lower_pitch_to_timing_cross_talk": true
+        },
+        "meets": true
+      }
+    },
+    "pitch_free_structural": {
+      "conditions": [
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "pitch_drift__0",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.027667984189723382,
+            "mean_local_cost": 0.0010198407620839462,
+            "mean_normalized_position_error": 0.004249349107636687,
+            "pair_count": 293,
+            "total_cost": 0.29881334329059633,
+            "warp_step_fraction": 0.2671232876712329
+          },
+          "condition_id": "pitch_drift__0p01",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 95.90046377952744,
+            "rhythm_fidelity": 100,
+            "section_stability": 96.91400337753137,
+            "timing_consistency": 97.16710059490887
+          },
+          "strength": 0.01
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.055335968379446654,
+            "mean_local_cost": 0.0013576217379931484,
+            "mean_normalized_position_error": 0.007528084044102354,
+            "pair_count": 304,
+            "total_cost": 0.412717008349917,
+            "warp_step_fraction": 0.33003300330033003
+          },
+          "condition_id": "pitch_drift__0p03",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 87.19231008401378,
+            "rhythm_fidelity": 99.99554829571053,
+            "section_stability": 91.68449838250147,
+            "timing_consistency": 94.98127730393176
+          },
+          "strength": 0.03
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.015810276679841903,
+            "mean_local_cost": 0.0026514898830105145,
+            "mean_normalized_position_error": 0.0019467878001297857,
+            "pair_count": 268,
+            "total_cost": 0.710599288646818,
+            "warp_step_fraction": 0.10486891385767791
+          },
+          "condition_id": "pitch_drift__0p06",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 74.77200749094524,
+            "rhythm_fidelity": 99.98664447659031,
+            "section_stability": 86.36176110689814,
+            "timing_consistency": 98.70214146658014
+          },
+          "strength": 0.06
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "local_timing_warp__0",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.055335968379446654,
+            "mean_local_cost": 0.0010706072380211001,
+            "mean_normalized_position_error": 0.007428587447088836,
+            "pair_count": 282,
+            "total_cost": 0.30191124112195017,
+            "warp_step_fraction": 0.199288256227758
+          },
+          "condition_id": "local_timing_warp__20",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 98.93466803512578,
+            "rhythm_fidelity": 99.830722535807,
+            "section_stability": 96.51519451187998,
+            "timing_consistency": 95.04760836860744
+          },
+          "strength": 20
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.011857707509881465,
+            "mean_local_cost": 0.00116304174658386,
+            "mean_normalized_position_error": 0.0033331366881009968,
+            "pair_count": 268,
+            "total_cost": 0.3116951880844744,
+            "warp_step_fraction": 0.10486891385767791
+          },
+          "condition_id": "local_timing_warp__40",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 99.36202530865067,
+            "rhythm_fidelity": 98.58337565849257,
+            "section_stability": 98.20570598078288,
+            "timing_consistency": 97.77790887459933
+          },
+          "strength": 40
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.02371541501976293,
+            "mean_local_cost": 0.001629465888266138,
+            "mean_normalized_position_error": 0.006524645431295048,
+            "pair_count": 272,
+            "total_cost": 0.4432147216083897,
+            "warp_step_fraction": 0.13284132841328414
+          },
+          "condition_id": "local_timing_warp__80",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 98.97383966935867,
+            "rhythm_fidelity": 99.12232926891008,
+            "section_stability": 96.26727489050803,
+            "timing_consistency": 95.65023637913663
+          },
+          "strength": 80
+        }
+      ],
+      "local_timing_warp": {
+        "pitch_cross_talk_max_abs_delta": 1.0653319648742183,
+        "pitch_scores": [
+          100,
+          98.93466803512578,
+          99.36202530865067,
+          98.97383966935867
+        ],
+        "strengths": [
+          0,
+          20,
+          40,
+          80
+        ],
+        "timing_directional_sensitivity": "PASS",
+        "timing_endpoint_delta": -4.349763620863371,
+        "timing_monotonicity": "PARTIAL",
+        "timing_scores": [
+          100,
+          95.04760836860744,
+          97.77790887459933,
+          95.65023637913663
+        ]
+      },
+      "path_geometry": {
+        "max_mean_normalized_position_error": 0.007528084044102354,
+        "max_warp_step_fraction": 0.33003300330033003,
+        "min_coverage_ratio": 1
+      },
+      "pitch_drift": {
+        "pitch_directional_sensitivity": "PASS",
+        "pitch_monotonicity": "PASS",
+        "pitch_scores": [
+          100,
+          95.90046377952744,
+          87.19231008401378,
+          74.77200749094524
+        ],
+        "strengths": [
+          0,
+          0.01,
+          0.03,
+          0.06
+        ],
+        "timing_cross_talk_max_abs_delta": 5.018722696068238,
+        "timing_scores": [
+          100,
+          97.16710059490887,
+          94.98127730393176,
+          98.70214146658014
+        ]
+      },
+      "profile": {
+        "energy_weight": 0.5555555555555556,
+        "pitch_weight": 0,
+        "position_penalty_weight": 0,
+        "voiced_mismatch_penalty": 0,
+        "zcr_weight": 0.4444444444444444
+      },
+      "strict_narrow_hypothesis": {
+        "checks": {
+          "local_timing_directional_sensitivity_pass": true,
+          "local_timing_monotonicity_pass": false,
+          "minimum_coverage_preserved": true,
+          "non_current_profile": true,
+          "pitch_directional_sensitivity_pass": true,
+          "pitch_monotonicity_pass": true,
+          "strictly_lower_pitch_to_timing_cross_talk": false
+        },
+        "meets": false
+      }
+    },
+    "pitch_half": {
+      "conditions": [
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "pitch_drift__0",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.031620553359683834,
+            "mean_local_cost": 0.0013202621384558893,
+            "mean_normalized_position_error": 0.003413582464965864,
+            "pair_count": 286,
+            "total_cost": 0.37759497159838423,
+            "warp_step_fraction": 0.22456140350877193
+          },
+          "condition_id": "pitch_drift__0p01",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 96.71776365312317,
+            "rhythm_fidelity": 100,
+            "section_stability": 97.41874926672128,
+            "timing_consistency": 97.72427835668942
+          },
+          "strength": 0.01
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.015810276679841917,
+            "mean_local_cost": 0.0029499295242948176,
+            "mean_normalized_position_error": 0.003432124119111587,
+            "pair_count": 281,
+            "total_cost": 0.8289301963268437,
+            "warp_step_fraction": 0.19285714285714287
+          },
+          "condition_id": "pitch_drift__0p03",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 88.90303226034872,
+            "rhythm_fidelity": 99.99554829571053,
+            "section_stability": 92.31569260765588,
+            "timing_consistency": 97.7119172539256
+          },
+          "strength": 0.03
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.015810276679841903,
+            "mean_local_cost": 0.006218358832224754,
+            "mean_normalized_position_error": 0.0009919575136966442,
+            "pair_count": 259,
+            "total_cost": 1.610554937546211,
+            "warp_step_fraction": 0.03875968992248062
+          },
+          "condition_id": "pitch_drift__0p06",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 74.85860857628526,
+            "rhythm_fidelity": 99.98664447659031,
+            "section_stability": 86.37063784537347,
+            "timing_consistency": 99.3386949908689
+          },
+          "strength": 0.06
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "local_timing_warp__0",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.0434782608695653,
+            "mean_local_cost": 0.0008943212239148709,
+            "mean_normalized_position_error": 0.006332610820689363,
+            "pair_count": 279,
+            "total_cost": 0.249515621472249,
+            "warp_step_fraction": 0.17985611510791366
+          },
+          "condition_id": "local_timing_warp__20",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 99.50072260033468,
+            "rhythm_fidelity": 99.830722535807,
+            "section_stability": 97.1083065536991,
+            "timing_consistency": 95.77825945287375
+          },
+          "strength": 20
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.011857707509881465,
+            "mean_local_cost": 0.0009633151960366374,
+            "mean_normalized_position_error": 0.0033331366881009968,
+            "pair_count": 268,
+            "total_cost": 0.25816847253781866,
+            "warp_step_fraction": 0.10486891385767791
+          },
+          "condition_id": "local_timing_warp__40",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 99.36202530865067,
+            "rhythm_fidelity": 98.58337565849257,
+            "section_stability": 98.20570598078288,
+            "timing_consistency": 97.77790887459933
+          },
+          "strength": 40
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.02371541501976293,
+            "mean_local_cost": 0.001349680928433037,
+            "mean_normalized_position_error": 0.0065537084398977,
+            "pair_count": 272,
+            "total_cost": 0.367113212533786,
+            "warp_step_fraction": 0.13284132841328414
+          },
+          "condition_id": "local_timing_warp__80",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 99.1050779490383,
+            "rhythm_fidelity": 99.12232926891008,
+            "section_stability": 96.26860641566036,
+            "timing_consistency": 95.63086104006821
+          },
+          "strength": 80
+        }
+      ],
+      "local_timing_warp": {
+        "pitch_cross_talk_max_abs_delta": 0.8949220509616964,
+        "pitch_scores": [
+          100,
+          99.50072260033468,
+          99.36202530865067,
+          99.1050779490383
+        ],
+        "strengths": [
+          0,
+          20,
+          40,
+          80
+        ],
+        "timing_directional_sensitivity": "PASS",
+        "timing_endpoint_delta": -4.369138959931789,
+        "timing_monotonicity": "PARTIAL",
+        "timing_scores": [
+          100,
+          95.77825945287375,
+          97.77790887459933,
+          95.63086104006821
+        ]
+      },
+      "path_geometry": {
+        "max_mean_normalized_position_error": 0.0065537084398977,
+        "max_warp_step_fraction": 0.22456140350877193,
+        "min_coverage_ratio": 1
+      },
+      "pitch_drift": {
+        "pitch_directional_sensitivity": "PASS",
+        "pitch_monotonicity": "PASS",
+        "pitch_scores": [
+          100,
+          96.71776365312317,
+          88.90303226034872,
+          74.85860857628526
+        ],
+        "strengths": [
+          0,
+          0.01,
+          0.03,
+          0.06
+        ],
+        "timing_cross_talk_max_abs_delta": 2.2880827460743944,
+        "timing_scores": [
+          100,
+          97.72427835668942,
+          97.7119172539256,
+          99.3386949908689
+        ]
+      },
+      "profile": {
+        "energy_weight": 0.4027777777777778,
+        "pitch_weight": 0.275,
+        "position_penalty_weight": 0,
+        "voiced_mismatch_penalty": 0.2,
+        "zcr_weight": 0.3222222222222222
+      },
+      "strict_narrow_hypothesis": {
+        "checks": {
+          "local_timing_directional_sensitivity_pass": true,
+          "local_timing_monotonicity_pass": false,
+          "minimum_coverage_preserved": true,
+          "non_current_profile": true,
+          "pitch_directional_sensitivity_pass": true,
+          "pitch_monotonicity_pass": true,
+          "strictly_lower_pitch_to_timing_cross_talk": false
+        },
+        "meets": false
+      }
+    },
+    "pitch_half_positional_0p10": {
+      "conditions": [
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "pitch_drift__0",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.007905138339920958,
+            "mean_local_cost": 0.0015830612707911753,
+            "mean_normalized_position_error": 0.0011607916893192477,
+            "pair_count": 269,
+            "total_cost": 0.4258434818428259,
+            "warp_step_fraction": 0.11194029850746269
+          },
+          "condition_id": "pitch_drift__0p01",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 96.51033607729823,
+            "rhythm_fidelity": 100,
+            "section_stability": 97.45857722816766,
+            "timing_consistency": 99.22613887378718
+          },
+          "strength": 0.01
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.007905138339920952,
+            "mean_local_cost": 0.003303900747155408,
+            "mean_normalized_position_error": 0.00039374252267805496,
+            "pair_count": 261,
+            "total_cost": 0.8623180950075614,
+            "warp_step_fraction": 0.05384615384615385
+          },
+          "condition_id": "pitch_drift__0p03",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 88.23077280989907,
+            "rhythm_fidelity": 99.99554829571053,
+            "section_stability": 92.2733430771318,
+            "timing_consistency": 99.7375049848813
+          },
+          "strength": 0.03
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.003952569169960507,
+            "mean_local_cost": 0.006364758016260585,
+            "mean_normalized_position_error": 0.00023250406882120435,
+            "pair_count": 255,
+            "total_cost": 1.6230132941464483,
+            "warp_step_fraction": 0.007874015748031496
+          },
+          "condition_id": "pitch_drift__0p06",
+          "family": "pitch_drift",
+          "scores": {
+            "pitch_fidelity": 74.65152376120929,
+            "rhythm_fidelity": 99.98664447659031,
+            "section_stability": 86.34303458180247,
+            "timing_consistency": 99.84499728745253
+          },
+          "strength": 0.06
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "condition_id": "local_timing_warp__0",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.0039525691699605625,
+            "mean_local_cost": 0.0012777461744562476,
+            "mean_normalized_position_error": 0.0009614357440444393,
+            "pair_count": 259,
+            "total_cost": 0.3309362591841681,
+            "warp_step_fraction": 0.03875968992248062
+          },
+          "condition_id": "local_timing_warp__20",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 98.90897603066371,
+            "rhythm_fidelity": 99.830722535807,
+            "section_stability": 98.87784825730165,
+            "timing_consistency": 99.3590428373037
+          },
+          "strength": 20
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.011857707509881465,
+            "mean_local_cost": 0.001179921936903977,
+            "mean_normalized_position_error": 0.0013175230566534908,
+            "pair_count": 270,
+            "total_cost": 0.3185789229640738,
+            "warp_step_fraction": 0.11895910780669144
+          },
+          "condition_id": "local_timing_warp__40",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 99.36675104710511,
+            "rhythm_fidelity": 98.58337565849257,
+            "section_stability": 98.40993789269079,
+            "timing_consistency": 99.12165129556433
+          },
+          "strength": 40
+        },
+        {
+          "alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.01976284584980237,
+            "mean_local_cost": 0.0017626369095717139,
+            "mean_normalized_position_error": 0.002173183787173839,
+            "pair_count": 271,
+            "total_cost": 0.4776746024939347,
+            "warp_step_fraction": 0.1259259259259259
+          },
+          "condition_id": "local_timing_warp__80",
+          "family": "local_timing_warp",
+          "scores": {
+            "pitch_fidelity": 98.77156601227398,
+            "rhythm_fidelity": 99.12232926891008,
+            "section_stability": 96.84734427758067,
+            "timing_consistency": 98.55121080855078
+          },
+          "strength": 80
+        }
+      ],
+      "local_timing_warp": {
+        "pitch_cross_talk_max_abs_delta": 1.2284339877260209,
+        "pitch_scores": [
+          100,
+          98.90897603066371,
+          99.36675104710511,
+          98.77156601227398
+        ],
+        "strengths": [
+          0,
+          20,
+          40,
+          80
+        ],
+        "timing_directional_sensitivity": "PASS",
+        "timing_endpoint_delta": -1.4487891914492224,
+        "timing_monotonicity": "PASS",
+        "timing_scores": [
+          100,
+          99.3590428373037,
+          99.12165129556433,
+          98.55121080855078
+        ]
+      },
+      "path_geometry": {
+        "max_mean_normalized_position_error": 0.002173183787173839,
+        "max_warp_step_fraction": 0.1259259259259259,
+        "min_coverage_ratio": 1
+      },
+      "pitch_drift": {
+        "pitch_directional_sensitivity": "PASS",
+        "pitch_monotonicity": "PASS",
+        "pitch_scores": [
+          100,
+          96.51033607729823,
+          88.23077280989907,
+          74.65152376120929
+        ],
+        "strengths": [
+          0,
+          0.01,
+          0.03,
+          0.06
+        ],
+        "timing_cross_talk_max_abs_delta": 0.7738611262128217,
+        "timing_scores": [
+          100,
+          99.22613887378718,
+          99.7375049848813,
+          99.84499728745253
+        ]
+      },
+      "profile": {
+        "energy_weight": 0.4027777777777778,
+        "pitch_weight": 0.275,
+        "position_penalty_weight": 0.1,
+        "voiced_mismatch_penalty": 0.2,
+        "zcr_weight": 0.3222222222222222
+      },
+      "strict_narrow_hypothesis": {
+        "checks": {
+          "local_timing_directional_sensitivity_pass": true,
+          "local_timing_monotonicity_pass": true,
+          "minimum_coverage_preserved": true,
+          "non_current_profile": true,
+          "pitch_directional_sensitivity_pass": true,
+          "pitch_monotonicity_pass": true,
+          "strictly_lower_pitch_to_timing_cross_talk": true
+        },
+        "meets": true
+      }
+    }
+  },
+  "profiles_meeting_strict_narrow_hypothesis": [
+    "current_positional_0p10",
+    "pitch_half_positional_0p10"
+  ],
+  "schema_version": 1,
+  "strict_narrow_hypothesis": {
+    "current_min_coverage": 1,
+    "current_timing_cross_talk": 2.2757216433105754,
+    "question": "Does a preregistered non-production alignment profile strictly reduce pitch-drift timing cross-talk, make local-timing response monotonic, preserve directional/monotonic pitch sensitivity, and preserve minimum coverage?"
+  }
+}

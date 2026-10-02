@@ -240,20 +240,41 @@ See:
 
 #### R0.5d — Alignment Substrate Ablation v1
 
+Status: complete / baseline recorded.
+
+Result:
+
+```text
+current_positional_0p10
+pitch_half_positional_0p10
+    -> meet strict narrow hypothesis
+
+pitch_half
+pitch_free_structural
+    -> do not
+```
+
+The simplest successful diagnostic profile reduces pitch->timing cross-talk from 2.276 to 0.537 and restores monotonic local-timing response while preserving pitch sensitivity and full coverage.
+
+Trade-offs remain:
+
+- local-timing endpoint response is compressed from -4.389 to -1.610;
+- timing->pitch residual rises from 0.764 to 1.022.
+
+See:
+
+- `docs/alignment_substrate_ablation_baseline_v1.json`;
+- `docs/alignment_substrate_ablation_results_v1.md`.
+
+#### R0.5e — Alignment Candidate Validation v1
+
 Status: active next machine-side experiment.
 
-Goal: test whether the timing defects attributed to DTW can be reduced with a narrower alignment substrate before admitting a new representation.
+Goal: validate the already-preregistered simplest successful profile, `current_positional_0p10`, against the broader existing R0 evidence without tuning its weight.
 
-Candidate diagnostic alignment costs:
+The validation should rerun all current target and nuisance families side by side against production behavior, including amplitude gain, deterministic additive noise, pitch drift, and local timing warp.
 
-- current pitch + energy + ZCR + voiced cost;
-- pitch-free structural cost;
-- reduced-pitch cost;
-- positional regularization.
-
-The experiment must compare pitch-drift timing cross-talk, local-timing monotonicity, coverage/path geometry, and preservation of useful target sensitivity.
-
-No production alignment change should be admitted merely because one ablation looks promising.
+No production DTW change should be made in R0.5e.
 
 ### R0.6 — Representation Admission Decision v1
 
@@ -334,10 +355,10 @@ Two evidence tracks are now intentionally separate:
 human evidence
     R0.5b — collect first local-session repeatability sample when convenient
 
-machine-side attribution
-    R0.5d — Alignment Substrate Ablation v1
+machine-side validation
+    R0.5e — Alignment Candidate Validation v1
 ```
 
-R0.5c showed that the main timing cross-talk and timing monotonicity defect are alignment-path problems. That makes alignment ablation the narrowest machine-side experiment available without requiring a guitar recording.
+R0.5d showed that the main timing defect is solvable inside alignment-space, but with measurable trade-offs. The next machine-side step is therefore broader validation of the already-preregistered positional candidate, not additional weight tuning and not a representation rewrite.
 
 R0.5b remains necessary before assigning practical human significance to the residual protected-score movements.
