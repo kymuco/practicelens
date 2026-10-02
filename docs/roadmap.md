@@ -268,13 +268,52 @@ See:
 
 #### R0.5e — Alignment Candidate Validation v1
 
+Status: complete / broader synthetic validation recorded.
+
+The frozen `current_positional_0p10` candidate does not pass all preregistered checks.
+
+It preserves:
+
+- amplitude-gain invariance;
+- pitch-drift sensitivity and monotonicity;
+- reduced pitch->timing cross-talk;
+- monotonic local-timing response;
+- full coverage.
+
+It regresses:
+
+- additive-noise pitch movement: 3.561 -> 3.770;
+- local-timing protected pitch movement: 0.764 -> 1.022.
+
+See:
+
+- `docs/alignment_candidate_validation_baseline_v1.json`;
+- `docs/alignment_candidate_validation_results_v1.md`.
+
+No production DTW change is admitted.
+
+#### R0.5f — Metric-Specific Alignment Readout Ablation v1
+
 Status: active next machine-side experiment.
 
-Goal: validate the already-preregistered simplest successful profile, `current_positional_0p10`, against the broader existing R0 evidence without tuning its weight.
+Goal: test whether the remaining trade-off is caused by forcing pitch and timing measurements to share one alignment path.
 
-The validation should rerun all current target and nuisance families side by side against production behavior, including amplitude gain, deterministic additive noise, pitch drift, and local timing warp.
+Diagnostic hypothesis:
 
-No production DTW change should be made in R0.5e.
+```text
+pitch_fidelity
+    -> current flexible feature-driven alignment
+
+timing_consistency
+    -> current_positional_0p10 geometry-regularized alignment
+
+rhythm_fidelity
+    -> unchanged onset/time path
+```
+
+This should be evaluated counterfactually against all existing target and nuisance families without changing production behavior.
+
+If metric-specific readouts recover both pitch robustness and timing monotonicity, shared-alignment coupling is the narrower architectural defect.
 
 ### R0.6 — Representation Admission Decision v1
 
@@ -356,9 +395,9 @@ human evidence
     R0.5b — collect first local-session repeatability sample when convenient
 
 machine-side validation
-    R0.5e — Alignment Candidate Validation v1
+    R0.5f — Metric-Specific Alignment Readout Ablation v1
 ```
 
-R0.5d showed that the main timing defect is solvable inside alignment-space, but with measurable trade-offs. The next machine-side step is therefore broader validation of the already-preregistered positional candidate, not additional weight tuning and not a representation rewrite.
+R0.5e showed that a single positional alignment path trades timing cleanliness for pitch robustness. The next machine-side step tests the narrower shared-alignment-coupling hypothesis instead of tuning another global weight or jumping to a representation rewrite.
 
 R0.5b remains necessary before assigning practical human significance to the residual protected-score movements.

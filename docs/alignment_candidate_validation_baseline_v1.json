@@ -1,0 +1,1152 @@
+{
+  "analysis_config": {
+    "frame_length": 1024,
+    "hop_length": 256,
+    "schema_version": 1,
+    "segment_duration_s": 1,
+    "target_sample_rate": 16000
+  },
+  "candidate_profile": {
+    "energy_weight": 0.25,
+    "name": "current_positional_0p10",
+    "pitch_weight": 0.55,
+    "position_penalty_weight": 0.1,
+    "voiced_mismatch_penalty": 0.4,
+    "zcr_weight": 0.2
+  },
+  "code_revision": "45384707dde57c874e76ba6e77501f12181623d9",
+  "experiment_id": "r0.5e-alignment-candidate-validation-v1",
+  "families": {
+    "amplitude_gain": {
+      "candidate": {
+        "deltas_from_control": {
+          "pitch_fidelity": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "rhythm_fidelity": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "section_stability": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "timing_consistency": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "endpoint_deltas": {
+          "pitch_fidelity": 0,
+          "rhythm_fidelity": 0,
+          "section_stability": 0,
+          "timing_consistency": 0
+        },
+        "max_abs_deltas": {
+          "pitch_fidelity": 0,
+          "rhythm_fidelity": 0,
+          "section_stability": 0,
+          "timing_consistency": 0
+        },
+        "values": {
+          "pitch_fidelity": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "rhythm_fidelity": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "section_stability": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "timing_consistency": [
+            100,
+            100,
+            100,
+            100
+          ]
+        }
+      },
+      "comparison": {
+        "candidate_min_coverage": 1,
+        "endpoint_delta_ratios_candidate_over_production": {
+          "pitch_fidelity": 1,
+          "rhythm_fidelity": 1,
+          "section_stability": 1,
+          "timing_consistency": 1
+        },
+        "max_abs_delta_ratios_candidate_over_production": {
+          "pitch_fidelity": 1,
+          "rhythm_fidelity": 1,
+          "section_stability": 1,
+          "timing_consistency": 1
+        },
+        "production_min_coverage": 1
+      },
+      "condition_ids": [
+        "amplitude_gain__0",
+        "amplitude_gain__3",
+        "amplitude_gain__6",
+        "amplitude_gain__12"
+      ],
+      "conditions": [
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "condition_id": "amplitude_gain__0",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0.000005015411876191848,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0.0012739146165527293,
+            "warp_step_fraction": 0
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "condition_id": "amplitude_gain__3",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 3
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0.000006525579146961105,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0.0016574971033281205,
+            "warp_step_fraction": 0
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "condition_id": "amplitude_gain__6",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 6
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0.000019602097700497957,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0.004978932815926481,
+            "warp_step_fraction": 0
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "condition_id": "amplitude_gain__12",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 12
+        }
+      ],
+      "family": "amplitude_gain",
+      "primary_measurement": null,
+      "production": {
+        "deltas_from_control": {
+          "pitch_fidelity": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "rhythm_fidelity": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "section_stability": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "timing_consistency": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "endpoint_deltas": {
+          "pitch_fidelity": 0,
+          "rhythm_fidelity": 0,
+          "section_stability": 0,
+          "timing_consistency": 0
+        },
+        "max_abs_deltas": {
+          "pitch_fidelity": 0,
+          "rhythm_fidelity": 0,
+          "section_stability": 0,
+          "timing_consistency": 0
+        },
+        "values": {
+          "pitch_fidelity": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "rhythm_fidelity": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "section_stability": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "timing_consistency": [
+            100,
+            100,
+            100,
+            100
+          ]
+        }
+      },
+      "protected_measurements": [
+        "pitch_fidelity",
+        "rhythm_fidelity",
+        "timing_consistency",
+        "section_stability"
+      ],
+      "role": "nuisance",
+      "strengths": [
+        0,
+        3,
+        6,
+        12
+      ]
+    },
+    "deterministic_additive_noise": {
+      "candidate": {
+        "deltas_from_control": {
+          "pitch_fidelity": [
+            0,
+            -1.088161418851442,
+            -1.5021150741103355,
+            -3.7695848790511093
+          ],
+          "rhythm_fidelity": [
+            0,
+            -0.09345419005819622,
+            -0.09790288535363345,
+            -1.184859407092759
+          ],
+          "section_stability": [
+            0,
+            -1.3982320997403406,
+            -1.4083268691509971,
+            -1.9265067482343738
+          ],
+          "timing_consistency": [
+            0,
+            -0.6412279515271848,
+            -0.4985222376526792,
+            -0.0823451910408437
+          ]
+        },
+        "endpoint_deltas": {
+          "pitch_fidelity": -3.7695848790511093,
+          "rhythm_fidelity": -1.184859407092759,
+          "section_stability": -1.9265067482343738,
+          "timing_consistency": -0.0823451910408437
+        },
+        "max_abs_deltas": {
+          "pitch_fidelity": 3.7695848790511093,
+          "rhythm_fidelity": 1.184859407092759,
+          "section_stability": 1.9265067482343738,
+          "timing_consistency": 0.6412279515271848
+        },
+        "values": {
+          "pitch_fidelity": [
+            100,
+            98.91183858114856,
+            98.49788492588966,
+            96.23041512094889
+          ],
+          "rhythm_fidelity": [
+            100,
+            99.9065458099418,
+            99.90209711464637,
+            98.81514059290724
+          ],
+          "section_stability": [
+            100,
+            98.60176790025966,
+            98.591673130849,
+            98.07349325176563
+          ],
+          "timing_consistency": [
+            100,
+            99.35877204847282,
+            99.50147776234732,
+            99.91765480895916
+          ]
+        }
+      },
+      "comparison": {
+        "candidate_min_coverage": 1,
+        "endpoint_delta_ratios_candidate_over_production": {
+          "pitch_fidelity": 1.0585937500000027,
+          "rhythm_fidelity": 1,
+          "section_stability": 0.5967394169280826,
+          "timing_consistency": 0.03573312236286937
+        },
+        "max_abs_delta_ratios_candidate_over_production": {
+          "pitch_fidelity": 1.0585937500000027,
+          "rhythm_fidelity": 1,
+          "section_stability": 0.5885248493826594,
+          "timing_consistency": 0.14219041228658985
+        },
+        "production_min_coverage": 1
+      },
+      "condition_ids": [
+        "deterministic_additive_noise__0",
+        "deterministic_additive_noise__0p01",
+        "deterministic_additive_noise__0p03",
+        "deterministic_additive_noise__0p06"
+      ],
+      "conditions": [
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "condition_id": "deterministic_additive_noise__0",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.011857707509881465,
+            "mean_local_cost": 0.0037951432226646055,
+            "mean_normalized_position_error": 0.0009618419272907617,
+            "pair_count": 263,
+            "total_cost": 0.9981226675607914,
+            "warp_step_fraction": 0.06870229007633588
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 98.91183858114856,
+            "rhythm_fidelity": 99.9065458099418,
+            "section_stability": 98.60176790025966,
+            "timing_consistency": 99.35877204847282
+          },
+          "condition_id": "deterministic_additive_noise__0p01",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 99.28004011281143,
+            "rhythm_fidelity": 99.9065458099418,
+            "section_stability": 96.72654986402833,
+            "timing_consistency": 95.49035732286389
+          },
+          "strength": 0.01
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.011857707509881465,
+            "mean_local_cost": 0.010154486108005253,
+            "mean_normalized_position_error": 0.0007477833564790091,
+            "pair_count": 259,
+            "total_cost": 2.6300119019733597,
+            "warp_step_fraction": 0.03875968992248062
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 98.49788492588966,
+            "rhythm_fidelity": 99.90209711464637,
+            "section_stability": 98.591673130849,
+            "timing_consistency": 99.50147776234732
+          },
+          "condition_id": "deterministic_additive_noise__0p03",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 98.57491646815174,
+            "rhythm_fidelity": 99.90209711464637,
+            "section_stability": 98.02424614282464,
+            "timing_consistency": 96.37077897947464
+          },
+          "strength": 0.03
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.003952569169960507,
+            "mean_local_cost": 0.021962888272951793,
+            "mean_normalized_position_error": 0.00012351778656126454,
+            "pair_count": 256,
+            "total_cost": 5.622499397875656,
+            "warp_step_fraction": 0.01568627450980392
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 96.23041512094889,
+            "rhythm_fidelity": 98.81514059290724,
+            "section_stability": 98.07349325176563,
+            "timing_consistency": 99.91765480895916
+          },
+          "condition_id": "deterministic_additive_noise__0p06",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 96.43906373049047,
+            "rhythm_fidelity": 98.81514059290724,
+            "section_stability": 96.77161137075255,
+            "timing_consistency": 97.69555007803042
+          },
+          "strength": 0.06
+        }
+      ],
+      "family": "deterministic_additive_noise",
+      "primary_measurement": null,
+      "production": {
+        "deltas_from_control": {
+          "pitch_fidelity": [
+            0,
+            -0.7199598871885655,
+            -1.4250835318482586,
+            -3.5609362695095257
+          ],
+          "rhythm_fidelity": [
+            0,
+            -0.09345419005819622,
+            -0.09790288535363345,
+            -1.184859407092759
+          ],
+          "section_stability": [
+            0,
+            -3.2734501359716717,
+            -1.9757538571753628,
+            -3.2283886292474477
+          ],
+          "timing_consistency": [
+            0,
+            -4.509642677136114,
+            -3.629221020525364,
+            -2.304449921969578
+          ]
+        },
+        "endpoint_deltas": {
+          "pitch_fidelity": -3.5609362695095257,
+          "rhythm_fidelity": -1.184859407092759,
+          "section_stability": -3.2283886292474477,
+          "timing_consistency": -2.304449921969578
+        },
+        "max_abs_deltas": {
+          "pitch_fidelity": 3.5609362695095257,
+          "rhythm_fidelity": 1.184859407092759,
+          "section_stability": 3.2734501359716717,
+          "timing_consistency": 4.509642677136114
+        },
+        "values": {
+          "pitch_fidelity": [
+            100,
+            99.28004011281143,
+            98.57491646815174,
+            96.43906373049047
+          ],
+          "rhythm_fidelity": [
+            100,
+            99.9065458099418,
+            99.90209711464637,
+            98.81514059290724
+          ],
+          "section_stability": [
+            100,
+            96.72654986402833,
+            98.02424614282464,
+            96.77161137075255
+          ],
+          "timing_consistency": [
+            100,
+            95.49035732286389,
+            96.37077897947464,
+            97.69555007803042
+          ]
+        }
+      },
+      "protected_measurements": [
+        "pitch_fidelity",
+        "rhythm_fidelity",
+        "timing_consistency",
+        "section_stability"
+      ],
+      "role": "nuisance",
+      "strengths": [
+        0,
+        0.01,
+        0.03,
+        0.06
+      ]
+    },
+    "local_timing_warp": {
+      "candidate": {
+        "deltas_from_control": {
+          "pitch_fidelity": [
+            0,
+            -1.0221112047168646,
+            -0.5047776313759584,
+            -0.755352675595347
+          ],
+          "rhythm_fidelity": [
+            0,
+            -0.1692774641930015,
+            -1.416624341507429,
+            -0.8776707310899212
+          ],
+          "section_stability": [
+            0,
+            -1.116556959181736,
+            -1.5783008630559578,
+            -3.103480804732925
+          ],
+          "timing_consistency": [
+            0,
+            -0.6511310859136898,
+            -0.8455744990462648,
+            -1.6097736255838981
+          ]
+        },
+        "endpoint_deltas": {
+          "pitch_fidelity": -0.755352675595347,
+          "rhythm_fidelity": -0.8776707310899212,
+          "section_stability": -3.103480804732925,
+          "timing_consistency": -1.6097736255838981
+        },
+        "max_abs_deltas": {
+          "pitch_fidelity": 1.0221112047168646,
+          "rhythm_fidelity": 1.416624341507429,
+          "section_stability": 3.103480804732925,
+          "timing_consistency": 1.6097736255838981
+        },
+        "primary_directional_sensitivity": "PASS",
+        "primary_monotonicity": "PASS",
+        "values": {
+          "pitch_fidelity": [
+            100,
+            98.97788879528314,
+            99.49522236862404,
+            99.24464732440465
+          ],
+          "rhythm_fidelity": [
+            100,
+            99.830722535807,
+            98.58337565849257,
+            99.12232926891008
+          ],
+          "section_stability": [
+            100,
+            98.88344304081826,
+            98.42169913694404,
+            96.89651919526708
+          ],
+          "timing_consistency": [
+            100,
+            99.34886891408631,
+            99.15442550095374,
+            98.3902263744161
+          ]
+        }
+      },
+      "comparison": {
+        "candidate_min_coverage": 1,
+        "endpoint_delta_ratios_candidate_over_production": {
+          "pitch_fidelity": 0.989090909090927,
+          "rhythm_fidelity": 1,
+          "section_stability": 0.8317851403063133,
+          "timing_consistency": 0.36681517158338234
+        },
+        "max_abs_delta_ratios_candidate_over_production": {
+          "pitch_fidelity": 1.3383958690139228,
+          "rhythm_fidelity": 1,
+          "section_stability": 0.8317851403063133,
+          "timing_consistency": 0.35846731780615976
+        },
+        "production_min_coverage": 1
+      },
+      "condition_ids": [
+        "local_timing_warp__0",
+        "local_timing_warp__20",
+        "local_timing_warp__40",
+        "local_timing_warp__80"
+      ],
+      "conditions": [
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "condition_id": "local_timing_warp__0",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.0039525691699605625,
+            "mean_local_cost": 0.0010746177300757875,
+            "mean_normalized_position_error": 0.0009766966288705418,
+            "pair_count": 259,
+            "total_cost": 0.27832599208962927,
+            "warp_step_fraction": 0.03875968992248062
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 98.97788879528314,
+            "rhythm_fidelity": 99.830722535807,
+            "section_stability": 98.88344304081826,
+            "timing_consistency": 99.34886891408631
+          },
+          "condition_id": "local_timing_warp__20",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 99.63520569565577,
+            "rhythm_fidelity": 99.830722535807,
+            "section_stability": 97.08438410571894,
+            "timing_consistency": 95.50928760971627
+          },
+          "strength": 20
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.011857707509881465,
+            "mean_local_cost": 0.0009203249040288096,
+            "mean_normalized_position_error": 0.0012683617485694041,
+            "pair_count": 268,
+            "total_cost": 0.24664707427972127,
+            "warp_step_fraction": 0.10486891385767791
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 99.49522236862404,
+            "rhythm_fidelity": 98.58337565849257,
+            "section_stability": 98.42169913694404,
+            "timing_consistency": 99.15442550095374
+          },
+          "condition_id": "local_timing_warp__40",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 99.49896146218978,
+            "rhythm_fidelity": 98.58337565849257,
+            "section_stability": 98.23973312784989,
+            "timing_consistency": 97.88220367930512
+          },
+          "strength": 40
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.02371541501976282,
+            "mean_local_cost": 0.001384785127992126,
+            "mean_normalized_position_error": 0.0024146604383758516,
+            "pair_count": 275,
+            "total_cost": 0.38081591019783434,
+            "warp_step_fraction": 0.15328467153284672
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 99.24464732440465,
+            "rhythm_fidelity": 99.12232926891008,
+            "section_stability": 96.89651919526708,
+            "timing_consistency": 98.3902263744161
+          },
+          "condition_id": "local_timing_warp__80",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 99.23631622871795,
+            "rhythm_fidelity": 99.12232926891008,
+            "section_stability": 96.26889126248392,
+            "timing_consistency": 95.61148570099976
+          },
+          "strength": 80
+        }
+      ],
+      "family": "local_timing_warp",
+      "primary_measurement": "timing_consistency",
+      "production": {
+        "deltas_from_control": {
+          "pitch_fidelity": [
+            0,
+            -0.36479430434422966,
+            -0.5010385378102171,
+            -0.7636837712820466
+          ],
+          "rhythm_fidelity": [
+            0,
+            -0.1692774641930015,
+            -1.416624341507429,
+            -0.8776707310899212
+          ],
+          "section_stability": [
+            0,
+            -2.9156158942810606,
+            -1.7602668721501118,
+            -3.731108737516081
+          ],
+          "timing_consistency": [
+            0,
+            -4.490712390283733,
+            -2.117796320694879,
+            -4.388514299000235
+          ]
+        },
+        "endpoint_deltas": {
+          "pitch_fidelity": -0.7636837712820466,
+          "rhythm_fidelity": -0.8776707310899212,
+          "section_stability": -3.731108737516081,
+          "timing_consistency": -4.388514299000235
+        },
+        "max_abs_deltas": {
+          "pitch_fidelity": 0.7636837712820466,
+          "rhythm_fidelity": 1.416624341507429,
+          "section_stability": 3.731108737516081,
+          "timing_consistency": 4.490712390283733
+        },
+        "primary_directional_sensitivity": "PASS",
+        "primary_monotonicity": "PARTIAL",
+        "values": {
+          "pitch_fidelity": [
+            100,
+            99.63520569565577,
+            99.49896146218978,
+            99.23631622871795
+          ],
+          "rhythm_fidelity": [
+            100,
+            99.830722535807,
+            98.58337565849257,
+            99.12232926891008
+          ],
+          "section_stability": [
+            100,
+            97.08438410571894,
+            98.23973312784989,
+            96.26889126248392
+          ],
+          "timing_consistency": [
+            100,
+            95.50928760971627,
+            97.88220367930512,
+            95.61148570099976
+          ]
+        }
+      },
+      "protected_measurements": [
+        "pitch_fidelity"
+      ],
+      "role": "target",
+      "strengths": [
+        0,
+        20,
+        40,
+        80
+      ]
+    },
+    "pitch_drift": {
+      "candidate": {
+        "deltas_from_control": {
+          "pitch_fidelity": [
+            0,
+            -3.5423380951199164,
+            -11.676727281647985,
+            -25.384571702092387
+          ],
+          "rhythm_fidelity": [
+            0,
+            0,
+            -0.004451704289465397,
+            -0.013355523409686043
+          ],
+          "section_stability": [
+            0,
+            -2.5802882783913788,
+            -7.732387459964556,
+            -13.657340102273281
+          ],
+          "timing_consistency": [
+            0,
+            -0.5369527929002942,
+            -0.21283064761325932,
+            0
+          ]
+        },
+        "endpoint_deltas": {
+          "pitch_fidelity": -25.384571702092387,
+          "rhythm_fidelity": -0.013355523409686043,
+          "section_stability": -13.657340102273281,
+          "timing_consistency": 0
+        },
+        "max_abs_deltas": {
+          "pitch_fidelity": 25.384571702092387,
+          "rhythm_fidelity": 0.013355523409686043,
+          "section_stability": 13.657340102273281,
+          "timing_consistency": 0.5369527929002942
+        },
+        "primary_directional_sensitivity": "PASS",
+        "primary_monotonicity": "PASS",
+        "values": {
+          "pitch_fidelity": [
+            100,
+            96.45766190488008,
+            88.32327271835202,
+            74.61542829790761
+          ],
+          "rhythm_fidelity": [
+            100,
+            100,
+            99.99554829571053,
+            99.98664447659031
+          ],
+          "section_stability": [
+            100,
+            97.41971172160862,
+            92.26761254003544,
+            86.34265989772672
+          ],
+          "timing_consistency": [
+            100,
+            99.4630472070997,
+            99.78716935238674,
+            100
+          ]
+        }
+      },
+      "comparison": {
+        "candidate_min_coverage": 1,
+        "endpoint_delta_ratios_candidate_over_production": {
+          "pitch_fidelity": 1.001423969747201,
+          "rhythm_fidelity": 1,
+          "section_stability": 1.0000274353829184,
+          "timing_consistency": 0
+        },
+        "max_abs_delta_ratios_candidate_over_production": {
+          "pitch_fidelity": 1.001423969747201,
+          "rhythm_fidelity": 1,
+          "section_stability": 1.0000274353829184,
+          "timing_consistency": 0.23594836146971357
+        },
+        "production_min_coverage": 1
+      },
+      "condition_ids": [
+        "pitch_drift__0",
+        "pitch_drift__0p01",
+        "pitch_drift__0p03",
+        "pitch_drift__0p06"
+      ],
+      "conditions": [
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 0,
+            "warp_step_fraction": 0
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "condition_id": "pitch_drift__0",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 100,
+            "rhythm_fidelity": 100,
+            "section_stability": 100,
+            "timing_consistency": 100
+          },
+          "strength": 0
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.0039525691699605625,
+            "mean_local_cost": 0.001836676522431366,
+            "mean_normalized_position_error": 0.0008054291893504368,
+            "pair_count": 265,
+            "total_cost": 0.486719278444312,
+            "warp_step_fraction": 0.08333333333333333
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 96.45766190488008,
+            "rhythm_fidelity": 100,
+            "section_stability": 97.41971172160862,
+            "timing_consistency": 99.4630472070997
+          },
+          "condition_id": "pitch_drift__0p01",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 96.71776365312317,
+            "rhythm_fidelity": 100,
+            "section_stability": 97.41874926672128,
+            "timing_consistency": 97.72427835668942
+          },
+          "strength": 0.01
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0.011857707509881427,
+            "mean_local_cost": 0.004681789454469701,
+            "mean_normalized_position_error": 0.00031924597141988465,
+            "pair_count": 260,
+            "total_cost": 1.2172652581621217,
+            "warp_step_fraction": 0.04633204633204633
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 88.32327271835202,
+            "rhythm_fidelity": 99.99554829571053,
+            "section_stability": 92.26761254003544,
+            "timing_consistency": 99.78716935238674
+          },
+          "condition_id": "pitch_drift__0p03",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 88.96018511553282,
+            "rhythm_fidelity": 99.99554829571053,
+            "section_stability": 92.31562605124768,
+            "timing_consistency": 98.38064438854953
+          },
+          "strength": 0.03
+        },
+        {
+          "candidate_alignment": {
+            "coverage_ratio": 1,
+            "max_normalized_position_error": 0,
+            "mean_local_cost": 0.009849299462164153,
+            "mean_normalized_position_error": 0,
+            "pair_count": 254,
+            "total_cost": 2.5017220633896944,
+            "warp_step_fraction": 0
+          },
+          "candidate_scores": {
+            "pitch_fidelity": 74.61542829790761,
+            "rhythm_fidelity": 99.98664447659031,
+            "section_stability": 86.34265989772672,
+            "timing_consistency": 100
+          },
+          "condition_id": "pitch_drift__0p06",
+          "production_alignment_coverage": 1,
+          "production_scores": {
+            "pitch_fidelity": 74.65152376120929,
+            "rhythm_fidelity": 99.98664447659031,
+            "section_stability": 86.34303458180247,
+            "timing_consistency": 99.84499728745253
+          },
+          "strength": 0.06
+        }
+      ],
+      "family": "pitch_drift",
+      "primary_measurement": "pitch_fidelity",
+      "production": {
+        "deltas_from_control": {
+          "pitch_fidelity": [
+            0,
+            -3.2822363468768287,
+            -11.039814884467177,
+            -25.34847623879071
+          ],
+          "rhythm_fidelity": [
+            0,
+            0,
+            -0.004451704289465397,
+            -0.013355523409686043
+          ],
+          "section_stability": [
+            0,
+            -2.581250733278722,
+            -7.684373948752324,
+            -13.65696541819753
+          ],
+          "timing_consistency": [
+            0,
+            -2.2757216433105754,
+            -1.619355611450473,
+            -0.15500271254747133
+          ]
+        },
+        "endpoint_deltas": {
+          "pitch_fidelity": -25.34847623879071,
+          "rhythm_fidelity": -0.013355523409686043,
+          "section_stability": -13.65696541819753,
+          "timing_consistency": -0.15500271254747133
+        },
+        "max_abs_deltas": {
+          "pitch_fidelity": 25.34847623879071,
+          "rhythm_fidelity": 0.013355523409686043,
+          "section_stability": 13.65696541819753,
+          "timing_consistency": 2.2757216433105754
+        },
+        "primary_directional_sensitivity": "PASS",
+        "primary_monotonicity": "PASS",
+        "values": {
+          "pitch_fidelity": [
+            100,
+            96.71776365312317,
+            88.96018511553282,
+            74.65152376120929
+          ],
+          "rhythm_fidelity": [
+            100,
+            100,
+            99.99554829571053,
+            99.98664447659031
+          ],
+          "section_stability": [
+            100,
+            97.41874926672128,
+            92.31562605124768,
+            86.34303458180247
+          ],
+          "timing_consistency": [
+            100,
+            97.72427835668942,
+            98.38064438854953,
+            99.84499728745253
+          ]
+        }
+      },
+      "protected_measurements": [
+        "rhythm_fidelity",
+        "timing_consistency"
+      ],
+      "role": "target",
+      "strengths": [
+        0,
+        0.01,
+        0.03,
+        0.06
+      ]
+    }
+  },
+  "interpretation_boundary": [
+    "The candidate profile is frozen from R0.5d; R0.5e performs no weight search.",
+    "Passing the synthetic checks does not admit a production DTW change.",
+    "Response magnitude is reported but not thresholded because R0.5b human repeatability evidence is still pending.",
+    "A protected-dimension regression is recorded as a failed synthetic check even if the primary target improves."
+  ],
+  "kind": "alignment_candidate_validation",
+  "passes_all_preregistered_checks": false,
+  "schema_version": 1,
+  "validation_checks": {
+    "additive_noise_no_measurement_regression": false,
+    "amplitude_gain_strict_invariance": true,
+    "local_timing_directional_sensitivity_preserved": true,
+    "local_timing_monotonicity_improved_to_pass": true,
+    "local_timing_protected_cross_talk_no_worse": false,
+    "minimum_alignment_coverage_preserved": true,
+    "pitch_drift_directional_sensitivity_preserved": true,
+    "pitch_drift_monotonicity_preserved": true,
+    "pitch_drift_protected_cross_talk_no_worse": true
+  }
+}
