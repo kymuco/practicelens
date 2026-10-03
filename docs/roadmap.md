@@ -333,24 +333,43 @@ This supports shared-alignment coupling, not frame-level insufficiency, as the c
 
 #### R0.5g — Additive Noise Attribution Audit v1
 
-Status: active next machine-side experiment.
+Status: complete / baseline recorded.
 
-Goal: localize the remaining additive-noise movement before attempting any robustness repair.
-
-The unresolved synthetic nuisance is now concentrated in:
+Result:
 
 ```text
-pitch_fidelity max delta   3.560936
-rhythm_fidelity max delta  1.184859
+noise -> pitch_fidelity
+    feature_extraction_with_alignment_contribution
+
+noise -> rhythm_fidelity
+    feature_extraction
 ```
 
-Timing noise movement can already be reduced inside alignment-space.
+Pitch evidence:
 
-R0.5g should determine whether the remaining pitch/rhythm nuisance first appears in feature extraction, alignment correspondence, or score construction.
+- relative-position pitch error rises to 7.599 cents at noise 0.06;
+- voiced mismatch fraction remains 0;
+- production DTW partially compensates the extractor error;
+- production pitch movement is 3.561 points versus 3.799 under linear alignment.
 
-Do not change pitch/onset estimators during the attribution audit.
+Rhythm evidence:
+
+- low-noise movement is tiny onset-position drift;
+- at noise 0.06 the onset count changes 23 -> 24;
+- the extra-onset count term contributes about 91.7% of the final 1.185-point rhythm movement.
+
+Score reconstruction error is zero for the audited pitch/rhythm paths.
+
+See:
+
+- `docs/additive_noise_attribution_baseline_v1.json`;
+- `docs/additive_noise_attribution_results_v1.md`.
+
+The remaining noise failures are estimator-local rather than evidence that a new event representation is required.
 
 ### R0.6 — Representation Admission Decision v1
+
+Status: active next machine-side decision.
 
 Goal: decide whether the existing frame-level representation is sufficient.
 
@@ -429,10 +448,10 @@ Two evidence tracks are now intentionally separate:
 human evidence
     R0.5b — collect first local-session repeatability sample when convenient
 
-machine-side attribution
-    R0.5g — Additive Noise Attribution Audit v1
+machine-side decision
+    R0.6 — Representation Admission Decision v1
 ```
 
-R0.5f supports shared-alignment coupling as the timing architecture defect without changing the frame-level representation. The remaining independent machine-side failure is additive-noise sensitivity in pitch and rhythm, so the next step is attribution rather than another alignment search or a representation rewrite.
+R0.5g localizes the remaining additive-noise failures to the current pitch and onset estimators. Together with the R0.5c-f alignment evidence, there is now enough machine-side evidence to make the conservative R0.6 representation-admission decision without another repair/tuning loop.
 
 R0.5b remains necessary before assigning practical human significance to the residual protected-score movements.
