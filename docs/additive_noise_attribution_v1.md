@@ -1,6 +1,6 @@
 # R0.5g — Additive Noise Attribution Audit v1
 
-Status: active experiment
+Status: complete / attribution baseline recorded
 
 ## Trigger
 
@@ -133,6 +133,29 @@ Then the next repair question belongs to energy/onset evidence, not DTW.
 ### Score-only movement
 
 That would indicate a score construction issue despite stable relevant feature evidence.
+
+## Recorded result
+
+Canonical evidence:
+
+- `docs/additive_noise_attribution_baseline_v1.json`;
+- `docs/additive_noise_attribution_results_v1.md`.
+
+Recorded attribution:
+
+```text
+noise -> pitch_fidelity
+    feature_extraction_with_alignment_contribution
+
+noise -> rhythm_fidelity
+    feature_extraction
+```
+
+Pitch remains voiced throughout the tested noise range, but the extracted frequency estimate moves by up to 7.599 cents under relative-position comparison. Production DTW partially compensates this feature error.
+
+Rhythm onset positions move slightly at low noise. At 0.06 noise, the detector admits one extra onset (23 -> 24), which dominates the 1.185-point rhythm movement.
+
+Current pitch and rhythm score formulas reconstruct exactly from the recorded feature terms, so no unexplained score-construction effect is required.
 
 ## Non-goals
 
