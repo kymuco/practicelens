@@ -1,0 +1,525 @@
+{
+  "analysis_config": {
+    "frame_length": 1024,
+    "hop_length": 256,
+    "schema_version": 1,
+    "segment_duration_s": 1,
+    "target_sample_rate": 16000
+  },
+  "code_revision": "4b979d01256598657f19a1cb97ae86dc66470e9b",
+  "conditions": [
+    {
+      "condition_id": "deterministic_additive_noise__0",
+      "feature_diagnostics": {
+        "frame_count_delta": 0,
+        "linear_energy_mean_abs_delta": 0,
+        "linear_pitch_mean_cents_error": 0,
+        "linear_pitch_voiced_mismatch_fraction": 0,
+        "linear_zcr_mean_abs_delta": 0,
+        "normalized_onset_mean_nearest_distance": 0,
+        "onset_count_delta": 0,
+        "reference_frame_count": 254,
+        "reference_onset_count": 23,
+        "reference_tempo_bpm": 3749.999999999997,
+        "reference_voiced_ratio": 1,
+        "take_frame_count": 254,
+        "take_onset_count": 23,
+        "take_tempo_bpm": 3749.999999999997,
+        "take_voiced_ratio": 1,
+        "tempo_delta_bpm": 0,
+        "voiced_ratio_delta": 0
+      },
+      "linear_pitch_terms": {
+        "aligned_pair_count": 254,
+        "aligned_voiced_pair_count": 254,
+        "final_score": 100,
+        "mean_cents_error": 0,
+        "mismatch_penalty": 0,
+        "raw_error_score": 100,
+        "voiced_mismatch_count": 0
+      },
+      "linear_scores": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      },
+      "production_alignment": {
+        "coverage_ratio": 1,
+        "max_normalized_position_error": 0,
+        "mean_local_cost": 0,
+        "mean_normalized_position_error": 0,
+        "pair_count": 254,
+        "total_cost": 0,
+        "warp_step_fraction": 0
+      },
+      "production_pitch_terms": {
+        "aligned_pair_count": 254,
+        "aligned_voiced_pair_count": 254,
+        "final_score": 100,
+        "mean_cents_error": 0,
+        "mismatch_penalty": 0,
+        "raw_error_score": 100,
+        "voiced_mismatch_count": 0
+      },
+      "production_scores": {
+        "pitch_fidelity": 100,
+        "rhythm_fidelity": 100,
+        "section_stability": 100,
+        "timing_consistency": 100
+      },
+      "rhythm_terms": {
+        "count_penalty_fraction": 0,
+        "count_score": 100,
+        "distance_score": 100,
+        "final_score": 100,
+        "mean_nearest_distance": 0,
+        "reference_onset_count": 23,
+        "take_onset_count": 23
+      },
+      "strength": 0
+    },
+    {
+      "condition_id": "deterministic_additive_noise__0p01",
+      "feature_diagnostics": {
+        "frame_count_delta": 0,
+        "linear_energy_mean_abs_delta": 0.006299567153455937,
+        "linear_pitch_mean_cents_error": 4.503982144652297,
+        "linear_pitch_voiced_mismatch_fraction": 0,
+        "linear_zcr_mean_abs_delta": 0.002278307586918204,
+        "normalized_onset_mean_nearest_distance": 0.0001495267040931194,
+        "onset_count_delta": 0,
+        "reference_frame_count": 254,
+        "reference_onset_count": 23,
+        "reference_tempo_bpm": 3749.999999999997,
+        "reference_voiced_ratio": 1,
+        "take_frame_count": 254,
+        "take_onset_count": 23,
+        "take_tempo_bpm": 3749.999999999997,
+        "take_voiced_ratio": 1,
+        "tempo_delta_bpm": 0,
+        "voiced_ratio_delta": 0
+      },
+      "linear_pitch_terms": {
+        "aligned_pair_count": 254,
+        "aligned_voiced_pair_count": 254,
+        "final_score": 97.74800892767385,
+        "mean_cents_error": 4.503982144652297,
+        "mismatch_penalty": 0,
+        "raw_error_score": 97.74800892767385,
+        "voiced_mismatch_count": 0
+      },
+      "linear_scores": {
+        "pitch_fidelity": 97.74800892767385,
+        "rhythm_fidelity": 99.9065458099418,
+        "section_stability": 98.51981100708015,
+        "timing_consistency": 100
+      },
+      "production_alignment": {
+        "coverage_ratio": 1,
+        "max_normalized_position_error": 0.0513833992094862,
+        "mean_local_cost": 0.0031699947318405957,
+        "mean_normalized_position_error": 0.006764464015704168,
+        "pair_count": 298,
+        "total_cost": 0.944658430088498,
+        "warp_step_fraction": 0.2962962962962963
+      },
+      "production_pitch_terms": {
+        "aligned_pair_count": 298,
+        "aligned_voiced_pair_count": 298,
+        "final_score": 99.28004011281143,
+        "mean_cents_error": 1.439919774377133,
+        "mismatch_penalty": 0,
+        "raw_error_score": 99.28004011281143,
+        "voiced_mismatch_count": 0
+      },
+      "production_scores": {
+        "pitch_fidelity": 99.28004011281143,
+        "rhythm_fidelity": 99.9065458099418,
+        "section_stability": 96.72654986402833,
+        "timing_consistency": 95.49035732286389
+      },
+      "rhythm_terms": {
+        "count_penalty_fraction": 0,
+        "count_score": 100,
+        "distance_score": 99.87539441325573,
+        "final_score": 99.9065458099418,
+        "mean_nearest_distance": 0.0001495267040931194,
+        "reference_onset_count": 23,
+        "take_onset_count": 23
+      },
+      "strength": 0.01
+    },
+    {
+      "condition_id": "deterministic_additive_noise__0p03",
+      "feature_diagnostics": {
+        "frame_count_delta": 0,
+        "linear_energy_mean_abs_delta": 0.01814924699992139,
+        "linear_pitch_mean_cents_error": 4.609293469254467,
+        "linear_pitch_voiced_mismatch_fraction": 0,
+        "linear_zcr_mean_abs_delta": 0.006450073506207618,
+        "normalized_onset_mean_nearest_distance": 0.00015664461656581812,
+        "onset_count_delta": 0,
+        "reference_frame_count": 254,
+        "reference_onset_count": 23,
+        "reference_tempo_bpm": 3749.999999999997,
+        "reference_voiced_ratio": 1,
+        "take_frame_count": 254,
+        "take_onset_count": 23,
+        "take_tempo_bpm": 3749.999999999997,
+        "take_voiced_ratio": 1,
+        "tempo_delta_bpm": 0,
+        "voiced_ratio_delta": 0
+      },
+      "linear_pitch_terms": {
+        "aligned_pair_count": 254,
+        "aligned_voiced_pair_count": 254,
+        "final_score": 97.69535326537276,
+        "mean_cents_error": 4.609293469254467,
+        "mismatch_penalty": 0,
+        "raw_error_score": 97.69535326537276,
+        "voiced_mismatch_count": 0
+      },
+      "linear_scores": {
+        "pitch_fidelity": 97.69535326537276,
+        "rhythm_fidelity": 99.90209711464637,
+        "section_stability": 98.47940316046368,
+        "timing_consistency": 100
+      },
+      "production_alignment": {
+        "coverage_ratio": 1,
+        "max_normalized_position_error": 0.023715415019762875,
+        "mean_local_cost": 0.009478170968077494,
+        "mean_normalized_position_error": 0.005443831530788054,
+        "pair_count": 273,
+        "total_cost": 2.587540674285157,
+        "warp_step_fraction": 0.13970588235294118
+      },
+      "production_pitch_terms": {
+        "aligned_pair_count": 273,
+        "aligned_voiced_pair_count": 273,
+        "final_score": 98.57491646815174,
+        "mean_cents_error": 2.8501670636965186,
+        "mismatch_penalty": 0,
+        "raw_error_score": 98.57491646815174,
+        "voiced_mismatch_count": 0
+      },
+      "production_scores": {
+        "pitch_fidelity": 98.57491646815174,
+        "rhythm_fidelity": 99.90209711464637,
+        "section_stability": 98.02424614282464,
+        "timing_consistency": 96.37077897947464
+      },
+      "rhythm_terms": {
+        "count_penalty_fraction": 0,
+        "count_score": 100,
+        "distance_score": 99.8694628195285,
+        "final_score": 99.90209711464637,
+        "mean_nearest_distance": 0.00015664461656581812,
+        "reference_onset_count": 23,
+        "take_onset_count": 23
+      },
+      "strength": 0.03
+    },
+    {
+      "condition_id": "deterministic_additive_noise__0p06",
+      "feature_diagnostics": {
+        "frame_count_delta": 0,
+        "linear_energy_mean_abs_delta": 0.03479037717821301,
+        "linear_pitch_mean_cents_error": 7.598533299504577,
+        "linear_pitch_voiced_mismatch_fraction": 0,
+        "linear_zcr_mean_abs_delta": 0.015170757614242502,
+        "normalized_onset_mean_nearest_distance": 0.00015664461656581812,
+        "onset_count_delta": 1,
+        "reference_frame_count": 254,
+        "reference_onset_count": 23,
+        "reference_tempo_bpm": 3749.999999999997,
+        "reference_voiced_ratio": 1,
+        "take_frame_count": 254,
+        "take_onset_count": 24,
+        "take_tempo_bpm": 3749.999999999997,
+        "take_voiced_ratio": 1,
+        "tempo_delta_bpm": 0,
+        "voiced_ratio_delta": 0
+      },
+      "linear_pitch_terms": {
+        "aligned_pair_count": 254,
+        "aligned_voiced_pair_count": 254,
+        "final_score": 96.20073335024772,
+        "mean_cents_error": 7.598533299504577,
+        "mismatch_penalty": 0,
+        "raw_error_score": 96.20073335024772,
+        "voiced_mismatch_count": 0
+      },
+      "linear_scores": {
+        "pitch_fidelity": 96.20073335024772,
+        "rhythm_fidelity": 98.81514059290724,
+        "section_stability": 98.01315870511208,
+        "timing_consistency": 100
+      },
+      "production_alignment": {
+        "coverage_ratio": 1,
+        "max_normalized_position_error": 0.0434782608695653,
+        "mean_local_cost": 0.020701666879783483,
+        "mean_normalized_position_error": 0.0034566748829543623,
+        "pair_count": 271,
+        "total_cost": 5.610151724421324,
+        "warp_step_fraction": 0.1259259259259259
+      },
+      "production_pitch_terms": {
+        "aligned_pair_count": 271,
+        "aligned_voiced_pair_count": 271,
+        "final_score": 96.43906373049047,
+        "mean_cents_error": 7.1218725390190505,
+        "mismatch_penalty": 0,
+        "raw_error_score": 96.43906373049047,
+        "voiced_mismatch_count": 0
+      },
+      "production_scores": {
+        "pitch_fidelity": 96.43906373049047,
+        "rhythm_fidelity": 98.81514059290724,
+        "section_stability": 96.77161137075255,
+        "timing_consistency": 97.69555007803042
+      },
+      "rhythm_terms": {
+        "count_penalty_fraction": 0.043478260869565216,
+        "count_score": 95.65217391304348,
+        "distance_score": 99.8694628195285,
+        "final_score": 98.81514059290724,
+        "mean_nearest_distance": 0.00015664461656581812,
+        "reference_onset_count": 23,
+        "take_onset_count": 24
+      },
+      "strength": 0.06
+    }
+  ],
+  "epsilon": 1e-9,
+  "experiment_id": "r0.5g-additive-noise-attribution-v1",
+  "interpretation_boundary": [
+    "The audit localizes the first stage where additive-noise movement becomes observable; it does not repair the estimator.",
+    "Linear alignment is a diagnostic counterfactual that removes feature-similarity path selection from pitch scoring.",
+    "Rhythm fidelity is alignment-independent in the production scorer, so onset/time feature movement precedes its score movement.",
+    "Score-term reconstruction verifies the current score mapping rather than proposing a new score."
+  ],
+  "kind": "additive_noise_attribution_audit",
+  "pitch_fidelity": {
+    "alignment_contribution_deltas": [
+      0,
+      1.5320311851375834,
+      0.8795632027789821,
+      0.23833038024275766
+    ],
+    "alignment_max_abs_contribution": 1.5320311851375834,
+    "classification": "feature_extraction_with_alignment_contribution",
+    "feature_evidence": {
+      "linear_pitch_mean_cents_error": [
+        0,
+        4.503982144652297,
+        4.609293469254467,
+        7.598533299504577
+      ],
+      "linear_pitch_voiced_mismatch_fraction": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "voiced_ratio_delta": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "linear_alignment_score_deltas": [
+      0,
+      -2.251991072326149,
+      -2.304646734627241,
+      -3.7992666497522833
+    ],
+    "linear_max_abs_delta": 3.7992666497522833,
+    "linear_score_terms": [
+      {
+        "aligned_pair_count": 254,
+        "aligned_voiced_pair_count": 254,
+        "final_score": 100,
+        "mean_cents_error": 0,
+        "mismatch_penalty": 0,
+        "raw_error_score": 100,
+        "voiced_mismatch_count": 0
+      },
+      {
+        "aligned_pair_count": 254,
+        "aligned_voiced_pair_count": 254,
+        "final_score": 97.74800892767385,
+        "mean_cents_error": 4.503982144652297,
+        "mismatch_penalty": 0,
+        "raw_error_score": 97.74800892767385,
+        "voiced_mismatch_count": 0
+      },
+      {
+        "aligned_pair_count": 254,
+        "aligned_voiced_pair_count": 254,
+        "final_score": 97.69535326537276,
+        "mean_cents_error": 4.609293469254467,
+        "mismatch_penalty": 0,
+        "raw_error_score": 97.69535326537276,
+        "voiced_mismatch_count": 0
+      },
+      {
+        "aligned_pair_count": 254,
+        "aligned_voiced_pair_count": 254,
+        "final_score": 96.20073335024772,
+        "mean_cents_error": 7.598533299504577,
+        "mismatch_penalty": 0,
+        "raw_error_score": 96.20073335024772,
+        "voiced_mismatch_count": 0
+      }
+    ],
+    "production_max_abs_delta": 3.5609362695095257,
+    "production_score_deltas": [
+      0,
+      -0.7199598871885655,
+      -1.4250835318482586,
+      -3.5609362695095257
+    ],
+    "production_score_terms": [
+      {
+        "aligned_pair_count": 254,
+        "aligned_voiced_pair_count": 254,
+        "final_score": 100,
+        "mean_cents_error": 0,
+        "mismatch_penalty": 0,
+        "raw_error_score": 100,
+        "voiced_mismatch_count": 0
+      },
+      {
+        "aligned_pair_count": 298,
+        "aligned_voiced_pair_count": 298,
+        "final_score": 99.28004011281143,
+        "mean_cents_error": 1.439919774377133,
+        "mismatch_penalty": 0,
+        "raw_error_score": 99.28004011281143,
+        "voiced_mismatch_count": 0
+      },
+      {
+        "aligned_pair_count": 273,
+        "aligned_voiced_pair_count": 273,
+        "final_score": 98.57491646815174,
+        "mean_cents_error": 2.8501670636965186,
+        "mismatch_penalty": 0,
+        "raw_error_score": 98.57491646815174,
+        "voiced_mismatch_count": 0
+      },
+      {
+        "aligned_pair_count": 271,
+        "aligned_voiced_pair_count": 271,
+        "final_score": 96.43906373049047,
+        "mean_cents_error": 7.1218725390190505,
+        "mismatch_penalty": 0,
+        "raw_error_score": 96.43906373049047,
+        "voiced_mismatch_count": 0
+      }
+    ]
+  },
+  "rhythm_fidelity": {
+    "classification": "feature_extraction",
+    "feature_evidence": {
+      "count_penalty_fraction": [
+        0,
+        0,
+        0,
+        0.043478260869565216
+      ],
+      "count_score": [
+        100,
+        100,
+        100,
+        95.65217391304348
+      ],
+      "distance_score": [
+        100,
+        99.87539441325573,
+        99.8694628195285,
+        99.8694628195285
+      ],
+      "mean_nearest_distance": [
+        0,
+        0.0001495267040931194,
+        0.00015664461656581812,
+        0.00015664461656581812
+      ],
+      "reference_onset_count": [
+        23,
+        23,
+        23,
+        23
+      ],
+      "take_onset_count": [
+        23,
+        23,
+        23,
+        24
+      ]
+    },
+    "production_max_abs_delta": 1.184859407092759,
+    "production_score_deltas": [
+      0,
+      -0.09345419005819622,
+      -0.09790288535363345,
+      -1.184859407092759
+    ],
+    "score_terms": [
+      {
+        "count_penalty_fraction": 0,
+        "count_score": 100,
+        "distance_score": 100,
+        "final_score": 100,
+        "mean_nearest_distance": 0,
+        "reference_onset_count": 23,
+        "take_onset_count": 23
+      },
+      {
+        "count_penalty_fraction": 0,
+        "count_score": 100,
+        "distance_score": 99.87539441325573,
+        "final_score": 99.9065458099418,
+        "mean_nearest_distance": 0.0001495267040931194,
+        "reference_onset_count": 23,
+        "take_onset_count": 23
+      },
+      {
+        "count_penalty_fraction": 0,
+        "count_score": 100,
+        "distance_score": 99.8694628195285,
+        "final_score": 99.90209711464637,
+        "mean_nearest_distance": 0.00015664461656581812,
+        "reference_onset_count": 23,
+        "take_onset_count": 23
+      },
+      {
+        "count_penalty_fraction": 0.043478260869565216,
+        "count_score": 95.65217391304348,
+        "distance_score": 99.8694628195285,
+        "final_score": 98.81514059290724,
+        "mean_nearest_distance": 0.00015664461656581812,
+        "reference_onset_count": 23,
+        "take_onset_count": 24
+      }
+    ],
+    "uses_alignment": false
+  },
+  "schema_version": 1,
+  "score_reconstruction": {
+    "exact_within_epsilon": true,
+    "pitch_linear_max_abs_error": 0,
+    "pitch_production_max_abs_error": 0,
+    "rhythm_max_abs_error": 0
+  },
+  "strengths": [
+    0,
+    0.01,
+    0.03,
+    0.06
+  ]
+}
