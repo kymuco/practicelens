@@ -200,7 +200,10 @@ def additive_noise_attribution_payload(
         "interpretation_boundary": [
             "The audit localizes the first stage where additive-noise movement becomes observable; it does not repair the estimator.",
             "Linear alignment is a diagnostic counterfactual that removes feature-similarity path selection from pitch scoring.",
-            (\n                "Rhythm fidelity is alignment-independent in the production scorer, so " \n                "onset/time feature movement precedes its score movement."\n            ),
+            (
+                "Rhythm fidelity is alignment-independent in the production scorer, so "
+                "onset/time feature movement precedes its score movement."
+            ),
             "Score-term reconstruction verifies the current score mapping rather than proposing a new score.",
         ],
     }
