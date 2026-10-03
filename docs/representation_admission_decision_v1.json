@@ -1,0 +1,100 @@
+{
+  "kind": "representation_admission_decision",
+  "schema_version": 1,
+  "decision_id": "r0.6-representation-admission-decision-v1",
+  "frozen_base_revision": "e823d2bc7f63e402ebf309dbdaa5fea5302584f5",
+  "scope": {
+    "activity": "short clean monophonic or near-monophonic reference-based practice review",
+    "evidence_basis": "R0.1 through R0.5g controlled synthetic evidence",
+    "excluded_from_claim": [
+      "polyphonic-first analysis",
+      "full transcription",
+      "artistic or pedagogical diagnosis",
+      "human longitudinal significance before R0.5b"
+    ]
+  },
+  "decision": {
+    "current_representation": "retain",
+    "event_perceptual_primitive_layer": "not_admitted",
+    "candidate_primitives": [
+      "Event",
+      "Attack",
+      "Sustain",
+      "Transition",
+      "Rest"
+    ],
+    "rationale": "No current machine-side failure remains that requires event semantics after lower-level attribution."
+  },
+  "admission_rule": {
+    "required_evidence": [
+      "a reproducible measurement failure must remain after preprocessing, feature-estimator, alignment, and score-construction attribution",
+      "the failure must map to a construct that the current representation cannot expose with a bounded lower-complexity repair",
+      "an event/perceptual candidate must be tested against a preregistered falsifiable hypothesis",
+      "the candidate must improve the target failure without creating unacceptable nuisance or protected-dimension regressions"
+    ],
+    "current_state": "requirements_not_met"
+  },
+  "evidence": [
+    {
+      "issue": "recording-start equivalence",
+      "first_failure_stage": "preprocessing",
+      "evidence": "R0.5a",
+      "disposition": "repaired with DC centering, peak normalization, and exact activity trim",
+      "representation_implication": "does_not_support_new_representation"
+    },
+    {
+      "issue": "pitch drift -> timing cross-talk and non-monotonic local timing",
+      "first_failure_stage": "shared alignment ownership",
+      "evidence": "R0.5c through R0.5f",
+      "disposition": "metric-specific alignment readouts pass all preregistered R0.5f synthetic checks",
+      "representation_implication": "does_not_support_new_representation"
+    },
+    {
+      "issue": "local timing warp -> pitch movement",
+      "first_failure_stage": "frame-boundary pitch movement with flexible DTW compensation",
+      "evidence": "R0.5c and R0.5f",
+      "disposition": "production pitch readout retains 0.763684 max protected movement while timing readout becomes monotonic under separate alignment ownership",
+      "representation_implication": "does_not_require_new_representation"
+    },
+    {
+      "issue": "additive noise -> pitch fidelity",
+      "first_failure_stage": "pitch feature estimator",
+      "evidence": "R0.5g",
+      "disposition": "relative-position pitch error reaches 7.599 cents; production DTW partially compensates it; voiced-mask instability is absent",
+      "representation_implication": "estimator_local_not_representation_failure"
+    },
+    {
+      "issue": "additive noise -> rhythm fidelity",
+      "first_failure_stage": "onset detector",
+      "evidence": "R0.5g",
+      "disposition": "strongest condition admits one extra onset; about 91.7% of the score movement comes from the count term",
+      "representation_implication": "estimator_local_not_representation_failure"
+    },
+    {
+      "issue": "section stability",
+      "first_failure_stage": "derived aggregate semantics",
+      "evidence": "R0.4 through R0.5f",
+      "disposition": "not treated as an independent construct and not redefined from multiple alignment paths during ablations",
+      "representation_implication": "insufficient_basis_for_new_representation"
+    },
+    {
+      "issue": "real within-session variability",
+      "first_failure_stage": "not yet measured",
+      "evidence": "R0.5b pending",
+      "disposition": "blocks longitudinal significance claims, not the current machine-side representation decision",
+      "representation_implication": "human_evidence_pending"
+    }
+  ],
+  "reopen_conditions": [
+    "real-session evidence exposes a repeatable failure that cannot be localized to preprocessing, estimator robustness, alignment ownership, or score mapping",
+    "a target such as articulation or transition quality is shown to be unobservable from the current feature bundle under a controlled protocol",
+    "a preregistered event/perceptual representation experiment is justified by a newly demonstrated representational gap",
+    "scope expands to a domain whose observables are structurally absent from the current monophonic frame-level model"
+  ],
+  "non_claims": [
+    "the current representation is not declared universally sufficient",
+    "the current measurements are not declared ecologically validated",
+    "R0.5b human repeatability evidence is still required before longitudinal score deltas can be interpreted as development",
+    "future event/perceptual primitives are deferred rather than rejected permanently"
+  ]
+}
