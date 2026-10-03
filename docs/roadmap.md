@@ -141,7 +141,7 @@ See:
 
 ### R0.5 — Repeatability and Noise Floor v1
 
-Status: active.
+Status: active / machine-side synthetic work complete; human repeatability evidence pending.
 
 Goal: determine how much variation exists without an intended underlying skill change.
 
@@ -369,27 +369,45 @@ The remaining noise failures are estimator-local rather than evidence that a new
 
 ### R0.6 — Representation Admission Decision v1
 
-Status: active next machine-side decision.
+Status: complete / event-perceptual primitive layer not admitted.
 
-Goal: decide whether the existing frame-level representation is sufficient.
-
-Possible next representation:
+Decision:
 
 ```text
-Event
-Attack
-Sustain
-Transition
-Rest
+CURRENT_FRAME_LEVEL_REPRESENTATION
+    RETAIN
+
+EVENT_PERCEPTUAL_PRIMITIVE_LAYER
+    NOT_ADMITTED
+
+REASON
+    NO_DEMONSTRATED_REPRESENTATIONAL_GAP
 ```
 
-An event/perceptual primitive layer is added only if it wins against a falsifiable hypothesis derived from R0.4/R0.5 failures.
+The current machine-side failures have all been localized below the representation-admission boundary:
 
-## After R0
+- recording-start equivalence -> preprocessing;
+- pitch/timing coupling -> shared alignment ownership;
+- additive-noise pitch movement -> pitch estimator robustness;
+- additive-noise rhythm movement -> onset detector robustness;
+- current score construction -> exactly reconstructable from observed feature terms.
 
-The next track is intentionally not frozen yet.
+R0.5f additionally shows that the tested timing conflict can be removed with construct-specific alignment readouts while retaining the same frame-level feature representation.
 
-Candidate directions include:
+See:
+
+- `docs/representation_admission_decision_v1.json`;
+- `docs/representation_admission_decision_v1.md`.
+
+The representation question should reopen only after a new controlled or real-session failure demonstrates an observable that cannot be recovered through preprocessing, estimator, alignment, or score boundaries.
+
+## After the machine-side R0 decision
+
+The synthetic machine-side architecture track is now complete enough to stop expanding by default.
+
+R0 itself is **not ecologically complete** because R0.5b still lacks the first real-session repeatability sample.
+
+After that evidence arrives, candidate directions include:
 
 - real-musician repeatability validation;
 - longitudinal development evidence;
@@ -440,18 +458,19 @@ The first export boundary should eventually prefer compact evidence, uncertainty
 8. Keep raw user recordings local by default.
 9. Keep domain observation separate from general personal-development interpretation.
 
-## Immediate next steps
+## Immediate next step
 
-Two evidence tracks are now intentionally separate:
+The machine-side representation decision is complete.
+
+The next high-value evidence is:
 
 ```text
 human evidence
-    R0.5b — collect first local-session repeatability sample when convenient
-
-machine-side decision
-    R0.6 — Representation Admission Decision v1
+    R0.5b — collect the first local-session repeatability sample when convenient
 ```
 
-R0.5g localizes the remaining additive-noise failures to the current pitch and onset estimators. Together with the R0.5c-f alignment evidence, there is now enough machine-side evidence to make the conservative R0.6 representation-admission decision without another repair/tuning loop.
+Until R0.5b exists, do not create another machine-side architecture milestone merely to maintain momentum.
 
-R0.5b remains necessary before assigning practical human significance to the residual protected-score movements.
+A new machine-side experiment should require a newly demonstrated measurement failure.
+
+R0.5b remains necessary before assigning practical human significance to residual score movements or making longitudinal development claims.
